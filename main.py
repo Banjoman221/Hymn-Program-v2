@@ -11,6 +11,7 @@ application_path = os.path.dirname(sys.executable)
 mainPath = os.path.dirname(__file__)
 # Getting CSV file
 hymn = os.path.join(mainPath, "hymnlist.csv")
+hymnPic = "border-image: url('" + os.path.join(mainPath, "\jg.jpg") + "');"
 
 data = []
 theHymn = ""
@@ -58,6 +59,7 @@ class Example(QWidget):
         self.layout.addWidget(self.le, 1, 0, Qt.AlignmentFlag.AlignLeft)
         self.le.returnPressed.connect(self.show_new_window2) 
         self.le.returnPressed.connect(self.preview_widget) 
+        self.le.textChanged.connect(self.preview_widget3)
 
         self.btn = QPushButton('Change Hymn', self)
         self.btn.setFixedWidth(130)
@@ -128,6 +130,35 @@ class Example(QWidget):
         self.btn2.setText('Stop Slide Show')
         self.w.show()
 
+    def preview_widget3(self):
+        self.preview.setText("No Preview")
+        self.preview.setFixedHeight(180)
+        self.backGround.setStyleSheet("")
+        self.hymnNum.setStyleSheet("")
+        self.hymnNum.setText("")
+        self.hymnName.setStyleSheet("")
+        self.hymnName.setText("")
+        if (self.le.text() != ""):
+            num = int(self.le.text())
+            theHymn = str(data[num - 1][0])
+            self.backGround = QLabel(self)
+            self.backGround.setStyleSheet(hymnPic)
+            self.backGround.setScaledContents(True)
+            self.layout.addWidget(self.backGround, 0, 0)
+
+            self.hymnName = QLabel()
+            self.hymnName.setText(theHymn)
+            self.hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 25px; padding-top:30px;")
+            self.hymnName.setWordWrap(True)
+            self.hymnName.setAlignment(Qt.AlignmentFlag.AlignCenter)
+            self.layout.addWidget(self.hymnName, 0 , 0 , Qt.AlignmentFlag.AlignTop)
+
+            self.hymnNum = QLabel()
+            self.hymnNum.setText(str(num))
+            self.hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 40px;padding-bottom:5px;")
+            self.hymnNum.setAlignment(Qt.AlignmentFlag.AlignBottom)
+            self.layout.addWidget(self.hymnNum, 0, 0, Qt.AlignmentFlag.AlignHCenter)
+
     def preview_widget2(self):
         self.preview.setText("No Preview")
         self.preview.setFixedHeight(180)
@@ -141,7 +172,7 @@ class Example(QWidget):
                 num = int(self.le.text())
                 theHymn = str(data[num - 1][0])
                 self.backGround = QLabel(self)
-                self.backGround.setStyleSheet("border-image: url('C:/Users/jedij/Desktop/Hymn-Program-v2/bg.jpg');")
+                self.backGround.setStyleSheet(hymnPic)
                 self.backGround.setScaledContents(True)
                 self.layout.addWidget(self.backGround, 0, 0)
 
@@ -172,7 +203,7 @@ class Example(QWidget):
             num = int(self.le.text())
             theHymn = str(data[num - 1][0])
             self.backGround = QLabel(self)
-            self.backGround.setStyleSheet("border-image: url('C:/Users/jedij/Desktop/Hymn-Program-v2/bg.jpg');")
+            self.backGround.setStyleSheet(hymnPic)
             self.backGround.setScaledContents(True)
             self.layout.addWidget(self.backGround, 0, 0)
 
@@ -200,7 +231,7 @@ class Example(QWidget):
         num = 480
         theHymn = str(data[num - 1][0])
         self.backGround = QLabel(self)
-        self.backGround.setStyleSheet("border-image: url('C:/Users/jedij/Desktop/Hymn-Program-v2/bg.jpg');")
+        self.backGround.setStyleSheet(hymnPic)
         self.backGround.setScaledContents(True)
         self.layout.addWidget(self.backGround, 0, 0)
 
@@ -228,7 +259,7 @@ class Example(QWidget):
         num = 481
         theHymn = str(data[num - 1][0])
         self.backGround = QLabel(self)
-        self.backGround.setStyleSheet("border-image: url('C:/Users/jedij/Desktop/Hymn-Program-v2/bg.jpg');")
+        self.backGround.setStyleSheet(hymnPic)
         self.backGround.setScaledContents(True)
         self.layout.addWidget(self.backGround, 0, 0)
 
