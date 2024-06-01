@@ -19,7 +19,7 @@ theHymn = ""
 with open(hymn, newline="") as csvfile:
     rows = csv.reader(csvfile)
     for row in rows:
-        data.append(row)
+        data.append(row[0])
 
 
 class Example(QWidget):
@@ -65,50 +65,68 @@ class Example(QWidget):
         self.le.setPlaceholderText("Enter Page Number:")
         onlyInt = QIntValidator()
         onlyInt.setRange(2, 479)
-        self.le.setValidator(onlyInt)
+        #self.le.setValidator(onlyInt)
         self.le.setFixedWidth(130)
         self.layout.addWidget(self.le, 1, 1, Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignCenter)
-        self.le.returnPressed.connect(self.show_new_window2) 
-        self.le.returnPressed.connect(self.preview_widget) 
-        self.le.textChanged.connect(self.preview_widget3)
+        self.le.returnPressed.connect(self.show_new_window_preview) 
+        self.le.returnPressed.connect(self.preview_widgetPOnly) 
+        self.le.textChanged.connect(self.preview_widgetPOnly)
 
         self.btn2 = QPushButton('Start Slideshow')
         self.btn2.setFixedWidth(130)
         self.layout.addWidget(self.btn2, 1, 1, Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignCenter)
-        self.btn2.clicked.connect(self.preview_widget2)  
-        self.btn2.clicked.connect(self.show_new_window)  
+        self.btn2.clicked.connect(self.preview_widgetStart)  
+        self.btn2.clicked.connect(self.show_new_window_start)  
 
         self.btn3 = QPushButton('<<< Front Page', self)
         self.btn3.setFixedWidth(130)
         self.layout.addWidget(self.btn3, 1, 1, Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignBottom)
-        self.btn3.clicked.connect(self.preview_widgetF)  
-        self.btn3.clicked.connect(self.show_front_page)  
+        self.btn3.clicked.connect(lambda: self.preview_widgetFB("Front Page"))  
+        self.btn3.clicked.connect(lambda: self.show_front_back_page("Front Page"))  
 
         self.btn4 = QPushButton('Back Page >>>', self)
         self.btn4.setFixedWidth(130)
         self.layout.addWidget(self.btn4, 1, 1, Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignBottom)
-        self.btn4.clicked.connect(self.preview_widgetB)  
-        self.btn4.clicked.connect(self.show_back_page)  
+        self.btn4.clicked.connect(lambda: self.preview_widgetFB("Back Page"))  
+        self.btn4.clicked.connect(lambda: self.show_front_back_page("Back Page"))  
 
         self.show()
 
-    def show_new_window2(self):
+    def show_new_window_preview(self):
         if (self.le.text() != "" and self.w is not None):
-            num = int(self.le.text())
-            theHymn = str(data[num - 1][0])
-            self.w = slideShow.Slide(theHymn, self.le.text())
+            try: 
+                self.nnum = int(self.le.text())
+                if(self.nnum <= 479 and self.nnum > 0): 
+                    self.num = self.nnum
+                    self.theHymn = data[self.num - 1]
+            except:
+                i = 0 
+                for x in data:
+                    i += 1
+                    if self.le.text().lower() in x.lower():
+                        self.theHymn = x
+                        self.num = i
+            self.w = slideShow.Slide(str(self.theHymn), str(self.num))            
+            self.btn2.setText('Stop Slide Show')
             self.w.show()
-            
-    def show_new_window(self):
-        if self.w is None:
-            if (self.le.text() != "" and int(self.le.text()) <= 479 and int(self.le.text()) > 0):
-                    num = int(self.le.text())
-                    theHymn = str(data[num - 1][0])
-                    self.w = slideShow.Slide(theHymn, self.le.text())            
-                    self.btn2.setText('Stop Slide Show')
-                    self.w.show()
-            else:
-                print("try again")
+        
+    def show_new_window_start(self):
+        if (self.le.text() != "" and self.w is None):
+            try: 
+                self.nnum = int(self.le.text())
+                if(self.nnum <= 479 and self.nnum > 0): 
+                    self.num = self.nnum
+                    self.theHymn = data[self.num - 1]
+            except:
+                i = 0 
+                for x in data:
+                    i += 1
+                    if self.le.text().lower() in x.lower():
+                        self.theHymn = x
+                        self.num = i
+            self.w = slideShow.Slide(str(self.theHymn), str(self.num))            
+            self.btn2.setText('Stop Slide Show')
+            self.w.show()
         else:
             self.btn2.setText('Start Slide Show')
             self.preview.setText("No Preview")
@@ -123,21 +141,14 @@ class Example(QWidget):
             self.w.close()
             self.w = None
 
-    def show_front_page(self):
+    def show_front_back_page(self, hn):
         num = 480
-        theHymn = str(data[num - 1][0])
-        self.w = slideShow.Slide(theHymn, "Front Page") 
+        theHymn = str(data[num - 1])
+        self.w = slideShow.Slide(theHymn, hn) 
         self.btn2.setText('Stop Slide Show')
-        self.w.show()
-        
-    def show_back_page(self):
-        num = 481
-        theHymn = str(data[num - 1][0])
-        self.w = slideShow.Slide(theHymn, "Back Page") 
-        self.btn2.setText('Stop Slide Show')
-        self.w.show()
+        self.w.show() 
 
-    def preview_widget3(self):
+    def preview_widgetPOnly(self):
         self.preview.setText("No Preview")
         self.preview.setFixedHeight(180)
         self.preview.setStyleSheet("font-family: ALGERIAN; font-size: 40px;")
@@ -147,28 +158,43 @@ class Example(QWidget):
         self.hymnNum.setText("")
         self.hymnName.setStyleSheet("")
         self.hymnName.setText("")
-        if (self.le.text() != ""):
-            num = int(self.le.text())
-            theHymn = str(data[num - 1][0])
+        self.theHymn = ""
+        self.num = ""
+        if self.le.text() != "":
+            try: 
+                self.nnum = int(self.le.text())
+                if(self.nnum <= 479 and self.nnum > 0): 
+                    self.num = self.nnum
+                    self.theHymn = data[self.num - 1]
+            except:
+                i = 0 
+                for x in data:
+                    i += 1
+                    if self.le.text().lower() in x.lower():
+                        self.theHymn = x
+                        self.num = i
+                        
+
             self.backGround = QLabel(self)
             self.backGround.setStyleSheet(hymnPic)
             self.backGround.setScaledContents(True)
             self.layout.addWidget(self.backGround, 0, 1)
 
             self.hymnName = QLabel()
-            self.hymnName.setText(theHymn)
+            self.hymnName.setText(str(self.theHymn))
             self.hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 25px; padding-top:30px;")
             self.hymnName.setWordWrap(True)
             self.hymnName.setAlignment(Qt.AlignmentFlag.AlignCenter)
             self.layout.addWidget(self.hymnName, 0 , 1 , Qt.AlignmentFlag.AlignTop)
 
             self.hymnNum = QLabel()
-            self.hymnNum.setText(str(num))
+            self.hymnNum.setText(str(self.num))
             self.hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 40px;padding-bottom:5px;")
             self.hymnNum.setAlignment(Qt.AlignmentFlag.AlignBottom)
             self.layout.addWidget(self.hymnNum, 0, 1, Qt.AlignmentFlag.AlignHCenter)
+            
 
-    def preview_widget2(self):
+    def preview_widgetStart(self):
         self.preview.setText("No Preview")
         self.preview.setFixedHeight(180)
         self.preview.setStyleSheet("font-family: ALGERIAN; font-size: 40px;")
@@ -178,64 +204,43 @@ class Example(QWidget):
         self.hymnNum.setText("")
         self.hymnName.setStyleSheet("")
         self.hymnName.setText("")
-        if self.w is None:
-            if (self.le.text() != "" and int(self.le.text()) <= 479 and int(self.le.text()) > 0):
-                num = int(self.le.text())
-                theHymn = str(data[num - 1][0])
-                self.backGround = QLabel(self)
-                self.backGround.setStyleSheet(hymnPic)
-                self.backGround.setScaledContents(True)
-                self.backGround.setAlignment(Qt.AlignmentFlag.AlignCenter)
-                self.layout.addWidget(self.backGround, 0, 1)
+        self.theHymn = ""
+        self.num = ""
+        if self.le.text() != "" and self.w is None:
+            try: 
+                self.nnum = int(self.le.text())
+                if(self.nnum <= 479 and self.nnum > 0): 
+                    self.num = self.nnum
+                    self.theHymn = data[self.num - 1]
+            except:
+                i = 0 
+                for x in data:
+                    i += 1
+                    if self.le.text().lower() in x.lower():
+                        self.theHymn = x
+                        self.num = i
+                        
 
-                self.hymnName = QLabel()
-                self.hymnName.setText(theHymn)
-                self.hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 25px; padding-top:30px;")
-                self.hymnName.setWordWrap(True)
-                self.hymnName.setAlignment(Qt.AlignmentFlag.AlignCenter)
-                self.layout.addWidget(self.hymnName, 0 , 1 , Qt.AlignmentFlag.AlignTop)
-
-                self.hymnNum = QLabel()
-                self.hymnNum.setText(str(num))
-                self.hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 40px;padding-bottom:5px;")
-                self.hymnNum.setAlignment(Qt.AlignmentFlag.AlignBottom)
-                self.layout.addWidget(self.hymnNum, 0, 1, Qt.AlignmentFlag.AlignHCenter)
-            else:
-                print("try again")
-
-    def preview_widget(self):
-        self.preview.setText("No Preview")
-        self.preview.setFixedHeight(180)
-        self.backGround.setStyleSheet("")
-        self.preview.setStyleSheet("font-family: ALGERIAN; font-size: 40px;")
-        self.preview.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.hymnNum.setStyleSheet("")
-        self.hymnNum.setText("")
-        self.hymnName.setStyleSheet("")
-        self.hymnName.setText("")
-        if (self.le.text() != "" and self.w is not None):
-            num = int(self.le.text())
-            theHymn = str(data[num - 1][0])
             self.backGround = QLabel(self)
             self.backGround.setStyleSheet(hymnPic)
             self.backGround.setScaledContents(True)
             self.layout.addWidget(self.backGround, 0, 1)
-            self.backGround.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
             self.hymnName = QLabel()
-            self.hymnName.setText(theHymn)
+            self.hymnName.setText(str(self.theHymn))
             self.hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 25px; padding-top:30px;")
             self.hymnName.setWordWrap(True)
             self.hymnName.setAlignment(Qt.AlignmentFlag.AlignCenter)
-            self.layout.addWidget(self.hymnName, 0 , 1, Qt.AlignmentFlag.AlignTop)
+            self.layout.addWidget(self.hymnName, 0 , 1 , Qt.AlignmentFlag.AlignTop)
 
             self.hymnNum = QLabel()
-            self.hymnNum.setText(str(num))
+            self.hymnNum.setText(str(self.num))
             self.hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 40px;padding-bottom:5px;")
             self.hymnNum.setAlignment(Qt.AlignmentFlag.AlignBottom)
             self.layout.addWidget(self.hymnNum, 0, 1, Qt.AlignmentFlag.AlignHCenter)
+         
 
-    def preview_widgetF(self):
+    def preview_widgetFB(self, hnfb):
         self.preview.setText("No Preview")
         self.preview.setFixedHeight(180)
         self.preview.setStyleSheet("font-family: ALGERIAN; font-size: 40px;")
@@ -246,7 +251,7 @@ class Example(QWidget):
         self.hymnName.setStyleSheet("")
         self.hymnName.setText("")
         num = 480
-        theHymn = str(data[num - 1][0])
+        theHymn = str(data[num - 1])
         self.backGround = QLabel(self)
         self.backGround.setStyleSheet(hymnPic)
         self.backGround.setScaledContents(True)
@@ -262,42 +267,10 @@ class Example(QWidget):
 
 
         self.hymnNum = QLabel()
-        self.hymnNum.setText("Front Page")
+        self.hymnNum.setText(hnfb)
         self.hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 40px;padding-bottom:5px;")
         self.hymnNum.setAlignment(Qt.AlignmentFlag.AlignBottom)
-        self.layout.addWidget(self.hymnNum, 0, 1, Qt.AlignmentFlag.AlignHCenter)
-
-    def preview_widgetB(self):
-        self.preview.setText("No Preview")
-        self.preview.setFixedHeight(180)
-        self.preview.setStyleSheet("font-family: ALGERIAN; font-size: 40px;")
-        self.backGround.setStyleSheet("")
-        self.preview.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.hymnNum.setStyleSheet("")
-        self.hymnNum.setText("")
-        self.hymnName.setStyleSheet("")
-        self.hymnName.setText("")
-        num = 481
-        theHymn = str(data[num - 1][0])
-        self.backGround = QLabel(self)
-        self.backGround.setStyleSheet(hymnPic)
-        self.backGround.setScaledContents(True)
-        self.layout.addWidget(self.backGround, 0, 1)
-        self.backGround.setAlignment(Qt.AlignmentFlag.AlignCenter)
-
-
-        self.hymnName = QLabel()
-        self.hymnName.setText(theHymn)
-        self.hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 25px; padding-top:30px;")
-        self.hymnName.setWordWrap(True)
-        self.hymnName.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.layout.addWidget(self.hymnName, 0 , 1, Qt.AlignmentFlag.AlignTop)
-
-        self.hymnNum = QLabel()
-        self.hymnNum.setText("Back Page")
-        self.hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 40px;padding-bottom:5px;")
-        self.hymnNum.setAlignment(Qt.AlignmentFlag.AlignBottom)
-        self.layout.addWidget(self.hymnNum, 0, 1, Qt.AlignmentFlag.AlignHCenter)
+        self.layout.addWidget(self.hymnNum, 0, 1, Qt.AlignmentFlag.AlignHCenter) 
     
     def closeEvent(self, event):
         for window in QApplication.topLevelWidgets():

@@ -15,7 +15,7 @@ class Slide(QWidget):
         self.setLayout(self.layout)
 
         backGround = QLabel(self)
-        backGround.setStyleSheet("border-image: url('C:/Users/jedij/Desktop/Hymn-Program-v2/jg.jpg');")
+        backGround.setPixmap(QPixmap('C:/Users/jedij/Desktop/Hymn-Program-v2/jg.jpg'))
         backGround.setScaledContents(True)
         self.layout.addWidget(backGround, 0, 0)
 
