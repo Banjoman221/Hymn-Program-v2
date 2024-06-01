@@ -16,7 +16,7 @@ I Have used pyinstaller to make it an exe file to run on different windows compu
 ![Screenshot 2024-05-24 171141](https://github.com/Banjoman221/Hymn-Program-v2/assets/37515771/bda3abf7-3d08-48a5-b770-53f805efafb0)
 
 **Enter the page number then you must click "Start Slide Show" to start slide show. Another window will pop up and it should look like this:**
-![Screenshot 2024-05-04 184811](https://github.com/Banjoman221/Hymn-Program-v2/assets/37515771/c663fbde-b286-4c59-8281-eefbf38970ef)
+![Screenshot 2024-05-04 190600](https://github.com/Banjoman221/Hymn-Program-v2/assets/37515771/a6802c12-68c1-4de0-8663-262f44c4048c)
 
 To change Hymn, type in the new hymn number and press enter or click the change Hymn button.
 To exit the program close the main window and it will close everything.
