@@ -20,21 +20,38 @@ class Slide(QWidget):
         self.layout.addWidget(backGround, 0, 0)
 
         hymnName = QLabel(theHymn)
-        hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 125px; padding-top:200px; padding-top:150px;")
         hymnName.setWordWrap(True)
         hymnName.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.layout.addWidget(hymnName, 0 , 0 , Qt.AlignmentFlag.AlignTop)
 
         hymnNum = QLabel(num)
-        hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 200px;padding-bottom:50px;")
         hymnNum.setAlignment(Qt.AlignmentFlag.AlignBottom)
         self.layout.addWidget(hymnNum, 0, 0, Qt.AlignmentFlag.AlignHCenter)
-        
+
         for m in get_monitors():
+            print(m.width)
+            self.monWidth = m.width
             if m.is_primary == False:
                 self.move(int(m.x), int(m.y))
                 hymnName.move(int(m.x), int(m.y))
 
+        print(self.monWidth)
+        if self.monWidth >= 3840: 
+            if len(theHymn) <= 20:
+                hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 200px; padding-top: 70px;")
+                hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 250px; margin-top: 50px;")
+            elif len(theHymn) >= 20:
+                hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 155px; padding-top:100px;")
+                hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 200px; padding-bottom: 50px;")
+        elif self.monWidth < 3840:
+            if len(theHymn) <= 20:
+                hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 150px; padding-top: 70px;")
+                hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 250px; margin-top: 50px;")
+            elif len(theHymn) >= 20:
+                hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 105px; padding-top:100px;")
+                hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 200px; padding-bottom: 50px;")
+            
+        print(len(theHymn))
         self.showMaximized() 
         self.showFullScreen()
         self.show()
