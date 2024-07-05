@@ -22,18 +22,19 @@ with open(hymn, newline="") as csvfile:
         data.append(row[0])
 
 
-class Example(QWidget):
+class Example(QMainWindow):
 
     def __init__(self):
         super(Example, self).__init__()
         self.w = None
 
         # Add label              
-        self.setGeometry(300, 300, 300, 300)
+        self.setGeometry(400, 200, 300,200)
         self.setWindowTitle('HymnsOS') 
 
         self.layout = QGridLayout()
-        self.layout.setContentsMargins(10, 10, 10, 10)
+        self.layoutVertical = QVBoxLayout()
+        #self.layout.setContentsMargins(10, 10, 10, 10)
         self.setLayout(self.layout)
 
         self.preview = QLabel()
@@ -55,11 +56,13 @@ class Example(QWidget):
     
         self.placeHold = QLabel('')
         self.placeHold.setFixedWidth(80)
-        self.layout.addWidget(self.placeHold, 1, 0, Qt.AlignmentFlag.AlignLeft)
+        self.layout.addWidget(self.placeHold, 0, 0, Qt.AlignmentFlag.AlignLeft)
 
         self.placeHold = QLabel('')
         self.placeHold.setFixedWidth(80)
-        self.layout.addWidget(self.placeHold, 1, 2, Qt.AlignmentFlag.AlignLeft)
+        self.layout.addWidget(self.placeHold, 1, 1, Qt.AlignmentFlag.AlignLeft)
+
+        self.layout.addLayout(self.layoutVertical, 0, 0, 1, 1)
 
         self.le = QLineEdit(self)
         self.le.setPlaceholderText("Enter Page Number:")
@@ -67,28 +70,32 @@ class Example(QWidget):
         onlyInt.setRange(2, 479)
         #self.le.setValidator(onlyInt)
         self.le.setFixedWidth(130)
-        self.layout.addWidget(self.le, 1, 1, Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignCenter)
+        self.layoutVertical.addWidget(self.le)
         self.le.returnPressed.connect(self.show_new_window_preview) 
         self.le.returnPressed.connect(self.preview_widgetPOnly) 
         self.le.textChanged.connect(self.preview_widgetPOnly)
 
         self.btn2 = QPushButton('Start Slideshow')
         self.btn2.setFixedWidth(130)
-        self.layout.addWidget(self.btn2, 1, 1, Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignCenter)
+        self.layoutVertical.addWidget(self.btn2)
         self.btn2.clicked.connect(self.preview_widgetStart)  
         self.btn2.clicked.connect(self.show_new_window_start)  
 
-        self.btn3 = QPushButton('<<< Front Page', self)
+        self.btn3 = QPushButton('Front Page', self)
         self.btn3.setFixedWidth(130)
-        self.layout.addWidget(self.btn3, 1, 1, Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignBottom)
+        self.layoutVertical.addWidget(self.btn3)
         self.btn3.clicked.connect(lambda: self.preview_widgetFB("Front Page"))  
         self.btn3.clicked.connect(lambda: self.show_front_back_page("Front Page"))  
 
-        self.btn4 = QPushButton('Back Page >>>', self)
+        self.btn4 = QPushButton('Back Page ', self)
         self.btn4.setFixedWidth(130)
-        self.layout.addWidget(self.btn4, 1, 1, Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignBottom)
+        self.layoutVertical.addWidget(self.btn4)
         self.btn4.clicked.connect(lambda: self.preview_widgetFB("Back Page"))  
         self.btn4.clicked.connect(lambda: self.show_front_back_page("Back Page"))  
+
+        self.widget = QWidget()
+        self.widget.setLayout(self.layout)
+        self.setCentralWidget(self.widget)
 
         self.show()
 
@@ -127,7 +134,7 @@ class Example(QWidget):
             self.w = slideShow.Slide(str(self.theHymn), str(self.num))            
             self.btn2.setText('Stop Slide Show')
             self.w.show()
-        else:
+        elif (self.le.text() != ""):
             self.btn2.setText('Start Slide Show')
             self.preview.setText("No Preview")
             self.preview.setFixedHeight(180)
@@ -190,8 +197,8 @@ class Example(QWidget):
             self.hymnNum = QLabel()
             self.hymnNum.setText(str(self.num))
             self.hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 40px;padding-bottom:5px;")
-            self.hymnNum.setAlignment(Qt.AlignmentFlag.AlignBottom)
-            self.layout.addWidget(self.hymnNum, 0, 1, Qt.AlignmentFlag.AlignHCenter)
+            self.hymnNum.setAlignment(Qt.AlignmentFlag.AlignCenter)
+            self.layout.addWidget(self.hymnNum, 0, 1, Qt.AlignmentFlag.AlignBottom)
             
 
     def preview_widgetStart(self):
@@ -232,12 +239,12 @@ class Example(QWidget):
             self.hymnName.setWordWrap(True)
             self.hymnName.setAlignment(Qt.AlignmentFlag.AlignCenter)
             self.layout.addWidget(self.hymnName, 0 , 1 , Qt.AlignmentFlag.AlignTop)
-
+                     
             self.hymnNum = QLabel()
             self.hymnNum.setText(str(self.num))
             self.hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 40px;padding-bottom:5px;")
-            self.hymnNum.setAlignment(Qt.AlignmentFlag.AlignBottom)
-            self.layout.addWidget(self.hymnNum, 0, 1, Qt.AlignmentFlag.AlignHCenter)
+            self.hymnNum.setAlignment(Qt.AlignmentFlag.AlignCenter)
+            self.layout.addWidget(self.hymnNum, 0, 1, Qt.AlignmentFlag.AlignBottom)
          
 
     def preview_widgetFB(self, hnfb):
@@ -263,14 +270,14 @@ class Example(QWidget):
         self.hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 25px; padding-top:30px;")
         self.hymnName.setWordWrap(True)
         self.hymnName.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.layout.addWidget(self.preview, 0, 1, Qt.AlignmentFlag.AlignCenter)
+        self.layout.addWidget(self.hymnName, 0, 1, Qt.AlignmentFlag.AlignTop)
 
 
         self.hymnNum = QLabel()
         self.hymnNum.setText(hnfb)
         self.hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 40px;padding-bottom:5px;")
-        self.hymnNum.setAlignment(Qt.AlignmentFlag.AlignBottom)
-        self.layout.addWidget(self.hymnNum, 0, 1, Qt.AlignmentFlag.AlignHCenter) 
+        self.hymnNum.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.layout.addWidget(self.hymnNum, 0, 1, Qt.AlignmentFlag.AlignBottom) 
     
     def closeEvent(self, event):
         for window in QApplication.topLevelWidgets():
