@@ -285,6 +285,7 @@ class Example(QMainWindow):
 
 
 app = QApplication(sys.argv)
+app.setStyle('fusion')
 
 ex = Example()
 ex.show()
