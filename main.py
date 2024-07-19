@@ -19,17 +19,16 @@ theHymn = ""
 with open(hymn, newline="") as csvfile:
     rows = csv.reader(csvfile)
     for row in rows:
-        data.append(row[0])
+        data.append(row[0].upper())
 
 
 class Example(QMainWindow):
-
     def __init__(self):
         super(Example, self).__init__()
         self.w = None
 
         # Add label              
-        self.setGeometry(400, 200, 300,200)
+        self.setGeometry(400, 200, 300, 375)
         self.setWindowTitle('HymnsOS') 
 
         self.layout = QGridLayout()
@@ -93,12 +92,46 @@ class Example(QMainWindow):
         self.btn4.clicked.connect(lambda: self.preview_widgetFB("Back Page"))  
         self.btn4.clicked.connect(lambda: self.show_front_back_page("Back Page"))  
 
+        self.listHymn = QListWidget()
+        self.layout.addWidget(self.listHymn, 1, 1)
+        self.listHymn.addItems(data)
+        self.listHymn.currentItemChanged.connect(self.printListItems)
+
+
         self.widget = QWidget()
         self.widget.setLayout(self.layout)
         self.setCentralWidget(self.widget)
 
         self.show()
 
+    def printListItems(self, i):
+        print(i.text())
+
+        j = 0
+        for d in data:
+            j += 1 
+            if i.text().lower() in d.lower():
+                self.num = j
+
+        self.backGround = QLabel(self)
+        self.backGround.setStyleSheet(hymnPic)
+        self.backGround.setScaledContents(True)
+        self.layout.addWidget(self.backGround, 0, 1)
+
+        self.hymnName = QLabel()
+        self.hymnName.setText(str(i.text()))
+        self.hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 25px; padding-top:30px;")
+        self.hymnName.setWordWrap(True)
+        self.hymnName.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.layout.addWidget(self.hymnName, 0 , 1 , Qt.AlignmentFlag.AlignTop)
+
+        self.hymnNum = QLabel()
+        self.hymnNum.setText(str(self.num))
+        self.hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 40px;padding-bottom:5px;")
+        self.hymnNum.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.layout.addWidget(self.hymnNum, 0, 1, Qt.AlignmentFlag.AlignBottom)
+
+                     
     def show_new_window_preview(self):
         if (self.le.text() != "" and self.w is not None):
             try: 
@@ -167,7 +200,11 @@ class Example(QMainWindow):
         self.hymnName.setText("")
         self.theHymn = ""
         self.num = ""
+
+
         if self.le.text() != "":
+            self.listOfHymn = []
+
             try: 
                 self.nnum = int(self.le.text())
                 if(self.nnum <= 479 and self.nnum > 0): 
@@ -178,9 +215,10 @@ class Example(QMainWindow):
                 for x in data:
                     i += 1
                     if self.le.text().lower() in x.lower():
+                        self.listOfHymn.append(x)
                         self.theHymn = x
                         self.num = i
-                        
+                    
 
             self.backGround = QLabel(self)
             self.backGround.setStyleSheet(hymnPic)
@@ -199,7 +237,12 @@ class Example(QMainWindow):
             self.hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 40px;padding-bottom:5px;")
             self.hymnNum.setAlignment(Qt.AlignmentFlag.AlignCenter)
             self.layout.addWidget(self.hymnNum, 0, 1, Qt.AlignmentFlag.AlignBottom)
-            
+
+            self.listHymn = QListWidget()
+            self.layout.addWidget(self.listHymn, 1, 1)
+            self.listHymn.addItems(self.listOfHymn)
+            self.listHymn.currentItemChanged.connect(self.printListItems)
+
 
     def preview_widgetStart(self):
         self.preview.setText("No Preview")
