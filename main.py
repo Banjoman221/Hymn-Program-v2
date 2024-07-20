@@ -5,10 +5,9 @@ import os, sys
 import csv
 from screeninfo import get_monitors
 import slideShow
-application_path = os.path.dirname(sys.executable)
 
 # Getting main path of this folder
-mainPath = os.path.dirname(__file__)
+mainPath = os.getcwd()
 # Getting CSV file
 hymn = os.path.join(mainPath, "hymnlist.csv")
 hymnPic = "border-image: url('" + os.path.join(mainPath, "\jg.jpg") + "');"
