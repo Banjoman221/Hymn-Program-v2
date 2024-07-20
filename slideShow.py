@@ -4,6 +4,8 @@ from PyQt6.QtWidgets import *
 import os, sys
 from screeninfo import get_monitors
 
+mainPath = os.getcwd()
+hymnPic = os.path.join(mainPath, "\jg.jpg")
 
 class Slide(QWidget):
 
