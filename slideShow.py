@@ -4,6 +4,10 @@ from PyQt6.QtWidgets import *
 import os, sys
 from screeninfo import get_monitors
 
+# Getting main path of this folder
+mainPath = os.getcwd()
+# Getting CSV file
+hymn = os.path.join(mainPath,"\jg.jpg")
 
 class Slide(QWidget):
 
