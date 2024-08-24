@@ -7,7 +7,9 @@ To install python 3.12.3 or the latest version of pyhton go here: https://www.py
 
 To install Pyqt6 run this command in your terminal after you install python: pip install PyQt6
 
-I Have used pyinstaller to make it an exe file to run on different windows computers. Todo so go here: https://pyinstaller.org/en/stable/installation.html
+I Have used pyinstaller to make it an exe file to run on different windows computers. Todo so go here: https://pyinstaller.org/en/stable/installation.html \
+The command i used was: pyinstaller main.py --clean --onedir --noconsole \
+After running the command copy the csv file and jg.jpg file to the folder with main.exe and it should be able to run 
 
 **The Main screen should look like this when opened:**
 ![Screenshot 2024-08-24 135806](https://github.com/user-attachments/assets/20acfcbd-c230-4880-8989-648543b2f1c6)
