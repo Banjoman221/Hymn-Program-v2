@@ -188,6 +188,7 @@ class Example(QMainWindow):
         self.hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 25px; padding-top:30px;")
         self.hymnName.setWordWrap(True)
         self.hymnName.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.hymnName.adjustSize()
         self.layout.addWidget(self.hymnName, 0, 1, Qt.AlignmentFlag.AlignTop)
 
 
@@ -195,6 +196,7 @@ class Example(QMainWindow):
         self.hymnNum.setText(str(theNum))
         self.hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 40px;padding-bottom:5px;")
         self.hymnNum.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.hymnNum.adjustSize()
         self.layout.addWidget(self.hymnNum, 0, 1, Qt.AlignmentFlag.AlignBottom) 
     
     def closeEvent(self, event):
