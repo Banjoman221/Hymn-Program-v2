@@ -11,7 +11,6 @@ mainPath = os.getcwd()
 # Getting CSV file
 hymn = os.path.join(mainPath, "hymnlist.csv")
 hymnImage = os.path.join(mainPath,"\jg.jpg")
-print(hymnImage)
 hymnPic = "border-image: url('" + hymnImage + "');"
 
 data = []
@@ -67,7 +66,7 @@ class Example(QMainWindow):
         #self.le.setValidator(onlyInt)
         self.le.setFixedWidth(130)
         self.layoutVertical.addWidget(self.le)
-        self.le.returnPressed.connect(self.show_new_window_start) 
+        self.le.returnPressed.connect(lambda: self.show_new_window_start(self.le.text())) 
         self.le.textChanged.connect(self.preview_widgetPOnly)
 
         self.btn2 = QPushButton('Start Slideshow')
