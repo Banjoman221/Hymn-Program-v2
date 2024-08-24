@@ -26,10 +26,12 @@ class Slide(QWidget):
         hymnName = QLabel(theHymn)
         hymnName.setWordWrap(True)
         hymnName.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        hymnName.adjustSize()
         self.layout.addWidget(hymnName, 0 , 0 , Qt.AlignmentFlag.AlignTop)
 
         hymnNum = QLabel(num)
         hymnNum.setAlignment(Qt.AlignmentFlag.AlignBottom)
+        hymnNum.adjustSize()
         self.layout.addWidget(hymnNum, 0, 0, Qt.AlignmentFlag.AlignHCenter)
 
         for m in get_monitors():
