@@ -10,7 +10,9 @@ import slideShow
 mainPath = os.getcwd()
 # Getting CSV file
 hymn = os.path.join(mainPath, "hymnlist.csv")
-hymnPic = "border-image: url('" + os.path.join(mainPath, "jg.jpg") + "');"
+hymnImage = os.path.join(mainPath,"\jg.jpg")
+print(hymnImage)
+hymnPic = "border-image: url('" + hymnImage + "');"
 
 data = []
 theHymn = ""
@@ -33,7 +35,6 @@ class Example(QMainWindow):
         self.layout = QGridLayout()
         self.layoutVertical = QVBoxLayout()
         #self.layout.setContentsMargins(10, 10, 10, 10)
-        self.setLayout(self.layout)
 
         self.preview = QLabel()
         self.preview.setText("No Preview")
