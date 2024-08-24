@@ -10,7 +10,7 @@ import slideShow
 mainPath = os.getcwd()
 # Getting CSV file
 hymn = os.path.join(mainPath, "hymnlist.csv")
-hymnPic = "border-image: url('" + os.path.join(mainPath, "\jg.jpg") + "');"
+hymnPic = "border-image: url('" + os.path.join(mainPath, "jg.jpg") + "');"
 
 data = []
 theHymn = ""

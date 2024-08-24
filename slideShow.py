@@ -7,8 +7,8 @@ from screeninfo import get_monitors
 # Getting main path of this folder
 mainPath = os.getcwd()
 # Getting CSV file
-hymn = os.path.join(mainPath,"\jg.jpg")
-
+hymn = os.path.join(mainPath,"jg.jpg")
+print(hymn)
 class Slide(QWidget):
 
     def __init__(self, theHymn, num):
@@ -19,7 +19,7 @@ class Slide(QWidget):
         self.setLayout(self.layout)
 
         backGround = QLabel(self)
-        backGround.setPixmap(QPixmap('C:/Users/jedij/Desktop/Hymn-Program-v2/jg.jpg'))
+        backGround.setPixmap(QPixmap(hymn))
         backGround.setScaledContents(True)
         self.layout.addWidget(backGround, 0, 0)
 
@@ -49,10 +49,10 @@ class Slide(QWidget):
                 hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 200px; padding-bottom: 50px;")
         elif self.monWidth >= 3840:
             if len(theHymn) <= 20:
-                hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 190px; padding-top: 50px;")
+                hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 200px; padding-top: 50px;")
                 hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 250px; margin-top: 50px;")
             elif len(theHymn) >= 20:
-                hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 205px; padding-top:275px;")
+                hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 150px; padding-top:75px;")
                 hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 200px; padding-bottom: 50px;")
             
         print(len(theHymn))
