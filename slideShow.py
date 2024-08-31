@@ -45,17 +45,17 @@ class Slide(QWidget):
         if self.monWidth < 3840: 
             if len(theHymn) <= 20:
                 hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 250px; padding-top: 70px;")
-                hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 250px; margin-top: 50px;")
+                hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 250px; margin-top: 0px;")
             elif len(theHymn) >= 20:
                 hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 200px; padding-top:100px;")
-                hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 200px; padding-bottom: 50px;")
+                hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 200px; padding-bottom: 0px;")
         elif self.monWidth >= 3840:
             if len(theHymn) <= 20:
                 hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 200px; padding-top: 50px;")
-                hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 250px; margin-top: 50px;")
+                hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 250px; margin-top:5px;")
             elif len(theHymn) >= 20:
-                hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 150px; padding-top:75px;")
-                hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 200px; padding-bottom: 50px;")
+                hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 150px; padding-top:80px;")
+                hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 200px; padding-bottom:0px;")
             
         print(len(theHymn))
         self.showMaximized() 
