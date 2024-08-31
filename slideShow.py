@@ -43,21 +43,28 @@ class Slide(QWidget):
 
         print(self.monWidth)
         if self.monWidth < 3840: 
-            if len(theHymn) <= 20:
+            print(len(theHymn))
+            if len(theHymn) <= 30:
                 hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 250px; padding-top: 70px;")
                 hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 250px; margin-top: 0px;")
-            elif len(theHymn) >= 20:
-                hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 200px; padding-top:100px;")
-                hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 200px; padding-bottom: 0px;")
+            elif len(theHymn) > 31 and len(theHymn) < 40:
+                hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 180px; padding-top:100px;")
+                hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 200px; padding-bottom: 10px;")
+            elif len(theHymn) >= 41:
+                hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 150px; padding-top:100px;")
+                hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 200px; padding-bottom: 10px;")
         elif self.monWidth >= 3840:
-            if len(theHymn) <= 20:
+            print(len(theHymn))
+            if len(theHymn) <= 30:
                 hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 200px; padding-top: 50px;")
                 hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 250px; margin-top:5px;")
-            elif len(theHymn) >= 20:
+            elif len(theHymn) > 31 and len(theHymn) < 40:
                 hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 150px; padding-top:80px;")
                 hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 200px; padding-bottom:0px;")
+            elif len(theHymn) >= 41:
+                hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 110px; padding-top:80px;")
+                hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 200px; padding-bottom:0px;")
             
-        print(len(theHymn))
         self.showMaximized() 
         self.showFullScreen()
         self.show()
