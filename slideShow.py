@@ -60,9 +60,9 @@ class Slide(QWidget):
                 hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 250px; margin-top:5px;")
             elif len(theHymn) > 31 and len(theHymn) < 40:
                 hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 150px; padding-top:80px;")
-                hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 200px; padding-bottom:0px;")
+                hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 200px; padding-bottom:5px;")
             elif len(theHymn) >= 41:
-                hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 110px; padding-top:80px;")
+                hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 130px; padding-top:80px;")
                 hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 200px; padding-bottom:0px;")
             
         self.showMaximized() 
