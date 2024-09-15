@@ -46,7 +46,7 @@ class Slide(QWidget):
             print(len(theHymn))
             if len(theHymn) <= 30:
                 hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 250px; padding-top: 70px;")
-                hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 250px; margin-top: 0px;")
+                hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 250px; padding-bottom: 10px;")
             elif len(theHymn) > 31 and len(theHymn) < 40:
                 hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 180px; padding-top:100px;")
                 hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 200px; padding-bottom: 10px;")
@@ -57,13 +57,13 @@ class Slide(QWidget):
             print(len(theHymn))
             if len(theHymn) <= 30:
                 hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 200px; padding-top: 50px;")
-                hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 250px; margin-top:5px;")
+                hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 250px; padding-bottom: 10px;")
             elif len(theHymn) > 31 and len(theHymn) < 40:
                 hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 150px; padding-top:80px;")
-                hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 200px; padding-bottom:5px;")
+                hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 200px; padding-bottom:10px;")
             elif len(theHymn) >= 41:
                 hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 130px; padding-top:80px;")
-                hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 200px; padding-bottom:0px;")
+                hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 200px; padding-bottom:10px;")
             
         self.showMaximized() 
         self.showFullScreen()
