@@ -9,14 +9,14 @@ mainPath = os.getcwd()
 # Getting CSV file
 hymn = os.path.join(mainPath,"jg.jpg")
 print(hymn)
-class Slide(QWidget):
+class Slide(QMainWindow):
 
     def __init__(self, theHymn, num):
         super().__init__()
         self.setWindowTitle("Hymn Slide V2")
 
         self.layout = QGridLayout()
-        self.setLayout(self.layout)
+        self.layoutVertical = QVBoxLayout()
 
         backGround = QLabel(self)
         backGround.setPixmap(QPixmap(hymn))
@@ -25,14 +25,23 @@ class Slide(QWidget):
 
         hymnName = QLabel(theHymn)
         hymnName.setWordWrap(True)
-        hymnName.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        hymnName.setAlignment(Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignHCenter)
         hymnName.adjustSize()
-        self.layout.addWidget(hymnName, 0 , 0 , Qt.AlignmentFlag.AlignTop)
+        hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 230px;")
+        self.layoutVertical.addWidget(hymnName)
 
         hymnNum = QLabel(num)
-        hymnNum.setAlignment(Qt.AlignmentFlag.AlignBottom)
+        hymnNum.setAlignment(Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignHCenter)
         hymnNum.adjustSize()
-        self.layout.addWidget(hymnNum, 0, 0, Qt.AlignmentFlag.AlignHCenter)
+        hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 275px")
+        self.layoutVertical.addWidget(hymnNum)
+
+        self.layout.addLayout(self.layoutVertical, 0, 0)
+
+        self.widget = QWidget()
+        self.widget.setLayout(self.layout)
+        self.setCentralWidget(self.widget)
+
 
         for m in get_monitors():
             print(m.width)
@@ -42,29 +51,6 @@ class Slide(QWidget):
                 hymnName.move(int(m.x), int(m.y))
 
         print(self.monWidth)
-        if self.monWidth < 3840: 
-            print(len(theHymn))
-            if len(theHymn) <= 30:
-                hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 250px; padding-top: 70px;")
-                hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 300px; padding-bottom: 10px;")
-            elif len(theHymn) > 31 and len(theHymn) < 40:
-                hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 180px; padding-top:100px;")
-                hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 300px; padding-bottom: 10px;")
-            elif len(theHymn) >= 41:
-                hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 150px; padding-top:100px;")
-                hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 300px; padding-bottom: 10px;")
-        elif self.monWidth >= 3840:
-            print(len(theHymn))
-            if len(theHymn) <= 30:
-                hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 200px; padding-top: 50px;")
-                hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 300px; padding-bottom: 10px;")
-            elif len(theHymn) > 31 and len(theHymn) < 40:
-                hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 150px; padding-top:80px;")
-                hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 300px; padding-bottom:10px;")
-            elif len(theHymn) >= 41:
-                hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 130px; padding-top:80px;")
-                hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 300px; padding-bottom:10px;")
-            
         self.showMaximized() 
         self.showFullScreen()
         self.show()
