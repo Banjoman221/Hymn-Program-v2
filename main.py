@@ -176,7 +176,7 @@ class Example(QMainWindow):
             self.creating_Preview(hymnPic,self.theHymn, self.num)
 
             self.listHymn = QListWidget()
-            self.layout.addWidget(self.listHymn, 1, 1)
+            self.layout.addWidget(self.listHymn, 3, 0)
             self.listHymn.addItems(self.listOfHymn)
             self.listHymn.currentItemChanged.connect(self.printListItems)
 
@@ -185,7 +185,7 @@ class Example(QMainWindow):
         self.backGround = QLabel(self)
         self.backGround.setStyleSheet(hymnPicture)
         self.backGround.setScaledContents(True)
-        self.layout.addWidget(self.backGround, 0, 1)
+        self.layout.addWidget(self.backGround, 1, 0)
         self.backGround.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.hymnName = QLabel()
@@ -194,7 +194,7 @@ class Example(QMainWindow):
         self.hymnName.setWordWrap(True)
         self.hymnName.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.hymnName.adjustSize()
-        self.layout.addWidget(self.hymnName, 0, 1, Qt.AlignmentFlag.AlignTop)
+        self.layout.addWidget(self.hymnName, 1, 0, Qt.AlignmentFlag.AlignTop)
 
 
         self.hymnNum = QLabel()
@@ -202,7 +202,7 @@ class Example(QMainWindow):
         self.hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 40px;padding-bottom:5px;")
         self.hymnNum.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.hymnNum.adjustSize()
-        self.layout.addWidget(self.hymnNum, 0, 1, Qt.AlignmentFlag.AlignBottom) 
+        self.layout.addWidget(self.hymnNum, 1, 0, Qt.AlignmentFlag.AlignBottom) 
     
     def closeEvent(self, event):
         for window in QApplication.topLevelWidgets():
