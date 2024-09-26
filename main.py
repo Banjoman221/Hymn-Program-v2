@@ -58,7 +58,7 @@ class Example(QMainWindow):
 
         self.btn5 = QPushButton('Back Page ', self)
         self.btn5.setFixedWidth(100)
-        self.btn5.setFixedHeight(50)
+        self.btn5.setFixedHeight(50) 
         self.layoutVertical.addWidget(self.btn5)
         self.btn5.clicked.connect(lambda: self.creating_Preview(hymnPic,"I Know My Name Is There","Back Page"))  
         self.btn5.clicked.connect(lambda: self.show_front_back_page("I Know My Name Is There","Back Page"))  
