@@ -28,22 +28,62 @@ class Example(QMainWindow):
         self.w = None
 
         # Add label              
-        self.setGeometry(400, 200, 300, 375)
+        self.setGeometry(400, 100, 300, 475)
         self.setWindowTitle('HymnsOS') 
 
         self.layout = QGridLayout()
-        self.layoutVertical = QVBoxLayout()
+        self.layoutVertical = QHBoxLayout()
         #self.layout.setContentsMargins(10, 10, 10, 10)
 
+        #Vertical Layouts
+        self.btn2 = QPushButton('Start Slideshow')
+        self.btn2.setFixedWidth(100)
+        self.btn2.setFixedHeight(50)
+        self.layoutVertical.addWidget(self.btn2)
+        self.btn2.clicked.connect(lambda: self.show_new_window_start(self.le.text()))  
+
+        self.btn3 = QPushButton('Front Page Top Song', self)
+        self.btn3.setFixedWidth(125)
+        self.btn3.setFixedHeight(50)
+        self.layoutVertical.addWidget(self.btn3)
+        self.btn3.clicked.connect(lambda: self.creating_Preview(hymnPic,"Heaven's Jubilee","Front Page"))  
+        self.btn3.clicked.connect(lambda: self.show_front_back_page("Heaven's Jubilee","Front Page"))  
+
+        self.btn4 = QPushButton('Front Page Bottom Song', self)
+        self.btn4.setFixedWidth(140)
+        self.btn4.setFixedHeight(50)
+        self.layoutVertical.addWidget(self.btn4)
+        self.btn4.clicked.connect(lambda: self.creating_Preview(hymnPic,"I Feel Like Traveling On","Front Page"))  
+        self.btn4.clicked.connect(lambda: self.show_front_back_page("I Feel Like Traveling On","Front Page"))  
+
+        self.btn5 = QPushButton('Back Page ', self)
+        self.btn5.setFixedWidth(100)
+        self.btn5.setFixedHeight(50)
+        self.layoutVertical.addWidget(self.btn5)
+        self.btn5.clicked.connect(lambda: self.creating_Preview(hymnPic,"I Know My Name Is There","Back Page"))  
+        self.btn5.clicked.connect(lambda: self.show_front_back_page("I Know My Name Is There","Back Page"))  
+
+        #Grid Layout        
         self.preview = QLabel()
         self.preview.setText("No Preview")
         self.preview.setStyleSheet("font-family: ALGERIAN; font-size: 40px;")
         self.preview.setFixedHeight(180)
         self.preview.setFixedWidth(300)
-        self.layout.addWidget(self.preview, 0, 1, Qt.AlignmentFlag.AlignCenter)
+        self.layout.addWidget(self.preview, 1, 0, Qt.AlignmentFlag.AlignCenter)
         self.backGround = QLabel(self)
         self.backGround.setStyleSheet("")
         self.preview.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.le = QLineEdit(self)
+        self.le.setFocus()
+        self.le.setPlaceholderText("Enter Page Number or Name of Hymn:")
+        onlyInt = QIntValidator()
+        onlyInt.setRange(2, 479)
+        #self.le.setValidator(onlyInt)
+        # self.le.setFixedWidth(230)
+        self.layout.addWidget(self.le, 2,0)
+        self.le.returnPressed.connect(lambda: self.show_new_window_start(self.le.text())) 
+        self.le.textChanged.connect(self.preview_widgetPOnly)
 
         self.hymnName = QLabel()
         self.hymnName.setText("")
@@ -58,45 +98,10 @@ class Example(QMainWindow):
 
         self.layout.addLayout(self.layoutVertical, 0, 0, 1, 1)
 
-        self.le = QLineEdit(self)
-        self.le.setFocus()
-        self.le.setPlaceholderText("Enter Page Number:")
-        onlyInt = QIntValidator()
-        onlyInt.setRange(2, 479)
-        #self.le.setValidator(onlyInt)
-        self.le.setFixedWidth(130)
-        self.layoutVertical.addWidget(self.le)
-        self.le.returnPressed.connect(lambda: self.show_new_window_start(self.le.text())) 
-        self.le.textChanged.connect(self.preview_widgetPOnly)
-
-        self.btn2 = QPushButton('Start Slideshow')
-        self.btn2.setFixedWidth(130)
-        self.layoutVertical.addWidget(self.btn2)
-        self.btn2.clicked.connect(lambda: self.show_new_window_start(self.le.text()))  
-
-        self.btn3 = QPushButton('Front Page Top Song', self)
-        self.btn3.setFixedWidth(130)
-        self.layoutVertical.addWidget(self.btn3)
-        self.btn3.clicked.connect(lambda: self.creating_Preview(hymnPic,"Heaven's Jubilee","Front Page"))  
-        self.btn3.clicked.connect(lambda: self.show_front_back_page("Heaven's Jubilee","Front Page"))  
-
-        self.btn4 = QPushButton('Front Page Bottom Song', self)
-        self.btn4.setFixedWidth(130)
-        self.layoutVertical.addWidget(self.btn4)
-        self.btn4.clicked.connect(lambda: self.creating_Preview(hymnPic,"I Feel Like Traveling On","Front Page"))  
-        self.btn4.clicked.connect(lambda: self.show_front_back_page("I Feel Like Traveling On","Front Page"))  
-
-        self.btn5 = QPushButton('Back Page ', self)
-        self.btn5.setFixedWidth(130)
-        self.layoutVertical.addWidget(self.btn5)
-        self.btn5.clicked.connect(lambda: self.creating_Preview(hymnPic,"I Know My Name Is There","Back Page"))  
-        self.btn5.clicked.connect(lambda: self.show_front_back_page("I Know My Name Is There","Back Page"))  
-
         self.listHymn = QListWidget()
-        self.layout.addWidget(self.listHymn, 1, 1)
+        self.layout.addWidget(self.listHymn, 3, 0)
         self.listHymn.addItems(data)
         self.listHymn.currentItemChanged.connect(self.printListItems)
-
 
         self.widget = QWidget()
         self.widget.setLayout(self.layout)
