@@ -86,7 +86,7 @@ class Example(QMainWindow):
         #self.le.setValidator(onlyInt)
         # self.le.setFixedWidth(230)
         self.layout.addWidget(self.le, 2,0)
-        self.le.returnPressed.connect(lambda: self.show_new_window_start(self.le.text())) 
+        # self.le.returnPressed.connect(lambda: self.show_new_window_start(self.le.text())) 
         self.le.textChanged.connect(self.preview_widgetPOnly)
 
         self.hymnName = QLabel()
@@ -116,30 +116,26 @@ class Example(QMainWindow):
     def printListItems(self, i):
         print(i.text())
 
-        j = 0
-        for d in data:
-            j += 1 
-            if i.text().lower() in d.lower():
-                self.num = j
+        for j in data2:
+            if str(i.text().split(")")[1]).lower() in j.lower():
+                self.num = j.split(")")[0]
 
-        self.creating_Preview(hymnPic, str(i.text()), self.num)
-        self.show_new_window_start(str(i.text()))
+
+                self.creating_Preview(hymnPic, str(i.text().split(")")[1]), self.num)
+                self.show_new_window_start(str(j))
 
     #Starting the slideShow from the start slideShow button
     def show_new_window_start(self, hymnName):
-        if (hymnName != "" and self.w is None):
-            try: 
-                self.nnum = int(hymnName)
-                if(self.nnum <= 479 and self.nnum > 0): 
-                    self.num = self.nnum
-                    self.theHymn = data[self.num - 1]
-            except:
-                i = 0 
-                for x in data:
-                    i += 1
-                    if hymnName.lower() in x.lower():
-                        self.theHymn = x
-                        self.num = i
+        if (self.le.text() != "" and self.w is None):
+            self.allHymn = []
+            for y in data2:
+                if hymnName in y.lower():
+                    self.allHymn.append(y)
+
+            if len(self.allHymn) != 0:
+                self.theHymn = self.listOfHymn[0].split(")")[1]
+                self.num = self.listOfHymn[0].split(")")[0]
+
 
             self.w = slideShow.Slide(str(self.theHymn), str(self.num))            
             self.btn2.setText('Stop Slide Show')
@@ -166,16 +162,16 @@ class Example(QMainWindow):
                 if str(self.le.text()).lower() in y.lower():
                     self.listOfHymn.append(y)
             
+            if len(self.listOfHymn) != 0:
+                self.theHymn = self.listOfHymn[0].split(")")[1]
+                self.num = self.listOfHymn[0].split(")")[0]
 
-            self.theHymn = self.listOfHymn[0].split(")")[1]
-            self.num = self.listOfHymn[0].split(")")[0]
+                self.creating_Preview(hymnPic,self.theHymn, self.num)
 
-            self.creating_Preview(hymnPic,self.theHymn, self.num)
-
-        self.listHymn = QListWidget()
-        self.layout.addWidget(self.listHymn, 3, 0)
-        self.listHymn.addItems(self.listOfHymn)
-        self.listHymn.currentItemChanged.connect(self.printListItems)
+            self.listHymn = QListWidget()
+            self.layout.addWidget(self.listHymn, 3, 0)
+            self.listHymn.addItems(self.listOfHymn)
+            self.listHymn.currentItemChanged.connect(self.printListItems) 
 
     #Handling the preview creation
     def creating_Preview(self,hymnPicture, theHymn, theNum):
