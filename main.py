@@ -14,12 +14,16 @@ hymnImage = os.path.join(mainPath,"\jg.jpg")
 hymnPic = "border-image: url('" + hymnImage + "');"
 
 data = []
+data2 = []
 theHymn = ""
+dataNumbers = 0
 # Accessing CSV file and adding to an array to be accessed later
 with open(hymn, newline="") as csvfile:
     rows = csv.reader(csvfile)
     for row in rows:
+        dataNumbers += 1
         data.append(row[0].upper())
+        data2.append(str(dataNumbers) + ") " + row[0].upper())
 
 
 class Example(QMainWindow):
@@ -100,7 +104,7 @@ class Example(QMainWindow):
 
         self.listHymn = QListWidget()
         self.layout.addWidget(self.listHymn, 3, 0)
-        self.listHymn.addItems(data)
+        self.listHymn.addItems(data2)
         self.listHymn.currentItemChanged.connect(self.printListItems)
 
         self.widget = QWidget()
@@ -158,27 +162,20 @@ class Example(QMainWindow):
         if self.le.text() != "":
             self.listOfHymn = []
 
-            try: 
-                self.nnum = int(self.le.text())
-                if(self.nnum <= 479 and self.nnum > 0): 
-                    self.num = self.nnum
-                    self.theHymn = data[self.num - 1]
-            except:
-                i = 0 
-                for x in data:
-                    i += 1
-                    if self.le.text().lower() in x.lower():
-                        self.listOfHymn.append(x)
-                        self.theHymn = x
-                        self.num = i
-                    
+            for y in data2:
+                if str(self.le.text()).lower() in y.lower():
+                    self.listOfHymn.append(y)
+            
+
+            self.theHymn = self.listOfHymn[0].split(")")[1]
+            self.num = self.listOfHymn[0].split(")")[0]
 
             self.creating_Preview(hymnPic,self.theHymn, self.num)
 
-            self.listHymn = QListWidget()
-            self.layout.addWidget(self.listHymn, 3, 0)
-            self.listHymn.addItems(self.listOfHymn)
-            self.listHymn.currentItemChanged.connect(self.printListItems)
+        self.listHymn = QListWidget()
+        self.layout.addWidget(self.listHymn, 3, 0)
+        self.listHymn.addItems(self.listOfHymn)
+        self.listHymn.currentItemChanged.connect(self.printListItems)
 
     #Handling the preview creation
     def creating_Preview(self,hymnPicture, theHymn, theNum):
