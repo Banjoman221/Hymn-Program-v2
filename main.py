@@ -122,24 +122,28 @@ class Example(QMainWindow):
 
 
                 self.creating_Preview(hymnPic, str(i.text().split(")")[1]), self.num)
-                self.show_new_window_start(str(j))
+        self.show_new_window_start(str(i.text()))
 
     #Starting the slideShow from the start slideShow button
     def show_new_window_start(self, hymnName):
-        if (self.le.text() != "" and self.w is None):
+        print(hymnName)
+        if (hymnName != "" and self.w is None):
             self.allHymn = []
             for y in data2:
-                if hymnName in y.lower():
+                if hymnName in y:
+                    print("Hello")
                     self.allHymn.append(y)
 
+            print(self.allHymn)
             if len(self.allHymn) != 0:
-                self.theHymn = self.listOfHymn[0].split(")")[1]
-                self.num = self.listOfHymn[0].split(")")[0]
+                self.theHymn = self.allHymn[0].split(")")[1]
+                self.num = self.allHymn[0].split(")")[0]
 
 
-            self.w = slideShow.Slide(str(self.theHymn), str(self.num))            
-            self.btn2.setText('Stop Slide Show')
-            self.w.show()
+                self.w = slideShow.Slide(str(self.theHymn), str(self.num))            
+                self.btn2.setText('Stop Slide Show')
+                self.w.show()
+
         elif (self.le.text() != "" or self.btn2.text() == "Stop Slide Show"):
             self.creating_Preview("","","")
             self.btn2.setText('Start Slide Show')
