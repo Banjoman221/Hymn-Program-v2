@@ -81,6 +81,7 @@ class Example(QMainWindow):
         self.le = QLineEdit(self)
         self.le.setFocus()
         self.le.setPlaceholderText("Enter Page Number or Name of Hymn:")
+        self.le.setClearButtonEnabled(True)
         onlyInt = QIntValidator()
         onlyInt.setRange(2, 479)
         #self.le.setValidator(onlyInt)
