@@ -28,6 +28,12 @@ class Slide(QMainWindow):
         hymnName.setAlignment(Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignHCenter)
         hymnName.adjustSize()
         hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 230px;")
+        
+        if len(theHymn) >= 25:
+            hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 210px;margin-top: 20px;")
+        if len(theHymn) < 25:
+            hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 230px;margin-top: 20px;")
+            
         self.layoutVertical.addWidget(hymnName)
 
         hymnNum = QLabel(num)
