@@ -96,7 +96,7 @@ class Example(QMainWindow):
         self.hymnNum = QLabel()
         self.hymnNum.setText("")
         self.hymnNum.setStyleSheet("")
-    
+
         self.placeHold = QLabel('')
         self.placeHold.setFixedWidth(80)
         self.layout.addWidget(self.placeHold, 0, 0, Qt.AlignmentFlag.AlignLeft)
@@ -145,7 +145,7 @@ class Example(QMainWindow):
                 self.btn2.setText('Stop Slide Show')
                 self.w.show()
 
-        elif (self.le.text() != "" or self.btn2.text() == "Stop Slide Show"):
+        elif (self.btn2.text() == "Stop Slide Show"):
             self.creating_Preview("","","")
             self.btn2.setText('Start Slide Show')
             self.w.close()
@@ -177,30 +177,52 @@ class Example(QMainWindow):
             self.layout.addWidget(self.listHymn, 3, 0)
             self.listHymn.addItems(self.listOfHymn)
             self.listHymn.currentItemChanged.connect(self.printListItems) 
-
+        elif self.le.text() == "":
+            self.creating_Preview("","","")
+        
     #Handling the preview creation
     def creating_Preview(self,hymnPicture, theHymn, theNum):
-        self.backGround = QLabel(self)
-        self.backGround.setStyleSheet(hymnPicture)
-        self.backGround.setScaledContents(True)
-        self.layout.addWidget(self.backGround, 1, 0)
-        self.backGround.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        if hymnPicture != "" and theHymn != "" and theNum != "":
+            self.backGround = QLabel(self)
+            self.backGround.setStyleSheet(hymnPicture)
+            self.backGround.setScaledContents(True)
+            self.layout.addWidget(self.backGround, 1, 0)
+            self.backGround.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-        self.hymnName = QLabel()
-        self.hymnName.setText(theHymn)
-        self.hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 25px; padding-top:30px;")
-        self.hymnName.setWordWrap(True)
-        self.hymnName.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.hymnName.adjustSize()
-        self.layout.addWidget(self.hymnName, 1, 0, Qt.AlignmentFlag.AlignTop)
+            self.hymnName = QLabel()
+            self.hymnName.setText(theHymn)
+            self.hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 25px; padding-top:30px;")
+            self.hymnName.setWordWrap(True)
+            self.hymnName.setAlignment(Qt.AlignmentFlag.AlignCenter)
+            self.hymnName.adjustSize()
+            self.layout.addWidget(self.hymnName, 1, 0, Qt.AlignmentFlag.AlignTop)
 
 
-        self.hymnNum = QLabel()
-        self.hymnNum.setText(str(theNum))
-        self.hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 40px;padding-bottom:5px;")
-        self.hymnNum.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.hymnNum.adjustSize()
-        self.layout.addWidget(self.hymnNum, 1, 0, Qt.AlignmentFlag.AlignBottom) 
+            self.hymnNum = QLabel()
+            self.hymnNum.setText(str(theNum))
+            self.hymnNum.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 40px;padding-bottom:5px;")
+            self.hymnNum.setAlignment(Qt.AlignmentFlag.AlignCenter)
+            self.hymnNum.adjustSize() 
+            self.layout.addWidget(self.hymnNum, 1, 0, Qt.AlignmentFlag.AlignBottom) 
+        else:
+            self.preview = QLabel()
+            self.preview.setText("No Preview")
+            self.preview.setStyleSheet("font-family: ALGERIAN; font-size: 40px;")
+            self.preview.setFixedHeight(180)
+            self.preview.setFixedWidth(300)
+            self.preview.setAlignment(Qt.AlignmentFlag.AlignCenter)
+            self.layout.addWidget(self.preview, 1, 0, Qt.AlignmentFlag.AlignCenter)
+            self.backGround.setStyleSheet("border-image: none;")
+
+            self.hymnName.setText("")
+            self.hymnNum.setText("")       
+
+            self.listHymn = QListWidget()
+            self.layout.addWidget(self.listHymn, 3, 0)
+            self.listHymn.addItems(data2)
+            self.listHymn.currentItemChanged.connect(self.printListItems)
+
+
     
     def closeEvent(self, event):
         for window in QApplication.topLevelWidgets():
