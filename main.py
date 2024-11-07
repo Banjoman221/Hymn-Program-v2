@@ -5,6 +5,7 @@ import os, sys
 import csv
 from screeninfo import get_monitors
 import slideShow
+import subprocess
 
 # Getting main path of this folder
 mainPath = os.getcwd()
@@ -66,7 +67,13 @@ class Example(QMainWindow):
         self.layoutVertical.addWidget(self.btn5)
         self.btn5.clicked.connect(lambda: self.creating_Preview(hymnPic,"I Know My Name Is There","Back Page"))  
         self.btn5.clicked.connect(lambda: self.show_front_back_page("I Know My Name Is There","Back Page"))  
+        self.btn6 = QPushButton('Update', self)
+        self.btn6.setFixedWidth(100)
+        self.btn6.setFixedHeight(40) 
+        self.layoutVertical.addWidget(self.btn6)
+        self.btn6.clicked.connect(lambda: self.update_file())  
 
+ 
         #Grid Layout        
         self.preview = QLabel()
         self.preview.setText("No Preview")
@@ -113,6 +120,23 @@ class Example(QMainWindow):
         self.setCentralWidget(self.widget)
 
         self.show()
+
+    def update_file(self):
+        try:
+            result = subprocess.run(["powershell.exe","-ExecutionPolicy","Bypass","-File", "updater.ps1"], capture_output=True, text=True)
+
+            if result.returncode == 0:
+                print("Script executed sucessfully.")
+                print("Output:")
+                print(result.stdout)
+            else:
+                print("Script execution failed.")
+                print("Error:")
+                print(result.stderr)
+
+        except FileNotFounderror:
+            print(f"Error: Powershell script not found")
+
 
     def printListItems(self, i):
         print(i.text())
