@@ -7,12 +7,15 @@ from screeninfo import get_monitors
 import slideShow
 import subprocess
 
+
 # Getting main path of this folder
 mainPath = os.getcwd()
 # Getting CSV file
 hymn = os.path.join(mainPath, "hymnlist.csv")
 hymnImage = os.path.join(mainPath,"\jg.jpg")
+updaterPic = os.path.join(mainPath, "update_refresh.png")
 hymnPic = "border-image: url('" + hymnImage + "');"
+print(updaterPic.replace("\\","/"))
 
 data = []
 data2 = []
@@ -39,10 +42,9 @@ class Example(QMainWindow):
         self.layout = QGridLayout()
         self.layoutVertical = QHBoxLayout()
         #self.layout.setContentsMargins(10, 10, 10, 10)
-
-        #Vertical Layouts
-        self.btn2 = QPushButton('Start Slideshow')
-        self.btn2.setFixedWidth(100)
+#Vertical Layouts
+        self.btn2 = QPushButton('Start Slide Show')
+        self.btn2.setFixedWidth(125)
         self.btn2.setFixedHeight(40)
         self.layoutVertical.addWidget(self.btn2)
         self.btn2.clicked.connect(lambda: self.show_new_window_start(self.le.text()))  
@@ -67,9 +69,14 @@ class Example(QMainWindow):
         self.layoutVertical.addWidget(self.btn5)
         self.btn5.clicked.connect(lambda: self.creating_Preview(hymnPic,"I Know My Name Is There","Back Page"))  
         self.btn5.clicked.connect(lambda: self.show_front_back_page("I Know My Name Is There","Back Page"))  
-        self.btn6 = QPushButton('Update', self)
-        self.btn6.setFixedWidth(100)
-        self.btn6.setFixedHeight(40) 
+
+        updaterPixmap = QPixmap(updaterPic)
+        updaterIcon = QIcon(updaterPixmap)
+
+        self.btn6 = QPushButton(self)
+        self.btn6.setIcon(updaterIcon)
+        self.btn6.setFixedWidth(40)
+        self.btn6.setFixedHeight(20) 
         self.layoutVertical.addWidget(self.btn6)
         self.btn6.clicked.connect(lambda: self.update_file())  
 
@@ -152,23 +159,23 @@ class Example(QMainWindow):
     #Starting the slideShow from the start slideShow button
     def show_new_window_start(self, hymnName):
         print(hymnName)
-        if (hymnName != "" and self.w is None):
-            self.allHymn = []
-            for y in data2:
-                if hymnName in y:
-                    print("Hello")
-                    self.allHymn.append(y)
+        if(self.btn2.text() == "Start Slide Show"):
+            if (hymnName != ""):
+                self.allHymn = []
+                for y in data2:
+                    if hymnName in y:
+                        print("Hello")
+                        self.allHymn.append(y)
 
-            print(self.allHymn)
-            if len(self.allHymn) != 0:
-                self.theHymn = self.allHymn[0].split(")")[1]
-                self.num = self.allHymn[0].split(")")[0]
+                print(self.allHymn)
+                if len(self.allHymn) != 0:
+                    self.theHymn = self.allHymn[0].split(")")[1]
+                    self.num = self.allHymn[0].split(")")[0]
 
 
-                self.w = slideShow.Slide(str(self.theHymn), str(self.num))            
-                self.btn2.setText('Stop Slide Show')
-                self.w.show()
-
+                    self.w = slideShow.Slide(str(self.theHymn), str(self.num))            
+                    self.btn2.setText('Stop Slide Show')
+                    self.w.show()
         elif (self.btn2.text() == "Stop Slide Show"):
             self.creating_Preview("","","")
             self.btn2.setText('Start Slide Show')
