@@ -43,20 +43,15 @@ class Example(QMainWindow):
         self.layoutVertical = QHBoxLayout()
         #self.layout.setContentsMargins(10, 10, 10, 10)
 #Vertical Layouts
-        self.btn2 = QPushButton('Start Slide Show')
-        self.btn2.setFixedWidth(125)
-        self.btn2.setFixedHeight(40)
-        self.layoutVertical.addWidget(self.btn2)
-        self.btn2.clicked.connect(lambda: self.show_new_window_start(self.le.text()))  
-
-        self.btn3 = QPushButton('Front Page Top Song', self)
+       
+        self.btn3 = QPushButton('FP Top Song', self)
         self.btn3.setFixedWidth(125)
         self.btn3.setFixedHeight(40)
         self.layoutVertical.addWidget(self.btn3)
         self.btn3.clicked.connect(lambda: self.creating_Preview(hymnPic,"Heaven's Jubilee","Front Page"))  
         self.btn3.clicked.connect(lambda: self.show_front_back_page("Heaven's Jubilee","Front Page"))  
 
-        self.btn4 = QPushButton('Front Page Bottom Song', self)
+        self.btn4 = QPushButton('FP Bottom Song', self)
         self.btn4.setFixedWidth(140)
         self.btn4.setFixedHeight(40)
         self.layoutVertical.addWidget(self.btn4)
@@ -99,10 +94,16 @@ class Example(QMainWindow):
         onlyInt = QIntValidator()
         onlyInt.setRange(2, 479)
         #self.le.setValidator(onlyInt)
-        # self.le.setFixedWidth(230)
+        self.le.setFixedWidth(325)
         self.layout.addWidget(self.le, 2,0)
         # self.le.returnPressed.connect(lambda: self.show_new_window_start(self.le.text())) 
         self.le.textChanged.connect(self.preview_widgetPOnly)
+        
+        self.btn2 = QPushButton('Start')
+        self.btn2.setFixedWidth(50)
+        self.btn2.setFixedHeight(30)
+        self.layout.addWidget(self.btn2,2,0, Qt.AlignmentFlag.AlignRight)
+        self.btn2.clicked.connect(lambda: self.show_new_window_start(self.le.text()))  
 
         self.hymnName = QLabel()
         self.hymnName.setText("")
@@ -159,12 +160,11 @@ class Example(QMainWindow):
     #Starting the slideShow from the start slideShow button
     def show_new_window_start(self, hymnName):
         print(hymnName)
-        if(self.btn2.text() == "Start Slide Show"):
+        if(self.btn2.text() == "Start"):
             if (hymnName != ""):
                 self.allHymn = []
                 for y in data2:
                     if hymnName in y:
-                        print("Hello")
                         self.allHymn.append(y)
 
                 print(self.allHymn)
@@ -174,11 +174,11 @@ class Example(QMainWindow):
 
 
                     self.w = slideShow.Slide(str(self.theHymn), str(self.num))            
-                    self.btn2.setText('Stop Slide Show')
+                    self.btn2.setText('Stop')
                     self.w.show()
-        elif (self.btn2.text() == "Stop Slide Show"):
+        elif (self.btn2.text() == "Stop"):
             self.creating_Preview("","","")
-            self.btn2.setText('Start Slide Show')
+            self.btn2.setText('Start')
             self.w.close()
             self.w = None
 
@@ -186,7 +186,7 @@ class Example(QMainWindow):
     def show_front_back_page(self, hymnName, hymnNum):
         self.w = slideShow.Slide(hymnName, hymnNum) 
         self.w.show() 
-        self.btn2.setText('Stop Slide Show')
+        self.btn2.setText('Stop')
 
     #Getting the 
     def preview_widgetPOnly(self):
