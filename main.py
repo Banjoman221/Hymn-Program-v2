@@ -94,7 +94,7 @@ class Example(QMainWindow):
         onlyInt = QIntValidator()
         onlyInt.setRange(2, 479)
         #self.le.setValidator(onlyInt)
-        self.le.setFixedWidth(325)
+        self.le.setFixedWidth(370)
         self.layout.addWidget(self.le, 2,0)
         # self.le.returnPressed.connect(lambda: self.show_new_window_start(self.le.text())) 
         self.le.textChanged.connect(self.preview_widgetPOnly)
@@ -120,7 +120,7 @@ class Example(QMainWindow):
 
         self.listHymn = QListWidget()
         self.layout.addWidget(self.listHymn, 3, 0)
-        self.listHymn.addItems(data2)
+        # self.listHymn.addItems(data2)
         self.listHymn.currentItemChanged.connect(self.printListItems)
 
         self.widget = QWidget()
@@ -153,7 +153,7 @@ class Example(QMainWindow):
             if str(i.text().split(")")[1]).lower() in j.lower():
                 self.num = j.split(")")[0]
 
-
+                self.creating_Preview("","","")
                 self.creating_Preview(hymnPic, str(i.text().split(")")[1]), self.num)
         self.show_new_window_start(str(i.text()))
 
@@ -177,7 +177,7 @@ class Example(QMainWindow):
                     self.btn2.setText('Stop')
                     self.w.show()
         elif (self.btn2.text() == "Stop"):
-            self.creating_Preview("","","")
+            # self.creating_Preview("","","")
             self.btn2.setText('Start')
             self.w.close()
             self.w = None
@@ -250,7 +250,7 @@ class Example(QMainWindow):
 
             self.listHymn = QListWidget()
             self.layout.addWidget(self.listHymn, 3, 0)
-            self.listHymn.addItems(data2)
+            # self.listHymn.addItems(data2)
             self.listHymn.currentItemChanged.connect(self.printListItems)
 
 
