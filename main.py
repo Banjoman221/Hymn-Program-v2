@@ -10,12 +10,15 @@ import subprocess
 
 # Getting main path of this folder
 mainPath = os.getcwd()
+print(mainPath)
 # Getting CSV file
 hymn = os.path.join(mainPath, "hymnlist.csv")
-hymnImage = os.path.join(mainPath,"\\jg.jpg")
-updaterPic = os.path.join(mainPath, "update_refresh.png")
+creatingHymnImage = os.path.join(mainPath,"jg.jpg")
+hymnImage = creatingHymnImage.replace('\\', "/")
+print(hymnImage)
+# updaterPic = os.path.join(mainPath, "update_refresh.png")
 hymnPic = "border-image: url('" + hymnImage + "');"
-print(updaterPic.replace("\\","/"))
+# print(updaterPic.replace("\\","/"))
 
 data = []
 data2 = []
@@ -33,10 +36,42 @@ with open(hymn, newline="") as csvfile:
 class SettingsWindow(QWidget):
     def __init__(self):
         super().__init__()
-        self.layout = QVBoxLayout()
-        self.label = QLabel("Settings")
-        self.layout.addWidget(self.label)
+
+        self.setGeometry(200, 100, 400, 200)
+
+        self.layout = QGridLayout()
+
+        self.backGroundPreview = QLabel()
+        self.backGroundPreview.setStyleSheet(hymnPic)
+        self.backGroundPreview.setFixedHeight(180)
+        self.backGroundPreview.setFixedWidth(300)
+        self.layout.addWidget(self.backGroundPreview, 0, 0, Qt.AlignmentFlag.AlignCenter)
+
+        self.backGroundSetting = QLabel(hymnImage)
+        self.layout.addWidget(self.backGroundSetting, 1, 0, Qt.AlignmentFlag.AlignCenter)
+
+        self.changeBackgroundButton = QPushButton('Upload New BackGround')
+        self.changeBackgroundButton.clicked.connect(lambda: self.uploadingNewBackground())
+        self.layout.addWidget(self.changeBackgroundButton, 2,0, Qt.AlignmentFlag.AlignRight)
+        
+        self.saveButton = QPushButton('Save')
+        self.saveButton.clicked.connect(lambda: self.savingSetting())
+        self.layout.addWidget(self.saveButton , 3,0, Qt.AlignmentFlag.AlignRight)
+        
         self.setLayout(self.layout)
+
+    def uploadingNewBackground(self):
+        filename, _ = QFileDialog.getOpenFileName(self, "Select Image", "", "Image Files (*.png *.jpg *bmp)")
+        if filename:
+            print(filename)
+            newFileName = filename.replace("\\","/")
+            hymnPic = "border-image: url('" + newFileName + "');"
+
+            self.backGroundPreview.setStyleSheet(hymnPic)
+            self.backGroundSetting.setText(newFileName)
+
+    def savingSetting(self):
+        print("saved")
 
 class Example(QMainWindow):
     def __init__(self):
@@ -46,8 +81,6 @@ class Example(QMainWindow):
         # Add label              
         self.setGeometry(400, 200, 400, 475)
         self.setWindowTitle('HymnsOS') 
-
-       
 
         #Grid Layout        
         self.layout = QGridLayout()
