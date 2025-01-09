@@ -10,7 +10,6 @@ mainPath = os.getcwd()
 hymn = os.path.join(mainPath,"jg.jpg")
 print(hymn)
 class Slide(QMainWindow):
-
     def __init__(self, theHymn, num):
         super().__init__()
         self.setWindowTitle("Hymn Slide V2")

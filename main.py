@@ -3,8 +3,10 @@ from PyQt6.QtGui import *
 from PyQt6.QtWidgets import *
 import os, sys
 import csv
+import json
 from screeninfo import get_monitors
 import slideShow
+import  SettingsWindow as settingsWindow
 import subprocess
 
 
@@ -13,7 +15,13 @@ mainPath = os.getcwd()
 print(mainPath)
 # Getting CSV file
 hymn = os.path.join(mainPath, "hymnlist.csv")
-creatingHymnImage = os.path.join(mainPath,"jg.jpg")
+
+with open('Setting.json','r') as file:
+    data = json.load(file)
+
+print(data['background'])
+
+creatingHymnImage = os.path.join(mainPath,data['background'])
 hymnImage = creatingHymnImage.replace('\\', "/")
 print(hymnImage)
 # updaterPic = os.path.join(mainPath, "update_refresh.png")
@@ -31,47 +39,6 @@ with open(hymn, newline="") as csvfile:
         dataNumbers += 1
         data.append(row[0].upper())
         data2.append(str(dataNumbers) + ") " + row[0].upper())
-
-
-class SettingsWindow(QWidget):
-    def __init__(self):
-        super().__init__()
-
-        self.setGeometry(200, 100, 400, 200)
-
-        self.layout = QGridLayout()
-
-        self.backGroundPreview = QLabel()
-        self.backGroundPreview.setStyleSheet(hymnPic)
-        self.backGroundPreview.setFixedHeight(180)
-        self.backGroundPreview.setFixedWidth(300)
-        self.layout.addWidget(self.backGroundPreview, 0, 0, Qt.AlignmentFlag.AlignCenter)
-
-        self.backGroundSetting = QLabel(hymnImage)
-        self.layout.addWidget(self.backGroundSetting, 1, 0, Qt.AlignmentFlag.AlignCenter)
-
-        self.changeBackgroundButton = QPushButton('Upload New BackGround')
-        self.changeBackgroundButton.clicked.connect(lambda: self.uploadingNewBackground())
-        self.layout.addWidget(self.changeBackgroundButton, 2,0, Qt.AlignmentFlag.AlignRight)
-        
-        self.saveButton = QPushButton('Save')
-        self.saveButton.clicked.connect(lambda: self.savingSetting())
-        self.layout.addWidget(self.saveButton , 3,0, Qt.AlignmentFlag.AlignRight)
-        
-        self.setLayout(self.layout)
-
-    def uploadingNewBackground(self):
-        filename, _ = QFileDialog.getOpenFileName(self, "Select Image", "", "Image Files (*.png *.jpg *bmp)")
-        if filename:
-            print(filename)
-            newFileName = filename.replace("\\","/")
-            hymnPic = "border-image: url('" + newFileName + "');"
-
-            self.backGroundPreview.setStyleSheet(hymnPic)
-            self.backGroundSetting.setText(newFileName)
-
-    def savingSetting(self):
-        print("saved")
 
 class Example(QMainWindow):
     def __init__(self):
@@ -170,7 +137,7 @@ class Example(QMainWindow):
         self.show()
 
     def show_settings(self):
-        self.s = SettingsWindow()
+        self.s = settingsWindow.Settings(hymnPic, hymnImage)
         self.s.show()
 
     def update_file(self):
