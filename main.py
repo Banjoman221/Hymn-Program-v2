@@ -134,7 +134,7 @@ class Example(QMainWindow):
 
     def update_file(self):
         try:
-            result = subprocess.run(["powershell.exe","-ExecutionPolicy","Bypass","-File", "updater.ps1"], capture_output=True, text=True)
+            result = subprocess.run(["powershell.exe","-ExecutionPolicy","Bypass","-File", "updater.ps1"], capture_output=True, text=True, shell=True)
 
             if result.returncode == 0:
                 print("Script executed sucessfully.")
