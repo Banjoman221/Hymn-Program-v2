@@ -1,6 +1,7 @@
 from PyQt6.QtCore import *
 from PyQt6.QtGui import *
 from PyQt6.QtWidgets import *
+import  settingsModal as SettingsModal 
 import os, sys
 import json
 
@@ -8,20 +9,19 @@ dictionary = {
     'background': ''
 }
 class Settings(QWidget):
-    def __init__(self,hymnPic,hymnImage):
+    def __init__(self,hymnPic):
         super().__init__()
-
         self.setGeometry(200, 100, 400, 200)
 
         self.layout = QGridLayout()
 
         self.backGroundPreview = QLabel()
-        self.backGroundPreview.setStyleSheet(hymnPic)
+        self.backGroundPreview.setStyleSheet("border-image: url('" + hymnPic + "');")
         self.backGroundPreview.setFixedHeight(180)
         self.backGroundPreview.setFixedWidth(300)
         self.layout.addWidget(self.backGroundPreview, 0, 0, Qt.AlignmentFlag.AlignCenter)
 
-        self.backGroundSetting = QLabel(hymnImage)
+        self.backGroundSetting = QLabel(hymnPic)
         self.layout.addWidget(self.backGroundSetting, 1, 0, Qt.AlignmentFlag.AlignCenter)
 
         self.changeBackgroundButton = QPushButton('Upload New BackGround')
@@ -30,6 +30,10 @@ class Settings(QWidget):
         
         self.saveButton = QPushButton('Save')
         self.saveButton.clicked.connect(lambda: self.savingSetting())
+        self.layout.addWidget(self.saveButton , 3,0, Qt.AlignmentFlag.AlignLeft)
+        
+        self.saveButton = QPushButton('Save and Exit')
+        self.saveButton.clicked.connect(lambda: self. savingSettingAndExit())
         self.layout.addWidget(self.saveButton , 3,0, Qt.AlignmentFlag.AlignRight)
         
         self.setLayout(self.layout)
@@ -39,10 +43,12 @@ class Settings(QWidget):
         if filename:
             print(filename)
             newFileName = filename.replace("\\","/")
-            hymnPic = "border-image: url('" + newFileName + "');"
+            hymnPic = newFileName 
+            hymnImage = "border-image: url('" + newFileName + "');"
 
-            self.backGroundPreview.setStyleSheet(hymnPic)
+            self.backGroundPreview.setStyleSheet(hymnImage)
             self.backGroundSetting.setText(newFileName)
+
             dictionary['background'] = newFileName
 
     def savingSetting(self):
@@ -50,6 +56,9 @@ class Settings(QWidget):
         with open("Setting.json", "w") as outfile:
             outfile.write(json_object)
 
-        print(dictionary['background'])
+    def savingSettingAndExit(self):
+        json_object = json.dumps(dictionary, indent=4)
+        with open("Setting.json", "w") as outfile:
+            outfile.write(json_object)
 
-
+        self.close()

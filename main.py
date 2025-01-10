@@ -7,31 +7,19 @@ import json
 from screeninfo import get_monitors
 import slideShow
 import  SettingsWindow as settingsWindow
+import  settingsModal as SettingsModal 
 import subprocess
 
-
-# Getting main path of this folder
 mainPath = os.getcwd()
-print(mainPath)
-# Getting CSV file
-hymn = os.path.join(mainPath, "hymnlist.csv")
 
-with open('Setting.json','r') as file:
-    data = json.load(file)
-
-print(data['background'])
-
-creatingHymnImage = os.path.join(mainPath,data['background'])
-hymnImage = creatingHymnImage.replace('\\', "/")
-print(hymnImage)
-# updaterPic = os.path.join(mainPath, "update_refresh.png")
-hymnPic = "border-image: url('" + hymnImage + "');"
-# print(updaterPic.replace("\\","/"))
+updaterPic = os.path.join(mainPath, "update_refresh.png")
+print(updaterPic.replace("\\","/"))
 
 data = []
 data2 = []
 theHymn = ""
 dataNumbers = 0
+hymn = os.path.join(mainPath, "hymnlist.csv")
 # Accessing CSV file and adding to an array to be accessed later
 with open(hymn, newline="") as csvfile:
     rows = csv.reader(csvfile)
@@ -102,16 +90,19 @@ class Example(QMainWindow):
 
         # Menu
         self.btn3 = QAction('FP Top Song', self)
-        self.btn3.triggered.connect(lambda: self.creating_Preview(hymnPic,"Heaven's Jubilee","Front Page"))  
+        self.btn3.triggered.connect(lambda: self.creating_Preview(SettingsModal.gettingHymnName(),"Heaven's Jubilee","Front Page"))  
         self.btn3.triggered.connect(lambda: self.show_front_back_page("Heaven's Jubilee","Front Page"))  
 
         self.btn4 = QAction('FP Bottom Song', self)
-        self.btn4.triggered.connect(lambda: self.creating_Preview(hymnPic,"I Feel Like Traveling On","Front Page"))  
+        self.btn4.triggered.connect(lambda: self.creating_Preview(SettingsModal.gettingHymnName(),"I Feel Like Traveling On","Front Page"))  
         self.btn4.triggered.connect(lambda: self.show_front_back_page("I Feel Like Traveling On","Front Page"))  
 
         self.btn5 = QAction('Back Page ', self)
-        self.btn5.triggered.connect(lambda: self.creating_Preview(hymnPic,"I Know My Name Is There","Back Page"))  
+        self.btn5.triggered.connect(lambda: self.creating_Preview(SettingsModal.gettingHymnName(),"I Know My Name Is There","Back Page"))  
         self.btn5.triggered.connect(lambda: self.show_front_back_page("I Know My Name Is There","Back Page"))  
+
+        self.update = QAction(QIcon(updaterPic),'Update', self)
+        self.update.triggered.connect(lambda: self.update_file())  
 
         self.exitAction = QAction('E&xit', self)
         self.exitAction.triggered.connect(lambda: self.close())  
@@ -124,7 +115,10 @@ class Example(QMainWindow):
         file_menu = menu.addMenu("&File")
         file_menu.addAction(self.settingsAction)
         file_menu.addSeparator()
+        file_menu.addAction(self.update)
+        file_menu.addSeparator()
         file_menu.addAction(self.exitAction)
+
 
         other_menu = menu.addMenu("&Other Pages")
         other_submenu = other_menu.addMenu("&Front Pages")
@@ -137,7 +131,7 @@ class Example(QMainWindow):
         self.show()
 
     def show_settings(self):
-        self.s = settingsWindow.Settings(hymnPic, hymnImage)
+        self.s = settingsWindow.Settings(SettingsModal.gettingHymnName())
         self.s.show()
 
     def update_file(self):
@@ -165,7 +159,7 @@ class Example(QMainWindow):
                 self.num = j.split(")")[0]
 
                 self.creating_Preview("","","")
-                self.creating_Preview(hymnPic, str(i.text().split(")")[1]), self.num)
+                self.creating_Preview(SettingsModal.gettingHymnName(), str(i.text().split(")")[1]), self.num)
         self.show_new_window_start(str(i.text()))
 
     #Starting the slideShow from the start slideShow button
@@ -184,7 +178,7 @@ class Example(QMainWindow):
                     self.num = self.allHymn[0].split(")")[0]
 
 
-                    self.w = slideShow.Slide(str(self.theHymn), str(self.num))            
+                    self.w = slideShow.Slide(str(self.theHymn), str(self.num),SettingsModal.gettingHymnName())            
                     self.btn2.setText('Stop')
                     self.w.show()
         elif (self.btn2.text() == "Stop"):
@@ -195,7 +189,7 @@ class Example(QMainWindow):
 
     #Starting the slideShow from the front an back page
     def show_front_back_page(self, hymnName, hymnNum):
-        self.w = slideShow.Slide(hymnName, hymnNum) 
+        self.w = slideShow.Slide(hymnName, hymnNum,SettingsModal.gettingHymnName()) 
         self.w.show() 
         self.btn2.setText('Stop')
 
@@ -213,7 +207,7 @@ class Example(QMainWindow):
                 self.theHymn = self.listOfHymn[0].split(")")[1]
                 self.num = self.listOfHymn[0].split(")")[0]
 
-                self.creating_Preview(hymnPic,self.theHymn, self.num)
+                self.creating_Preview(SettingsModal.gettingHymnName(),self.theHymn, self.num)
 
             self.listHymn = QListWidget()
             self.layout.addWidget(self.listHymn, 2, 0)
@@ -226,7 +220,8 @@ class Example(QMainWindow):
     def creating_Preview(self,hymnPicture, theHymn, theNum):
         if hymnPicture != "" and theHymn != "" and theNum != "":
             self.backGround = QLabel(self)
-            self.backGround.setStyleSheet(hymnPicture)
+            self.backGround.setStyleSheet("border-image: url('" + hymnPicture + "');"
+)
             self.backGround.setScaledContents(True)
             self.layout.addWidget(self.backGround, 0, 0)
             self.backGround.setAlignment(Qt.AlignmentFlag.AlignCenter)
