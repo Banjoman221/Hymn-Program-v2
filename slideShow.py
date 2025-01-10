@@ -2,16 +2,11 @@ from PyQt6.QtCore import *
 from PyQt6.QtGui import *
 from PyQt6.QtWidgets import *
 import os, sys
+import json
 from screeninfo import get_monitors
 
-# Getting main path of this folder
-mainPath = os.getcwd()
-# Getting CSV file
-hymn = os.path.join(mainPath,"jg.jpg")
-print(hymn)
 class Slide(QMainWindow):
-
-    def __init__(self, theHymn, num):
+    def __init__(self, theHymn, num,hymnPic):
         super().__init__()
         self.setWindowTitle("Hymn Slide V2")
 
@@ -19,7 +14,7 @@ class Slide(QMainWindow):
         self.layoutVertical = QVBoxLayout()
 
         backGround = QLabel(self)
-        backGround.setPixmap(QPixmap(hymn))
+        backGround.setPixmap(QPixmap(hymnPic))
         backGround.setScaledContents(True)
         self.layout.addWidget(backGround, 0, 0)
 
@@ -27,12 +22,12 @@ class Slide(QMainWindow):
         hymnName.setWordWrap(True)
         hymnName.setAlignment(Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignHCenter)
         hymnName.adjustSize()
-        hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 230px;")
+        # hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 230px;")
         
         if len(theHymn) >= 25:
             hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 210px;margin-top: 20px;")
         if len(theHymn) < 25:
-            hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 230px;margin-top: 20px;")
+            hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 230px;margin-top: 40px;")
             
         self.layoutVertical.addWidget(hymnName)
 
