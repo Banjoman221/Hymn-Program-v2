@@ -1,11 +1,9 @@
 Stop-process -Name HymnOS
 
-Start-Sleep 5s
-
-rm .\HymnOS\ -r -Force
-
 $currentDirectory = pwd
 cd $currentDirectory
+
+git clone https://github.com/Banjoman221/Hymn-Program-v2.git
 
 $updating = git pull
 
@@ -19,10 +17,12 @@ if($updating -like '* up to date*'){
 
 Start-Sleep 5s
 
-cxfreeze --script main.py --target-dir HymnOS --target-name HymnOS --base gui --icon gospel 
+cxfreeze --script main.py --target-dir HymnOS --target-name HymnOS --base gui
 
 Start-Sleep 5s
 
+$powershellScript = $currentDirectory.path + "\updateHymnOS.ps1"
+Write-Host $powershellScript 
 $csvFile = $currentDirectory.path + "\hymnlist.csv"
 Write-Host $csvFile
 $jsonFile = $currentDirectory.path + "\Setting.json"
@@ -38,6 +38,7 @@ Copy-Item -Path $csvFile -Destination $destinationFile
 Copy-Item -Path $jsonFile -Destination $destinationFile
 Copy-Item -Path $picFile -Destination $destinationFile
 Copy-Item -Path $picFile2 -Destination $destinationFile
+Copy-Item -Path $powershellScript -Destination $destinationFile
 
 Start-Sleep 5s
 
