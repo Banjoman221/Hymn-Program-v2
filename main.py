@@ -12,8 +12,6 @@ import subprocess
 
 mainPath = os.getcwd()
 
-updaterPic = os.path.join(mainPath, "update_refresh.png")
-print(updaterPic.replace("\\","/"))
 
 data = []
 data2 = []
@@ -101,8 +99,8 @@ class Example(QMainWindow):
         self.btn5.triggered.connect(lambda: self.creating_Preview(SettingsModal.gettingHymnName(),"I Know My Name Is There","Back Page"))  
         self.btn5.triggered.connect(lambda: self.show_front_back_page("I Know My Name Is There","Back Page"))  
 
-        # self.update = QAction(QIcon(updaterPic),'Update', self)
-        # self.update.triggered.connect(lambda: self.update_file())  
+        self.update = QAction('Update', self)
+        self.update.triggered.connect(lambda: self.update_file())  
 
         self.exitAction = QAction('E&xit', self)
         self.exitAction.triggered.connect(lambda: self.close())  
@@ -115,8 +113,8 @@ class Example(QMainWindow):
         file_menu = menu.addMenu("&File")
         file_menu.addAction(self.settingsAction)
         file_menu.addSeparator()
-        # file_menu.addAction(self.update)
-        # file_menu.addSeparator()
+        file_menu.addAction(self.update)
+        file_menu.addSeparator()
         file_menu.addAction(self.exitAction)
 
 
