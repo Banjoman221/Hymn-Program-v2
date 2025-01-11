@@ -235,7 +235,7 @@ class Example(QMainWindow):
             if len(theHymn) >= 25:
                 self.hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 30px;margin-top: 20px;")
             if len(theHymn) < 25:
-                self.hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 40px;margin-top: 40px;")
+                self.hymnName.setStyleSheet("color: black; font-family: ALGERIAN; font-size: 40px;margin-top: 20px;")
                 
 
             self.hymnNum = QLabel()
