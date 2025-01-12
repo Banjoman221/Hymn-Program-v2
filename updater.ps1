@@ -11,9 +11,9 @@ git add .
 
 git status
 $gitStatus = git status
-Read-Host $gitStatus
+#Read-Host $gitStatus
 
-if($gitStatus -like "* Changes to be commited *"){
+if($gitStatus -like "*changes*"){
   $commitMessage = Read-Host "Please enter a commit message" 
 
   git commit -m $commitMessage
