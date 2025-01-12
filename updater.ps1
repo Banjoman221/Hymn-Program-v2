@@ -1,11 +1,21 @@
 Stop-process -Name HymnOS
 
-Start-Sleep 5s
+Start-Sleep -seconds 5
 
 rm .\HymnOS\ -r -Force
 
 $currentDirectory = pwd
 cd $currentDirectory
+
+git add .
+
+git status
+
+$commitMessage = Read-Host "Please enter a commit message" 
+
+git commit -m $commitMessage
+
+Start-Sleep -seconds 5
 
 $updating = git pull
 
@@ -17,11 +27,11 @@ if($updating -like '* up to date*'){
   Write-Host "App has been updated successfully"
 }
 
-Start-Sleep 5s
+Start-Sleep -seconds 5
 
 cxfreeze --script main.py --target-dir HymnOS --target-name HymnOS --base gui --icon gospel 
 
-Start-Sleep 5s
+Start-Sleep -seconds 5
 
 $csvFile = $currentDirectory.path + "\hymnlist.csv"
 Write-Host $csvFile
@@ -30,7 +40,7 @@ Write-Host $jsonFile
 $picFile = $currentDirectory.path + "\jg.jpg"
 Write-Host $picFile
 $picFile2 = $currentDirectory.path + "\1000014238.png"
-Write-Host $picFile
+Write-Host $picFile2
 $destinationFile = $currentDirectory.path + "\HymnOS"
 Write-Host $destinationFileFile
 
@@ -39,7 +49,7 @@ Copy-Item -Path $jsonFile -Destination $destinationFile
 Copy-Item -Path $picFile -Destination $destinationFile
 Copy-Item -Path $picFile2 -Destination $destinationFile
 
-Start-Sleep 5s
+Start-Sleep -seconds 5
 
 $exeFile = $currentDirectory.path + "\HymnOS\HymnOS.exe"
 start $exeFile
