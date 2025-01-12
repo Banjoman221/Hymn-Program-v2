@@ -15,6 +15,8 @@ $commitMessage = Read-Host "Please enter a commit message"
 
 git commit -m $commitMessage
 
+git push
+
 Start-Sleep -seconds 5
 
 $updating = git pull
