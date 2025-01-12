@@ -14,11 +14,12 @@ $gitStatus = git status
 #Read-Host $gitStatus
 
 if($gitStatus -like "*changes*"){
-  $commitMessage = Read-Host "Please enter a commit message" 
+  $commitMessage = Read-Host "Please enter a commit message or enter 'c' to continue" 
+  if($commitMessage -ne 'c'){
+    git commit -m $commitMessage
 
-  git commit -m $commitMessage
-
-  git push
+    git push
+  }
 }
 Start-Sleep -seconds 5
 
