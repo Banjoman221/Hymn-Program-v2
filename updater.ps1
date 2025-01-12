@@ -10,13 +10,14 @@ cd $currentDirectory
 git add .
 
 git status
+$gitStatus = git status
+if($gitStatus -notlike '* nothing to commit *'){
+  $commitMessage = Read-Host "Please enter a commit message" 
 
-$commitMessage = Read-Host "Please enter a commit message" 
+  git commit -m $commitMessage
 
-git commit -m $commitMessage
-
-git push
-
+  git push
+}
 Start-Sleep -seconds 5
 
 $updating = git pull
