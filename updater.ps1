@@ -13,7 +13,7 @@ git status
 $gitStatus = git status
 Read-Host $gitStatus
 
-if($gitStatus -notlike '* nothing to commit *'){
+if($gitStatus -notLike "On branch master Your branch is up to date with 'origin/master'.  nothing to commit, working tree clean"){
   $commitMessage = Read-Host "Please enter a commit message" 
 
   git commit -m $commitMessage
