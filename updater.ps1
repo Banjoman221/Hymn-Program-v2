@@ -11,6 +11,8 @@ git add .
 
 git status
 $gitStatus = git status
+Read-Host $gitStatus
+
 if($gitStatus -notlike '* nothing to commit *'){
   $commitMessage = Read-Host "Please enter a commit message" 
 
