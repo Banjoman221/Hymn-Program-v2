@@ -12,20 +12,23 @@ The script relies on cx_freeze to create the exe file.
 You can install it using the command: pip install --upgrade cx_Freeze
 For aditional info go to https://cx-freeze.readthedocs.io/en/latest/installation.html
 
-**The Main screen should look like this when opened:**
+<h2>The Main screen should look like this when opened:</h2>
 
+<img src="https://github.com/user-attachments/assets/f5e486a1-3914-44ad-b05c-99da34fe88ef" width="50%" height="50%">
+</br>
+<h2>A preview should show up on the main window when typing the number for the hymn or the name of the hymn:</h2>
 
-<img src="https://github.com/user-attachments/assets/f5e486a1-3914-44ad-b05c-99da34fe88ef" width="25%" height="25%">
+<img src="https://github.com/user-attachments/assets/e923a68a-e53a-4502-abe1-c3464ee6de3a" width="50%" height="50%">
+</br>
+<h2>Enter the page number then click "Start" to throw slide onto the screen or second monitor if available. It should look like this:</h2>
 
-**A preview should show up on the main window when typing the number for the hymn or the name of the hymn:**
-![Screenshot 2025-01-14 183612](https://github.com/user-attachments/assets/e923a68a-e53a-4502-abe1-c3464ee6de3a){:height="25%" width="25%"}
+<img src="https://github.com/user-attachments/assets/31e0544c-44e5-450d-a6c9-51c3264e58e9" width="50%" height="50%">
+</br>
+<h2>A settings page has been added and in development. More to come</h2>
 
-**Enter the page number then click "Start" to throw slide onto the screen or second monitor if available. It should look like this:**
-![Screenshot 2025-01-14 183702](https://github.com/user-attachments/assets/31e0544c-44e5-450d-a6c9-51c3264e58e9){:height="25%" width="25%"}
+<img src="https://github.com/user-attachments/assets/321b4306-c67d-4bd3-88bf-224f1dd3ffe3" width="50%" height="50%">
+</br>
 
-**A settings page has been added and in development. More to come**
-![Screenshot 2025-01-14 183642](https://github.com/user-attachments/assets/321b4306-c67d-4bd3-88bf-224f1dd3ffe3){:height="25%" width="25%"}
-
-To exit the program close the main window or use the keycombo Ctrl+q
-
-Have Fun!!!!!!!!!!!
+<h2>To exit the program close the main window or use the keycombo Ctrl+q</h2>
+</br>
+<h3>Have Fun!!!!!!!!!!!</h3>
