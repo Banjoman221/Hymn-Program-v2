@@ -7,21 +7,23 @@ To install python 3.12.3 or the latest version of pyhton go here: https://www.py
 
 To install Pyqt6 run this command in your terminal after you install python: pip install PyQt6
 
-I Have used pyinstaller to make it an exe file to run on different windows computers. Todo so go here: https://pyinstaller.org/en/stable/installation.html \
-The command i used was: pyinstaller main.py --clean --onedir --noconsole \
-After running the command copy the csv file and jg.jpg file to the folder with main.exe and it should be able to run 
+I wrote a powershell script to create an exe file and copy relavant files to the created directory.
+The script relies on cx_freeze to create the exe file. 
+You can install it using the command: pip install --upgrade cx_Freeze
+For aditional info go to https://cx-freeze.readthedocs.io/en/latest/installation.html
 
 **The Main screen should look like this when opened:**
-![Screenshot 2024-08-24 135806](https://github.com/user-attachments/assets/20acfcbd-c230-4880-8989-648543b2f1c6)
+![Screenshot 2025-01-14 183505](https://github.com/user-attachments/assets/f5e486a1-3914-44ad-b05c-99da34fe88ef)
 
 **A preview should show up on the main window when typing the number for the hymn or the name of the hymn:**
-![Screenshot 2024-08-24 143101](https://github.com/user-attachments/assets/fd20927b-7ee8-4a4b-b3f7-eb46f1fb5b34)
-![Screenshot 2024-08-24 143117](https://github.com/user-attachments/assets/518b9e53-9c67-4fb7-a069-32349d3c3401)
+![Screenshot 2025-01-14 183612](https://github.com/user-attachments/assets/e923a68a-e53a-4502-abe1-c3464ee6de3a)
 
-**Enter the page number then you must click "Start Slide Show" to start slide show. Another window will pop up and it should look like this:**
-![Screenshot 2024-05-04 190600](https://github.com/Banjoman221/Hymn-Program-v2/assets/37515771/a6802c12-68c1-4de0-8663-262f44c4048c)
+**Enter the page number then click "Start" to throw slide onto the screen or second monitor if available. It should look like this:**
+![Screenshot 2025-01-14 183702](https://github.com/user-attachments/assets/31e0544c-44e5-450d-a6c9-51c3264e58e9)
 
-To change Hymn, type in the new hymn number and press enter or click the change Hymn button.
-To exit the program close the main window and it will close everything.
+**A settings page has been added and in development. More to come
+![Screenshot 2025-01-14 183642](https://github.com/user-attachments/assets/321b4306-c67d-4bd3-88bf-224f1dd3ffe3)
+
+To exit the program close the main window or use the keycombo Ctrl+q
 
 Have Fun!!!!!!!!!!!
