@@ -9,7 +9,7 @@ To install Pyqt6 run this command in your terminal after you install python: pip
 
 I wrote a powershell script to create an exe file and copy relavant files to the created directory.
 The script relies on cx_freeze to create the exe file. 
-You can install it using the command: pip install --upgrade cx_Freeze
+You can install it using the command: pip install --upgrade cx_Freeze.
 For aditional info go to https://cx-freeze.readthedocs.io/en/latest/installation.html
 
 <h2>The Main screen should look like this when opened:</h2>
@@ -31,4 +31,4 @@ For aditional info go to https://cx-freeze.readthedocs.io/en/latest/installation
 
 <h2>To exit the program close the main window or use the keycombo Ctrl+q</h2>
 </br>
-<h3>Have Fun!!!!!!!!!!!</h3>
+<h3>Have Fun!!</h3>
