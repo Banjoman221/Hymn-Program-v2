@@ -13,16 +13,16 @@ You can install it using the command: pip install --upgrade cx_Freeze
 For aditional info go to https://cx-freeze.readthedocs.io/en/latest/installation.html
 
 **The Main screen should look like this when opened:**
-![Screenshot 2025-01-14 183505](https://github.com/user-attachments/assets/f5e486a1-3914-44ad-b05c-99da34fe88ef)
+![Screenshot 2025-01-14 183505](https://github.com/user-attachments/assets/f5e486a1-3914-44ad-b05c-99da34fe88ef){:height="25%" width="25%"}
 
 **A preview should show up on the main window when typing the number for the hymn or the name of the hymn:**
-![Screenshot 2025-01-14 183612](https://github.com/user-attachments/assets/e923a68a-e53a-4502-abe1-c3464ee6de3a)
+![Screenshot 2025-01-14 183612](https://github.com/user-attachments/assets/e923a68a-e53a-4502-abe1-c3464ee6de3a){:height="25%" width="25%"}
 
 **Enter the page number then click "Start" to throw slide onto the screen or second monitor if available. It should look like this:**
-![Screenshot 2025-01-14 183702](https://github.com/user-attachments/assets/31e0544c-44e5-450d-a6c9-51c3264e58e9)
+![Screenshot 2025-01-14 183702](https://github.com/user-attachments/assets/31e0544c-44e5-450d-a6c9-51c3264e58e9){:height="25%" width="25%"}
 
-**A settings page has been added and in development. More to come
-![Screenshot 2025-01-14 183642](https://github.com/user-attachments/assets/321b4306-c67d-4bd3-88bf-224f1dd3ffe3)
+**A settings page has been added and in development. More to come**
+![Screenshot 2025-01-14 183642](https://github.com/user-attachments/assets/321b4306-c67d-4bd3-88bf-224f1dd3ffe3){:height="25%" width="25%"}
 
 To exit the program close the main window or use the keycombo Ctrl+q
 
