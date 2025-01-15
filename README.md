@@ -13,6 +13,8 @@ You can install it using the command: pip install --upgrade cx_Freeze
 For aditional info go to https://cx-freeze.readthedocs.io/en/latest/installation.html
 
 **The Main screen should look like this when opened:**
+
+
 <img src="https://github.com/user-attachments/assets/f5e486a1-3914-44ad-b05c-99da34fe88ef" width="25%" height="25%">
 
 **A preview should show up on the main window when typing the number for the hymn or the name of the hymn:**
