@@ -12,18 +12,20 @@ dictionary = {
     'monitor': SettingsModal.gettingMonitor()
 }
 
-primaryMonitors = SettingsModal.gettingMonitor()
-monitors = []
-for m in get_monitors():
-    if(m.name != dictionary['background']):
-        monitors.append(m.name)
+def nonPrimaryMonitors():
+    monitors = []
+    for m in get_monitors():
+        if(m.name != SettingsModal.gettingMonitor()):
+            monitors.append(m.name)
+
+    return monitors 
 
 
 class Settings(QWidget):
     def __init__(self,hymnPic):
         super().__init__()
         self.setGeometry(200, 100, 400, 200)
-        print(monitors)
+        
         self.layout = QGridLayout()
 
         self.backGroundPreview = QLabel()
@@ -43,8 +45,8 @@ class Settings(QWidget):
         self.layout.addWidget(self.monitorSelectLabel,3,0,Qt.AlignmentFlag.AlignLeft)
 
         self.monitorSelect = QComboBox()
-        self.monitorSelect.addItem(primaryMonitors)
-        self.monitorSelect.addItems(monitors)
+        self.monitorSelect.addItem(SettingsModal.gettingMonitor())
+        self.monitorSelect.addItems(nonPrimaryMonitors())
         self.monitorSelect.setFixedWidth(180)
         self.monitorSelect.activated.connect(self.setMonitorSettings)
         self.layout.addWidget(self.monitorSelect,3,0,Qt.AlignmentFlag.AlignCenter)
