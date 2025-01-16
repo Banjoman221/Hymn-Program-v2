@@ -6,8 +6,8 @@ import csv
 import json
 from screeninfo import get_monitors
 import slideShow
-import  SettingsWindow as settingsWindow
-import  settingsModal as SettingsModal 
+import SettingsWindow as settingsWindow
+import settingsModal as SettingsModal 
 import subprocess
 
 mainPath = os.getcwd()

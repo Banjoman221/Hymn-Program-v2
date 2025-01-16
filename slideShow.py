@@ -1,6 +1,7 @@
 from PyQt6.QtCore import *
 from PyQt6.QtGui import *
 from PyQt6.QtWidgets import *
+import settingsModal as SettingsModal 
 import os, sys
 import json
 from screeninfo import get_monitors
@@ -47,7 +48,7 @@ class Slide(QMainWindow):
         for m in get_monitors():
             print(m.width)
             self.monWidth = m.width
-            if m.is_primary == False:
+            if m.name == SettingsModal.gettingMonitor():
                 self.move(int(m.x), int(m.y))
                 hymnName.move(int(m.x), int(m.y))
 

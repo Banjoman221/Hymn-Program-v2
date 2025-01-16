@@ -2,6 +2,7 @@ from PyQt6.QtCore import *
 from PyQt6.QtGui import *
 from PyQt6.QtWidgets import *
 import  settingsModal as SettingsModal 
+import SettingsWindow as settingsWindow
 import os, sys
 import json
 from screeninfo import get_monitors
@@ -11,7 +12,8 @@ for m in get_monitors():
     monitors.append(m.name) 
 
 dictionary = {
-    'background': ''
+    'background': SettingsModal.gettingHymnName(),
+    'monitor': SettingsModal.gettingMonitor()
 }
 class Settings(QWidget):
     def __init__(self,hymnPic):
@@ -33,22 +35,25 @@ class Settings(QWidget):
         self.changeBackgroundButton.clicked.connect(lambda: self.uploadingNewBackground())
         self.layout.addWidget(self.changeBackgroundButton, 2,0, Qt.AlignmentFlag.AlignRight)
 
-        self.monitorSelecLabel = QLabel('Choose A Monitor')
-        self.layout.addWidget(self.monitorSelecLabel,3,0,Qt.AlignmentFlag.AlignLeft)
+        self.monitorSelectLabel = QLabel('Available Monitors')
+        self.layout.addWidget(self.monitorSelectLabel,3,0,Qt.AlignmentFlag.AlignLeft)
 
         self.monitorSelect = QComboBox()
         self.monitorSelect.addItems(monitors)
         self.monitorSelect.setFixedWidth(180)
-        self.layout.addWidget(self.monitorSelect,3,0,Qt.AlignmentFlag.AlignRight)
-        # self.
+        self.monitorSelect.activated.connect(self.setMonitorSettings)
+        self.layout.addWidget(self.monitorSelect,3,0,Qt.AlignmentFlag.AlignCenter)
+
+        self.monitorSelectedLabel = QLabel('Current Monitor Selected' + SettingsModal.gettingMonitor())
+        self.layout.addWidget(self.monitorSelectedLabel,4,0,Qt.AlignmentFlag.AlignRight)
 
         self.saveButton = QPushButton('Save')
         self.saveButton.clicked.connect(lambda: self.savingSetting())
-        self.layout.addWidget(self.saveButton , 4,0, Qt.AlignmentFlag.AlignLeft)
+        self.layout.addWidget(self.saveButton , 5,0, Qt.AlignmentFlag.AlignLeft)
         
         self.saveButton = QPushButton('Save and Exit')
         self.saveButton.clicked.connect(lambda: self. savingSettingAndExit())
-        self.layout.addWidget(self.saveButton , 4,0, Qt.AlignmentFlag.AlignRight)
+        self.layout.addWidget(self.saveButton , 5,0, Qt.AlignmentFlag.AlignRight)
         
         self.setLayout(self.layout)
 
@@ -76,3 +81,9 @@ class Settings(QWidget):
             outfile.write(json_object)
 
         self.close()
+
+    def setMonitorSettings(self, index):
+        ctext = self.monitorSelect.itemText(index) 
+        print(ctext)
+        dictionary['monitor'] = ctext   
+

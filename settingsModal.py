@@ -21,3 +21,16 @@ def gettingHymnName():
     hymnPic = creatingHymnImage.replace('\\', "/")
 
     return hymnPic
+
+def gettingMonitor():
+    filepath = 'Setting.json'
+    data = read_json_file(filepath)
+    # dictionary['background'] = data['background']
+    print(data['monitor'])
+
+    selectedMonitor = data['monitor']
+
+    return selectedMonitor
+
+
+
