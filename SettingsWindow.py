@@ -7,19 +7,23 @@ import os, sys
 import json
 from screeninfo import get_monitors
 
-monitors = []
-for m in get_monitors():
-    monitors.append(m.name) 
-
 dictionary = {
     'background': SettingsModal.gettingHymnName(),
     'monitor': SettingsModal.gettingMonitor()
 }
+
+primaryMonitors = SettingsModal.gettingMonitor()
+monitors = []
+for m in get_monitors():
+    if(m.name != dictionary['background']):
+        monitors.append(m.name)
+
+
 class Settings(QWidget):
     def __init__(self,hymnPic):
         super().__init__()
         self.setGeometry(200, 100, 400, 200)
-
+        print(monitors)
         self.layout = QGridLayout()
 
         self.backGroundPreview = QLabel()
@@ -39,12 +43,13 @@ class Settings(QWidget):
         self.layout.addWidget(self.monitorSelectLabel,3,0,Qt.AlignmentFlag.AlignLeft)
 
         self.monitorSelect = QComboBox()
+        self.monitorSelect.addItem(primaryMonitors)
         self.monitorSelect.addItems(monitors)
         self.monitorSelect.setFixedWidth(180)
         self.monitorSelect.activated.connect(self.setMonitorSettings)
         self.layout.addWidget(self.monitorSelect,3,0,Qt.AlignmentFlag.AlignCenter)
 
-        self.monitorSelectedLabel = QLabel('Current Monitor Selected' + SettingsModal.gettingMonitor())
+        self.monitorSelectedLabel = QLabel('Current Monitor Selected: ' + SettingsModal.gettingMonitor())
         self.layout.addWidget(self.monitorSelectedLabel,4,0,Qt.AlignmentFlag.AlignRight)
 
         self.saveButton = QPushButton('Save')
