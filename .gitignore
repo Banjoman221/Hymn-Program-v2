@@ -1,4 +1,5 @@
 /HymnOS/
 /__pycache__  
 
-*.json
+/Setting.json
+/HymnOS/Setting.json
