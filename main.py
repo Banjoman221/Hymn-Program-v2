@@ -8,6 +8,8 @@ from screeninfo import get_monitors
 import slideShow
 import SettingsWindow as settingsWindow
 import settingsModal as SettingsModal 
+import editHymns as EditHymns
+
 import subprocess
 
 mainPath = os.getcwd()
@@ -109,10 +111,15 @@ class Example(QMainWindow):
         self.settingsAction = QAction('&Settings', self)
         self.settingsAction.triggered.connect(lambda: self.show_settings())  
 
+        self.editHymn = QAction('&Edit Hymns', self)
+        self.editHymn.triggered.connect(lambda: self.show_hymns_edit())
+
         menu = self.menuBar()
         file_menu = menu.addMenu("&File")
         file_menu.addAction(self.settingsAction)
         file_menu.addSeparator()
+        # file_menu.addAction(self.editHymn)
+        # file_menu.addSeparator()
         # file_menu.addAction(self.update)
         # file_menu.addSeparator()
         file_menu.addAction(self.exitAction)
@@ -131,7 +138,10 @@ class Example(QMainWindow):
     def show_settings(self):
         self.s = settingsWindow.Settings(SettingsModal.gettingHymnName())
         self.s.show()
-    #
+
+    def show_hymns_edit(self):
+        self.s = EditHymns.HymnsEdit()
+        self.s.show()   
     # def update_file(self):
     #     try:
     #         result = subprocess.run(["powershell.exe","-ExecutionPolicy","Bypass","-File", "updater.ps1"], capture_output=True, text=True, shell=True)
