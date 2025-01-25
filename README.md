@@ -26,7 +26,11 @@ For aditional info go to https://cx-freeze.readthedocs.io/en/latest/installation
 </br>
 <h2>A settings page has been added and in development. More to come</h2>
 
-<img src="https://github.com/user-attachments/assets/321b4306-c67d-4bd3-88bf-224f1dd3ffe3" width="50%" height="50%">
+<img src="https://github.com/user-attachments/assets/063c07f8-87e0-4d7e-906e-7e06427597ae" width="50%" height="50%">
+</br>
+<h2>Added the ability to import a CSV file of your Church's Hymn Book</h2>
+
+<img src="https://github.com/user-attachments/assets/f77dd401-3d71-4d13-8935-0c38e2dc0c24" width="50%" height="50%">
 </br>
 
 <h2>To exit the program close the main window or use the keycombo Ctrl+q</h2>
