@@ -18,8 +18,11 @@ data = []
 data2 = []
 theHymn = ""
 dataNumbers = 0
-# hymn = os.path.join(mainPath, "hymnlist.csv")
 hymn = SettingsModal.gettingCSVFile()
+
+if(hymn == ""):
+    hymn = os.path.join(mainPath, "hymnlist.csv")
+
 # Accessing CSV file and adding to an array to be accessed later
 with open(hymn, newline="") as csvfile:
     rows = csv.reader(csvfile)
