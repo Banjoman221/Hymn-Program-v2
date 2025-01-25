@@ -1,3 +1,5 @@
+Stop-process -Name HymnOS
+
 $updating = git pull
 
   if($updating -like '* up to date*'){
@@ -14,3 +16,5 @@ cd ..
 
 cxfreeze --script main.py --target-dir HymnOS --target-name HymnOS --base gui --icon gospel 
 
+$exeFile = $currentDirectory.path + "\HymnOS\HymnOS.exe"
+start $exeFile
