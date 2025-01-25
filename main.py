@@ -140,7 +140,7 @@ class Example(QMainWindow):
         self.s.show()
 
     def update_file(self):
-        print(updating....)
+        print('updating....')
 
     def printListItems(self, i):
         print(i.text())
