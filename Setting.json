@@ -1,5 +1,5 @@
 {
-    "background": "C:/Users/jedij/Desktop/Hymn-Program-v2/HymnOS/1000014238.png",
-    "monitor": "\\\\.\\DISPLAY3",
-    "csvFile": "C:/Users/jedij/Desktop/Hymn-Program-v2/HymnOS/hymnlist.csv"
+    "background": "C:/Users/jedij/Desktop/Hymn-Program-v2/1000014238.png",
+    "monitor": "\\\\.\\DISPLAY1",
+    "csvFile": "C:\\Users\\jedij\\Desktop\\Hymn-Program-v2\\hymnlist.csv"
 }

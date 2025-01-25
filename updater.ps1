@@ -47,8 +47,6 @@ Start-Sleep -seconds 5
 
 $csvFile = $currentDirectory.path + "\hymnlist.csv"
 Write-Host $csvFile
-$jsonFile = $currentDirectory.path + "\Setting.json"
-Write-Host $jsonFile
 $picFile = $currentDirectory.path + "\jg.jpg"
 Write-Host $picFile
 $picFile2 = $currentDirectory.path + "\1000014238.png"
@@ -57,7 +55,6 @@ $destinationFile = $currentDirectory.path + "\HymnOS"
 Write-Host $destinationFileFile
 
 Copy-Item -Path $csvFile -Destination $destinationFile
-Copy-Item -Path $jsonFile -Destination $destinationFile
 Copy-Item -Path $picFile -Destination $destinationFile
 Copy-Item -Path $picFile2 -Destination $destinationFile
 

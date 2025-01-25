@@ -19,15 +19,14 @@ data2 = []
 theHymn = ""
 dataNumbers = 0
 hymn = SettingsModal.gettingCSVFile()
-# hymn = os.path.join(mainPath, "hymnlist.csv")
+
 # Accessing CSV file and adding to an array to be accessed later
-if(hymn):
-    with open(hymn, newline="") as csvfile:
-        rows = csv.reader(csvfile)
-        for row in rows:
-            dataNumbers += 1
-            data.append(row[0].upper())
-            data2.append(str(dataNumbers) + ") " + row[0].upper())
+with open(hymn, newline="") as csvfile:
+    rows = csv.reader(csvfile)
+    for row in rows:
+        dataNumbers += 1
+        data.append(row[0].upper())
+        data2.append(str(dataNumbers) + ") " + row[0].upper())
 
 class Example(QMainWindow):
     def __init__(self):
