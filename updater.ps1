@@ -58,7 +58,3 @@ Copy-Item -Path $csvFile -Destination $destinationFile
 Copy-Item -Path $picFile -Destination $destinationFile
 Copy-Item -Path $picFile2 -Destination $destinationFile
 
-Start-Sleep -seconds 5
-
-$exeFile = $currentDirectory.path + "\HymnOS\HymnOS.exe"
-start $exeFile
