@@ -17,12 +17,10 @@ for m in get_monitors():
 default_monitor = monitors[len(monitors)-1]
 
 defaultDictionary = {
-    'background': default_pic,
+    'background': default_pic.replace('\\','/'),
     'monitor':  default_monitor,
-    'csvFile':  default_csv
+    'csvFile':  default_csv.replace('\\','/')
 }
-
-read_json_file('Setting.json')
 
 def read_json_file(filepath):
     try:
@@ -51,7 +49,7 @@ def gettingHymnName():
 def gettingMonitor():
     filepath = 'Setting.json'
     data2 = read_json_file(filepath)
-    selectedMonitor =data2['monitor']
+    selectedMonitor = data2['monitor']
 
     return selectedMonitor
 
