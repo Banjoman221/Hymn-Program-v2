@@ -27,10 +27,12 @@ def read_json_file(filepath):
         f = open(filepath,'r')
     except FileNotFoundError:
         json_object = json.dumps(defaultDictionary, indent=4)
-        with open("Setting.json", "w") as outfile:
+        with open(filepath, "w") as outfile:
             outfile.write(json_object)
 
-        data = defaultDictionary
+        with open(filepath,'r') as newFile:
+            data = json.load(newFile)
+
     else:
         with f:
             data = json.load(f)
