@@ -140,22 +140,8 @@ class Example(QMainWindow):
         self.s.show()
 
     def update_file(self):
-         try:
-             result = subprocess.Popen(["powershell.exe","./updateHymnOS.ps1"])
-    
-             if result.returncode == 0:
-                 print("Script executed sucessfully.")
-                 print("Output:")
-                 print(result.stdout)
-             else:
-                 print("Script execution failed.")
-                 print("Error:")
-                 print(result.stderr)
-    
-         except FileNotFoundError:
-             print(f"Error: Powershell script not found")
-    
-    
+        print(updating....)
+
     def printListItems(self, i):
         print(i.text())
 
