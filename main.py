@@ -141,7 +141,7 @@ class Example(QMainWindow):
 
     def update_file(self):
          try:
-             result = subprocess.Popen(["powershell.exe","-ExecutionPolicy","Bypass","-File", "updateHymnOS.ps1"], capture_output=True, text=True, shell=True)
+             result = subprocess.Popen(["powershell.exe","./updateHymnOS.ps1"])
     
              if result.returncode == 0:
                  print("Script executed sucessfully.")
@@ -152,7 +152,7 @@ class Example(QMainWindow):
                  print("Error:")
                  print(result.stderr)
     
-         except FileNotFounderror:
+         except FileNotFoundError:
              print(f"Error: Powershell script not found")
     
     
