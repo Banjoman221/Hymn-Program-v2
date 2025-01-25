@@ -120,8 +120,8 @@ class Example(QMainWindow):
         file_menu.addSeparator()
         file_menu.addAction(self.importCsv)
         file_menu.addSeparator()
-        file_menu.addAction(self.update)
-        file_menu.addSeparator()
+        # file_menu.addAction(self.update)
+        # file_menu.addSeparator()
         file_menu.addAction(self.exitAction)
 
 
