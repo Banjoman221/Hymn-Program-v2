@@ -13,24 +13,27 @@ def read_json_file(filepath):
 
 def gettingHymnName():
     filepath = 'Setting.json'
-    data = read_json_file(filepath)
-    # dictionary['background'] = data['background']
-    print(data['background'])
+    data1 = read_json_file(filepath)
 
-    creatingHymnImage = os.path.join(mainPath,data['background'])
+    creatingHymnImage = os.path.join(mainPath,data1['background'])
     hymnPic = creatingHymnImage.replace('\\', "/")
 
     return hymnPic
 
 def gettingMonitor():
     filepath = 'Setting.json'
-    data = read_json_file(filepath)
-    # dictionary['background'] = data['background']
-    print(data['monitor'])
-
-    selectedMonitor = data['monitor']
+    data2 = read_json_file(filepath)
+    selectedMonitor =data2['monitor']
 
     return selectedMonitor
+
+def gettingCSVFile():
+    filepath = 'Setting.json'
+    data3 = read_json_file(filepath)
+    selectedCsvFile = data3['csvFile']
+
+    return selectedCsvFile 
+
 
 
 

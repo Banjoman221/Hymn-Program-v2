@@ -8,7 +8,6 @@ from screeninfo import get_monitors
 import slideShow
 import SettingsWindow as settingsWindow
 import settingsModal as SettingsModal 
-import editHymns as EditHymns
 
 import subprocess
 
@@ -19,7 +18,8 @@ data = []
 data2 = []
 theHymn = ""
 dataNumbers = 0
-hymn = os.path.join(mainPath, "hymnlist.csv")
+# hymn = os.path.join(mainPath, "hymnlist.csv")
+hymn = SettingsModal.gettingCSVFile()
 # Accessing CSV file and adding to an array to be accessed later
 with open(hymn, newline="") as csvfile:
     rows = csv.reader(csvfile)
@@ -97,7 +97,7 @@ class Example(QMainWindow):
         self.btn4.triggered.connect(lambda: self.creating_Preview(SettingsModal.gettingHymnName(),"I Feel Like Traveling On","Front Page"))  
         self.btn4.triggered.connect(lambda: self.show_front_back_page("I Feel Like Traveling On","Front Page"))  
 
-        self.btn5 = QAction('Back Page ', self)
+        self.btn5 = QAction('&Back Page ', self)
         self.btn5.triggered.connect(lambda: self.creating_Preview(SettingsModal.gettingHymnName(),"I Know My Name Is There","Back Page"))  
         self.btn5.triggered.connect(lambda: self.show_front_back_page("I Know My Name Is There","Back Page"))  
         #
@@ -111,15 +111,15 @@ class Example(QMainWindow):
         self.settingsAction = QAction('&Settings', self)
         self.settingsAction.triggered.connect(lambda: self.show_settings())  
 
-        self.editHymn = QAction('&Edit Hymns', self)
-        self.editHymn.triggered.connect(lambda: self.show_hymns_edit())
+        self.importCsv = QAction('&Import CSV', self)
+        self.importCsv.triggered.connect(lambda: settingsWindow.get_CSV_File(self))
 
         menu = self.menuBar()
         file_menu = menu.addMenu("&File")
         file_menu.addAction(self.settingsAction)
         file_menu.addSeparator()
-        # file_menu.addAction(self.editHymn)
-        # file_menu.addSeparator()
+        file_menu.addAction(self.importCsv)
+        file_menu.addSeparator()
         # file_menu.addAction(self.update)
         # file_menu.addSeparator()
         file_menu.addAction(self.exitAction)
@@ -139,9 +139,6 @@ class Example(QMainWindow):
         self.s = settingsWindow.Settings(SettingsModal.gettingHymnName())
         self.s.show()
 
-    def show_hymns_edit(self):
-        self.s = EditHymns.HymnsEdit()
-        self.s.show()   
     # def update_file(self):
     #     try:
     #         result = subprocess.run(["powershell.exe","-ExecutionPolicy","Bypass","-File", "updater.ps1"], capture_output=True, text=True, shell=True)
@@ -272,8 +269,6 @@ class Example(QMainWindow):
             # self.listHymn.addItems(data2)
             self.listHymn.currentItemChanged.connect(self.printListItems)
 
-
-    
     def closeEvent(self, event):
         for window in QApplication.topLevelWidgets():
             window.close()

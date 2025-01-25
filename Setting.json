@@ -1,4 +1,5 @@
 {
-    "background": "C:/Users/EBCSoundBooth/Desktop/Hymn-Program-v2/HymnOS/1000014238.png",
-    "monitor": "\\\\.\\DISPLAY3"
+    "background": "C:/Users/jedij/Desktop/Hymn-Program-v2/HymnOS/1000014238.png",
+    "monitor": "\\\\.\\DISPLAY3",
+    "csvFile": "C:/Users/jedij/Desktop/Hymn-Program-v2/hymnlist.csv"
 }

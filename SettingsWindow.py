@@ -1,7 +1,7 @@
 from PyQt6.QtCore import *
 from PyQt6.QtGui import *
 from PyQt6.QtWidgets import *
-import  settingsModal as SettingsModal 
+import settingsModal as SettingsModal 
 import SettingsWindow as settingsWindow
 import os, sys
 import json
@@ -9,7 +9,8 @@ from screeninfo import get_monitors
 
 dictionary = {
     'background': SettingsModal.gettingHymnName(),
-    'monitor': SettingsModal.gettingMonitor()
+    'monitor': SettingsModal.gettingMonitor(),
+    'csvFile': SettingsModal.gettingCSVFile()
 }
 
 def nonPrimaryMonitors():
@@ -19,6 +20,17 @@ def nonPrimaryMonitors():
             monitors.append(m.name)
 
     return monitors 
+
+def get_CSV_File(self):
+    filename, _ = QFileDialog.getOpenFileName(self, "Select Image", "", "CSV Files (*.csv)")
+    if filename:
+        print(filename)
+        dictionary['csvFile'] = filename
+        print(dictionary['csvFile'])
+
+        json_object = json.dumps(dictionary, indent=4)
+        with open("Setting.json", "w") as outfile:
+            outfile.write(json_object)
 
 
 class Settings(QWidget):
