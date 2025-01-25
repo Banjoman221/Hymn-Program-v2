@@ -22,6 +22,8 @@ defaultDictionary = {
     'csvFile':  default_csv
 }
 
+read_json_file('Setting.json')
+
 def read_json_file(filepath):
     try:
         f = open(filepath,'r')
