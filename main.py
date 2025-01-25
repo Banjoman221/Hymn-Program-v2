@@ -100,10 +100,10 @@ class Example(QMainWindow):
         self.btn5 = QAction('&Back Page ', self)
         self.btn5.triggered.connect(lambda: self.creating_Preview(SettingsModal.gettingHymnName(),"I Know My Name Is There","Back Page"))  
         self.btn5.triggered.connect(lambda: self.show_front_back_page("I Know My Name Is There","Back Page"))  
-        #
-        # self.update = QAction('Update', self)
-        # self.update.triggered.connect(lambda: self.update_file())  
-        #
+        
+        self.update = QAction('Update', self)
+        self.update.triggered.connect(lambda: self.update_file())  
+        
         self.exitAction = QAction('E&xit', self)
         self.exitAction.triggered.connect(lambda: self.close())  
         self.exitAction.setShortcut(QKeySequence("Ctrl+q"))  
@@ -120,8 +120,8 @@ class Example(QMainWindow):
         file_menu.addSeparator()
         file_menu.addAction(self.importCsv)
         file_menu.addSeparator()
-        # file_menu.addAction(self.update)
-        # file_menu.addSeparator()
+        file_menu.addAction(self.update)
+        file_menu.addSeparator()
         file_menu.addAction(self.exitAction)
 
 
@@ -139,23 +139,23 @@ class Example(QMainWindow):
         self.s = settingsWindow.Settings(SettingsModal.gettingHymnName())
         self.s.show()
 
-    # def update_file(self):
-    #     try:
-    #         result = subprocess.run(["powershell.exe","-ExecutionPolicy","Bypass","-File", "updater.ps1"], capture_output=True, text=True, shell=True)
-    #
-    #         if result.returncode == 0:
-    #             print("Script executed sucessfully.")
-    #             print("Output:")
-    #             print(result.stdout)
-    #         else:
-    #             print("Script execution failed.")
-    #             print("Error:")
-    #             print(result.stderr)
-    #
-    #     except FileNotFounderror:
-    #         print(f"Error: Powershell script not found")
-    #
-    #
+    def update_file(self):
+         try:
+             result = subprocess.run(["powershell.exe","-ExecutionPolicy","Bypass","-File", "updateHymnOS.ps1"], capture_output=True, text=True, shell=True)
+    
+             if result.returncode == 0:
+                 print("Script executed sucessfully.")
+                 print("Output:")
+                 print(result.stdout)
+             else:
+                 print("Script execution failed.")
+                 print("Error:")
+                 print(result.stderr)
+    
+         except FileNotFounderror:
+             print(f"Error: Powershell script not found")
+    
+    
     def printListItems(self, i):
         print(i.text())
 
