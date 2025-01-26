@@ -36,7 +36,6 @@ def read_json_file(filepath):
 
         with open(filepath,'r') as newFile:
             data = json.load(newFile)
-
     else:
         with f:
             data = json.load(f)
@@ -45,22 +44,18 @@ def read_json_file(filepath):
 
 def gettingHymnName():
     data1 = read_json_file(jsonFile)
-
     creatingHymnImage = os.path.join(mainPath,data1['background'])
     hymnPic = creatingHymnImage.replace('\\', "/")
-
     return hymnPic
 
 def gettingMonitor():
     data2 = read_json_file(jsonFile)
     selectedMonitor = data2['monitor']
-
     return selectedMonitor
 
 def gettingCSVFile():
     data3 = read_json_file(jsonFile)
     selectedCsvFile = data3['csvFile']
-
     return selectedCsvFile 
 
 

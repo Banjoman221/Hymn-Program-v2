@@ -40,26 +40,17 @@ if($continueing -ne 'c'){
 }
 
 Start-Sleep -seconds 5
+cd ./public/
 
-cxfreeze --script ./public/main.py --target-dir HymnOS --target-name HymnOS --base gui --icon gospel 
+cxfreeze --script main.py --target-dir ../HymnOS --target-name HymnOS --base gui --icon ../resources/gospel 
 
 Start-Sleep -seconds 5
-#
-# $csvFile = $currentDirectory.path + "\resources\hymnlist.csv"
-# Write-Host $csvFile
-# $picFile = $currentDirectory.path + "\resources\jg.jpg"
-# Write-Host $picFile
-# $picFile2 = $currentDirectory.path + "\resources\1000014238.png"
-# Write-Host $picFile2
-#
-$resources = $currentDirectory.path + "\resources"
-$destinationFile = $currentDirectory.path + "\HymnOS\resources"
-Write-Host $destinationFileFile
-#
-# Copy-Item -Path $csvFile -Destination $destinationFile
-# Copy-Item -Path $picFile -Destination $destinationFile
-# Copy-Item -Path $picFile2 -Destination $destinationFile
-Copy-Item -Path $resources -Destination $destinationFile -Recurse
+cd ..
 
-cd ./HymnOS/
-mkdir bakcend
+rm .\backend -r -Force
+
+Start-Sleep -seconds 5
+
+mkdir backend
+
+start HymnOS
