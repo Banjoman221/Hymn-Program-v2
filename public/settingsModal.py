@@ -6,9 +6,13 @@ import json
 from screeninfo import get_monitors
 
 mainPath = os.getcwd()
+parentDirectory = os.path.dirname(mainPath)
+new_parentDirectory = parentDirectory.replace('\\','/') 
+print(parentDirectory.replace('\\','/'))
 
-default_pic = os.path.join(mainPath, "1000014238.png")
-default_csv = os.path.join(mainPath, "hymnlist.csv")
+default_pic = os.path.join(new_parentDirectory,"resources/1000014238.png")
+default_csv = os.path.join(new_parentDirectory,"resources/hymnlist.csv")
+jsonFile = os.path.join(new_parentDirectory,"resources/Setting.json")
 
 monitors = []
 for m in get_monitors():
@@ -17,9 +21,9 @@ for m in get_monitors():
 default_monitor = monitors[len(monitors)-1]
 
 defaultDictionary = {
-    'background': default_pic.replace('\\','/'),
+    'background': default_pic,
     'monitor':  default_monitor,
-    'csvFile':  default_csv.replace('\\','/')
+    'csvFile':  default_csv
 }
 
 def read_json_file(filepath):
@@ -27,7 +31,7 @@ def read_json_file(filepath):
         f = open(filepath,'r')
     except FileNotFoundError:
         json_object = json.dumps(defaultDictionary, indent=4)
-        with open(filepath, "w") as outfile:
+        with open(filepath , "w") as outfile:
             outfile.write(json_object)
 
         with open(filepath,'r') as newFile:
@@ -40,8 +44,7 @@ def read_json_file(filepath):
     return data 
 
 def gettingHymnName():
-    filepath = 'Setting.json'
-    data1 = read_json_file(filepath)
+    data1 = read_json_file(jsonFile)
 
     creatingHymnImage = os.path.join(mainPath,data1['background'])
     hymnPic = creatingHymnImage.replace('\\', "/")
@@ -49,15 +52,13 @@ def gettingHymnName():
     return hymnPic
 
 def gettingMonitor():
-    filepath = 'Setting.json'
-    data2 = read_json_file(filepath)
+    data2 = read_json_file(jsonFile)
     selectedMonitor = data2['monitor']
 
     return selectedMonitor
 
 def gettingCSVFile():
-    filepath = 'Setting.json'
-    data3 = read_json_file(filepath)
+    data3 = read_json_file(jsonFile)
     selectedCsvFile = data3['csvFile']
 
     return selectedCsvFile 

@@ -7,6 +7,10 @@ import os, sys
 import json
 from screeninfo import get_monitors
 
+mainPath = os.getcwd()
+parentDirectory = os.path.dirname(mainPath)
+jsonFile = os.path.join(parentDirectory, "/resources/Setting.json")
+
 dictionary = {
     'background': SettingsModal.gettingHymnName(),
     'monitor': SettingsModal.gettingMonitor(),
@@ -89,12 +93,12 @@ class Settings(QWidget):
 
     def savingSetting(self):
         json_object = json.dumps(dictionary, indent=4)
-        with open("Setting.json", "w") as outfile:
+        with open(jsonFile , "w") as outfile:
             outfile.write(json_object)
 
     def savingSettingAndExit(self):
         json_object = json.dumps(dictionary, indent=4)
-        with open("Setting.json", "w") as outfile:
+        with open(jsonFile , "w") as outfile:
             outfile.write(json_object)
 
         self.close()

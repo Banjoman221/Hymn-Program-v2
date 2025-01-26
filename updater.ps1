@@ -45,11 +45,11 @@ cxfreeze --script main.py --target-dir HymnOS --target-name HymnOS --base gui --
 
 Start-Sleep -seconds 5
 
-$csvFile = $currentDirectory.path + "\hymnlist.csv"
+$csvFile = $currentDirectory.path + "\resources\hymnlist.csv"
 Write-Host $csvFile
-$picFile = $currentDirectory.path + "\jg.jpg"
+$picFile = $currentDirectory.path + "\resources\jg.jpg"
 Write-Host $picFile
-$picFile2 = $currentDirectory.path + "\1000014238.png"
+$picFile2 = $currentDirectory.path + "\resources\1000014238.png"
 Write-Host $picFile2
 $destinationFile = $currentDirectory.path + "\HymnOS"
 Write-Host $destinationFileFile
