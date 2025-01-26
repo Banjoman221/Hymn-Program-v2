@@ -53,7 +53,8 @@ class Settings(QWidget):
         self.changeBackgroundButton.clicked.connect(lambda: self.uploadingNewBackground())
         self.layout.addWidget(self.changeBackgroundButton, 2,0, Qt.AlignmentFlag.AlignRight)
 
-        self.monitorSelectLabel = QLabel('Available Monitors')
+        self.monitorSelectLabel = QLabel('Monitors:')
+        self.monitorSelectLabel.setStyleSheet("position:relative;margin-left: 40px;")
         self.layout.addWidget(self.monitorSelectLabel,3,0,Qt.AlignmentFlag.AlignLeft)
 
         self.monitorSelect = QComboBox()
@@ -62,9 +63,6 @@ class Settings(QWidget):
         self.monitorSelect.setFixedWidth(180)
         self.monitorSelect.activated.connect(self.setMonitorSettings)
         self.layout.addWidget(self.monitorSelect,3,0,Qt.AlignmentFlag.AlignCenter)
-
-        self.monitorSelectedLabel = QLabel('Current Monitor Selected: ' + SettingsModal.gettingMonitor())
-        self.layout.addWidget(self.monitorSelectedLabel,4,0,Qt.AlignmentFlag.AlignRight)
 
         self.saveButton = QPushButton('Save')
         self.saveButton.clicked.connect(lambda: self.savingSetting())
