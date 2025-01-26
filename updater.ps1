@@ -41,7 +41,7 @@ if($continueing -ne 'c'){
 
 Start-Sleep -seconds 5
 
-cxfreeze --script \public\main.py --target-dir HymnOS --target-name HymnOS --base gui --icon gospel 
+cxfreeze --script /public/main.py --target-dir HymnOS --target-name HymnOS --base gui --icon gospel 
 
 Start-Sleep -seconds 5
 
