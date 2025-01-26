@@ -12,7 +12,7 @@ print(parentDirectory.replace('\\','/'))
 
 default_pic = os.path.join(new_parentDirectory,"resources/1000014238.png")
 default_csv = os.path.join(new_parentDirectory,"resources/hymnlist.csv")
-jsonFile = os.path.join(new_parentDirectory,"resources/Setting.json")
+jsonFile = os.path.join(new_parentDirectory,"backend/Setting.json")
 
 monitors = []
 for m in get_monitors():

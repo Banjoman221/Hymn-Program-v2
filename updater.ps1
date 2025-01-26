@@ -41,20 +41,22 @@ if($continueing -ne 'c'){
 
 Start-Sleep -seconds 5
 
-cxfreeze --script main.py --target-dir HymnOS --target-name HymnOS --base gui --icon gospel 
+cxfreeze --script \public\main.py --target-dir HymnOS --target-name HymnOS --base gui --icon gospel 
 
 Start-Sleep -seconds 5
 
-$csvFile = $currentDirectory.path + "\resources\hymnlist.csv"
-Write-Host $csvFile
-$picFile = $currentDirectory.path + "\resources\jg.jpg"
-Write-Host $picFile
-$picFile2 = $currentDirectory.path + "\resources\1000014238.png"
-Write-Host $picFile2
+# $csvFile = $currentDirectory.path + "\resources\hymnlist.csv"
+# Write-Host $csvFile
+# $picFile = $currentDirectory.path + "\resources\jg.jpg"
+# Write-Host $picFile
+# $picFile2 = $currentDirectory.path + "\resources\1000014238.png"
+# Write-Host $picFile2
+$resources = $currentDirectory.path + "\resources\hymnlist.csv"
 $destinationFile = $currentDirectory.path + "\HymnOS"
 Write-Host $destinationFileFile
+Copy-Item -Path $resources -Destination $destinationFile
 
-Copy-Item -Path $csvFile -Destination $destinationFile
-Copy-Item -Path $picFile -Destination $destinationFile
-Copy-Item -Path $picFile2 -Destination $destinationFile
+# Copy-Item -Path $csvFile -Destination $destinationFile
+# Copy-Item -Path $picFile -Destination $destinationFile
+# Copy-Item -Path $picFile2 -Destination $destinationFile
 

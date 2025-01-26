@@ -9,7 +9,9 @@ from screeninfo import get_monitors
 
 mainPath = os.getcwd()
 parentDirectory = os.path.dirname(mainPath)
-jsonFile = os.path.join(parentDirectory, "/resources/Setting.json")
+new_parentDirectory = parentDirectory.replace('\\','/') 
+
+jsonFile = os.path.join(new_parentDirectory,"backend/Setting.json")
 
 dictionary = {
     'background': SettingsModal.gettingHymnName(),
