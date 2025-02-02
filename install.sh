@@ -5,8 +5,6 @@ git pull
 rm ./backend/ -read -r 
 mkdir backend
 
-cd ./public/
-
 desktopLocation=$(xdg-user-dir DESKTOP)
 file=$desktopLocation'/HymnsOS.desktop'
 echo $file 
