@@ -8,15 +8,16 @@ import json
 from screeninfo import get_monitors
 
 mainPath = os.getcwd()
-parentDirectory = os.path.dirname(mainPath)
-new_parentDirectory = parentDirectory.replace('\\','/') 
+new_parentDirectory = mainPath.replace('\\','/') 
+print(new_parentDirectory)
 
 jsonFile = os.path.join(new_parentDirectory,"backend/Setting.json")
 
 dictionary = {
     'background': SettingsModal.gettingHymnName(),
     'monitor': SettingsModal.gettingMonitor(),
-    'csvFile': SettingsModal.gettingCSVFile()
+    'csvFile': SettingsModal.gettingCSVFile(),
+    'powerpoint': SettingsModal.gettingPowerpoint()
 }
 
 def nonPrimaryMonitors():
@@ -37,7 +38,20 @@ def get_CSV_File(self):
         json_object = json.dumps(dictionary, indent=4)
         with open("Setting.json", "w") as outfile:
             outfile.write(json_object)
+    print("importing CSV file......")
 
+def get_Powerpoint(self):
+    filename, _ = QFileDialog.getOpenFileName(self, "Select Powerpoint", "", "Powerpoint Files (*.pptx)")
+    if filename:
+        print(filename)
+        dictionary['powerpoint'] = filename
+        print(dictionary['powerpoint'])
+
+        json_object = json.dumps(dictionary, indent=4)
+        with open("Setting.json", "w") as outfile:
+            outfile.write(json_object)
+
+    print("importing powerpoint......")
 
 class Settings(QWidget):
     def __init__(self,hymnPic):

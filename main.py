@@ -1,6 +1,7 @@
 from PyQt6.QtCore import *
 from PyQt6.QtGui import *
 from PyQt6.QtWidgets import *
+from pptx import Presentation
 import os, sys
 import csv
 import json
@@ -19,6 +20,8 @@ data2 = []
 theHymn = ""
 dataNumbers = 0
 hymn = SettingsModal.gettingCSVFile()
+newPP = SettingsModal.gettingPowerpoint()
+newPPSplit = SettingsModal.gettingPowerpoint().split('/')
 
 # Accessing CSV file and adding to an array to be accessed later
 with open(hymn, newline="") as csvfile:
@@ -27,6 +30,11 @@ with open(hymn, newline="") as csvfile:
         dataNumbers += 1
         data.append(row[0].upper())
         data2.append(str(dataNumbers) + ") " + row[0].upper())
+
+prs = Presentation(newPP)
+for slide in prs.slides:
+    for shapes in slide.shapes:
+        print(shapes.image)
 
 class Example(QMainWindow):
     def __init__(self):
@@ -84,6 +92,10 @@ class Example(QMainWindow):
         # self.listHymn.addItems(data2)
         self.listHymn.currentItemChanged.connect(self.printListItems)
 
+        self.powerpointLabel = QLabel("Current Powerpoint: " + newPPSplit[len(newPPSplit) -1])
+        self.layout.addWidget(self.powerpointLabel, 0, 1)
+        # self.listHymn.addItems(data2)
+
         self.widget = QWidget()
         self.widget.setLayout(self.layout)
         self.setCentralWidget(self.widget)
@@ -111,19 +123,22 @@ class Example(QMainWindow):
         self.settingsAction = QAction('&Settings', self)
         self.settingsAction.triggered.connect(lambda: self.show_settings())  
 
-        self.importCsv = QAction('&Import CSV', self)
+        self.importCsv = QAction('Import &CSV', self)
         self.importCsv.triggered.connect(lambda: settingsWindow.get_CSV_File(self))
+
+        self.importPowerpoint = QAction('Import &Powerpoint', self)
+        self.importPowerpoint.triggered.connect(lambda: settingsWindow.get_Powerpoint(self))
 
         menu = self.menuBar()
         file_menu = menu.addMenu("&File")
         file_menu.addAction(self.settingsAction)
         file_menu.addSeparator()
-        file_menu.addAction(self.importCsv)
-        file_menu.addSeparator()
-        # file_menu.addAction(self.update)
-        # file_menu.addSeparator()
         file_menu.addAction(self.exitAction)
 
+        import_menu = menu.addMenu("&Import")
+        import_menu.addAction(self.importCsv)
+        import_menu.addSeparator()
+        import_menu.addAction(self.importPowerpoint)
 
         other_menu = menu.addMenu("&Other Pages")
         other_submenu = other_menu.addMenu("&Front Pages")

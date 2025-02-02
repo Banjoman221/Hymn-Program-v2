@@ -9,9 +9,10 @@ mainPath = os.getcwd()
 newPath = mainPath.replace('\\','/')
 print(mainPath.replace('\\','/'))
 
-dir_backend = os.path.join(newPath,"backend/")
-default_pic = os.path.join(newPath,"resources/1000014238.png")
-default_csv = os.path.join(newPath,"resources/hymnlist.csv")
+dir_backend = os.path.join(newPath,"backend/").replace('\\','/')
+default_pic = os.path.join(newPath,"resources/1000014238.png").replace('\\','/')
+default_csv = os.path.join(newPath,"resources/hymnlist.csv").replace('\\','/')
+default_powerpoint = os.path.join(newPath,"resources/church slides.pptx").replace('\\','/')
 jsonFile = os.path.join(newPath,"backend/Setting.json")
 
 monitors = []
@@ -23,7 +24,8 @@ default_monitor = monitors[len(monitors)-1]
 defaultDictionary = {
     'background': default_pic,
     'monitor':  default_monitor,
-    'csvFile':  default_csv
+    'csvFile':  default_csv,
+    'powerpoint':  default_powerpoint
 }
 
 def read_json_file(filepath):
@@ -60,6 +62,10 @@ def gettingCSVFile():
     selectedCsvFile = data3['csvFile']
     return selectedCsvFile 
 
+def gettingPowerpoint():
+    data4 = read_json_file(jsonFile)
+    selectedPowerpointFile = data4['powerpoint']
+    return selectedPowerpointFile 
 
 
 
