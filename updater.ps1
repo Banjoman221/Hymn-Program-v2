@@ -40,17 +40,6 @@ if($continueing -ne 'c'){
 }
 
 Start-Sleep -seconds 5
-cd ./public/
 
-cxfreeze --script main.py --target-dir ../HymnOS --target-name HymnOS --base gui --icon ../resources/gospel 
-
-Start-Sleep -seconds 5
-cd ..
-
-rm .\backend -r -Force
-
-Start-Sleep -seconds 5
-
-mkdir backend
-
-start HymnOS
+# cxfreeze --script main.py --target-dir ../HymnOS --target-name HymnOS --base gui --icon ../resources/gospel 
+C:\Users\jedij\AppData\Local\Programs\Python\Python312\python.exe .\setup.py build

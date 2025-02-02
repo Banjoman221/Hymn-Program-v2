@@ -6,13 +6,13 @@ import json
 from screeninfo import get_monitors
 
 mainPath = os.getcwd()
-parentDirectory = os.path.dirname(mainPath)
-new_parentDirectory = parentDirectory.replace('\\','/') 
-print(parentDirectory.replace('\\','/'))
+newPath = mainPath.replace('\\','/')
+print(mainPath.replace('\\','/'))
 
-default_pic = os.path.join(new_parentDirectory,"resources/1000014238.png")
-default_csv = os.path.join(new_parentDirectory,"resources/hymnlist.csv")
-jsonFile = os.path.join(new_parentDirectory,"backend/Setting.json")
+dir_backend = os.path.join(newPath,"backend/")
+default_pic = os.path.join(newPath,"resources/1000014238.png")
+default_csv = os.path.join(newPath,"resources/hymnlist.csv")
+jsonFile = os.path.join(newPath,"backend/Setting.json")
 
 monitors = []
 for m in get_monitors():
@@ -30,12 +30,14 @@ def read_json_file(filepath):
     try:
         f = open(filepath,'r')
     except FileNotFoundError:
-        json_object = json.dumps(defaultDictionary, indent=4)
-        with open(filepath , "w") as outfile:
-            outfile.write(json_object)
+        os.mkdir(dir_backend)
+        if dir_backend:
+            json_object = json.dumps(defaultDictionary, indent=4)
+            with open(filepath , "w") as outfile:
+                outfile.write(json_object)
 
-        with open(filepath,'r') as newFile:
-            data = json.load(newFile)
+            with open(filepath,'r') as newFile:
+                data = json.load(newFile)
     else:
         with f:
             data = json.load(f)
