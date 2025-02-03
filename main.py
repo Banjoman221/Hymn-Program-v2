@@ -2,6 +2,7 @@ from PyQt6.QtCore import *
 from PyQt6.QtGui import *
 from PyQt6.QtWidgets import *
 from pptx import Presentation
+import zipfile
 import os, sys
 import csv
 import json
@@ -22,6 +23,14 @@ dataNumbers = 0
 hymn = SettingsModal.gettingCSVFile()
 newPP = SettingsModal.gettingPowerpoint()
 newPPSplit = SettingsModal.gettingPowerpoint().split('/')
+powerPointUnZip = os.path.join(mainPath,'resources/' + str(newPPSplit[len(newPPSplit) -1].split('.')[0]))
+
+with zipfile.ZipFile(newPP, "r") as zip_ref:
+    print(powerPointUnZip.replace('\\','/'))
+    zip_ref.extractall(powerPointUnZip.replace('\\','/'))
+
+
+welcomeSlide = os.path.join(mainPath,'resources/' + str(newPPSplit[len(newPPSplit) -1].split('.')[0]) + "/ppt/media/image11.jpeg")
 
 # Accessing CSV file and adding to an array to be accessed later
 with open(hymn, newline="") as csvfile:
@@ -31,10 +40,10 @@ with open(hymn, newline="") as csvfile:
         data.append(row[0].upper())
         data2.append(str(dataNumbers) + ") " + row[0].upper())
 
-prs = Presentation(newPP)
-for slide in prs.slides:
-    for shapes in slide.shapes:
-        print(shapes.image)
+# prs = Presentation(newPP)
+# for slide in prs.slides:
+#     for shapes in slide.shapes:
+#         print(shapes)
 
 class Example(QMainWindow):
     def __init__(self):
@@ -92,9 +101,10 @@ class Example(QMainWindow):
         # self.listHymn.addItems(data2)
         self.listHymn.currentItemChanged.connect(self.printListItems)
 
-        self.powerpointLabel = QLabel("Current Powerpoint: " + newPPSplit[len(newPPSplit) -1])
+        self.powerpointLabel = QPushButton(icon=QIcon(welcomeSlide))
+        self.powerpointLabel.setIconSize(QSize(300,180))
         self.layout.addWidget(self.powerpointLabel, 0, 1)
-        # self.listHymn.addItems(data2)
+        self.powerpointLabel.clicked.connect(lambda: self.showPowerPoint())  
 
         self.widget = QWidget()
         self.widget.setLayout(self.layout)
@@ -149,6 +159,11 @@ class Example(QMainWindow):
         other_menu.addAction(self.btn5)
 
         self.show()
+
+    def showPowerPoint(self):
+        print('showing.....')
+        self.z = slideShow.Slide('', '',welcomeSlide)            
+        self.z.show()
 
     def show_settings(self):
         self.s = settingsWindow.Settings(SettingsModal.gettingHymnName())
