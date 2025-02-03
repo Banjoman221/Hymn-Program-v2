@@ -162,8 +162,15 @@ class Example(QMainWindow):
 
     def showPowerPoint(self):
         print('showing.....')
-        self.z = slideShow.Slide('', '',welcomeSlide)            
-        self.z.show()
+        if(self.btn2.text() == "Start"):
+            self.w = slideShow.Slide('', '',welcomeSlide)            
+            self.btn2.setText('Stop')
+            self.w.show()
+        elif (self.btn2.text() == "Stop"):
+            # self.creating_Preview("","","")
+            self.btn2.setText('Start')
+            self.w.close()
+            self.w = None
 
     def show_settings(self):
         self.s = settingsWindow.Settings(SettingsModal.gettingHymnName())
