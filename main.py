@@ -24,13 +24,16 @@ hymn = SettingsModal.gettingCSVFile()
 newPP = SettingsModal.gettingPowerpoint()
 newPPSplit = SettingsModal.gettingPowerpoint().split('/')
 powerPointUnZip = os.path.join(mainPath,'resources/' + str(newPPSplit[len(newPPSplit) -1].split('.')[0]))
+ppSlides = os.path.join(mainPath,'resources/' + str(newPPSplit[len(newPPSplit) -1].split('.')[0]) + "/ppt/media/").replace('\\','/')
+print(ppSlides)
+powerPointImages = os.listdir(ppSlides)
+print(powerPointImages)
 
 with zipfile.ZipFile(newPP, "r") as zip_ref:
     print(powerPointUnZip.replace('\\','/'))
     zip_ref.extractall(powerPointUnZip.replace('\\','/'))
 
 
-welcomeSlide = os.path.join(mainPath,'resources/' + str(newPPSplit[len(newPPSplit) -1].split('.')[0]) + "/ppt/media/image11.jpeg")
 
 # Accessing CSV file and adding to an array to be accessed later
 with open(hymn, newline="") as csvfile:
@@ -101,10 +104,14 @@ class Example(QMainWindow):
         # self.listHymn.addItems(data2)
         self.listHymn.currentItemChanged.connect(self.printListItems)
 
-        self.powerpointLabel = QPushButton(icon=QIcon(welcomeSlide))
-        self.powerpointLabel.setIconSize(QSize(300,180))
-        self.layout.addWidget(self.powerpointLabel, 0, 1)
-        self.powerpointLabel.clicked.connect(lambda: self.showPowerPoint())  
+        i=-1
+        for p in powerPointImages:
+            i+=1
+            print(i)
+            self.powerpointLabel = QPushButton(icon=QIcon(ppSlides + p))
+            self.powerpointLabel.setIconSize(QSize(300,180))
+            self.layout.addWidget(self.powerpointLabel, i, 1)
+            self.powerpointLabel.clicked.connect(lambda: self.showPowerPoint())  
 
         self.widget = QWidget()
         self.widget.setLayout(self.layout)
@@ -163,7 +170,7 @@ class Example(QMainWindow):
     def showPowerPoint(self):
         print('showing.....')
         if(self.btn2.text() == "Start"):
-            self.w = slideShow.Slide('', '',welcomeSlide)            
+            self.w = slideShow.Slide('', '',ppSlides +  powerPointImages[0])            
             self.btn2.setText('Stop')
             self.w.show()
         elif (self.btn2.text() == "Stop"):
