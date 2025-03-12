@@ -14,6 +14,7 @@ default_pic = os.path.join(newPath,"resources/1000014238.png").replace('\\','/')
 default_csv = os.path.join(newPath,"resources/hymnlist.csv").replace('\\','/')
 default_powerpoint = os.path.join(newPath,"resources/church slides.pptx").replace('\\','/')
 jsonFile = os.path.join(newPath,"backend/Setting.json")
+slidesJsonFile = os.path.join(newPath,"backend/picsSlides.json")
 
 monitors = []
 for m in get_monitors():
@@ -62,10 +63,10 @@ def gettingCSVFile():
     selectedCsvFile = data3['csvFile']
     return selectedCsvFile 
 
-def gettingPowerpoint():
-    data4 = read_json_file(jsonFile)
-    selectedPowerpointFile = data4['powerpoint']
-    return selectedPowerpointFile 
+def gettingSlides():
+    data4 = read_json_file(slidesJsonFile)
+    selectedSlide = data4['slideShow']
+    return selectedSlide 
 
 
 

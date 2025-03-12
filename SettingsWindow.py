@@ -17,7 +17,6 @@ dictionary = {
     'background': SettingsModal.gettingHymnName(),
     'monitor': SettingsModal.gettingMonitor(),
     'csvFile': SettingsModal.gettingCSVFile(),
-    'powerpoint': SettingsModal.gettingPowerpoint()
 }
 
 def nonPrimaryMonitors():
@@ -48,7 +47,7 @@ def get_Powerpoint(self):
         print(dictionary['powerpoint'])
 
         json_object = json.dumps(dictionary, indent=4)
-        with open("Setting.json", "w") as outfile:
+        with open(jsonFile, "w") as outfile:
             outfile.write(json_object)
 
     print("importing powerpoint......")

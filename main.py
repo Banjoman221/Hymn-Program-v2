@@ -1,8 +1,6 @@
 from PyQt6.QtCore import *
 from PyQt6.QtGui import *
 from PyQt6.QtWidgets import *
-from pptx import Presentation
-import zipfile
 import os, sys
 import csv
 import json
@@ -10,43 +8,28 @@ from screeninfo import get_monitors
 import slideShow
 import SettingsWindow as settingsWindow
 import settingsModal as SettingsModal 
+import tempfile
 
 import subprocess
 
 mainPath = os.getcwd()
 
+dictionarySlideOut = {
+    'slideShow': SettingsModal.gettingSlides(),
+}
 
 data = []
 data2 = []
 theHymn = ""
 dataNumbers = 0
-hymn = SettingsModal.gettingCSVFile()
-newPP = SettingsModal.gettingPowerpoint()
-newPPSplit = SettingsModal.gettingPowerpoint().split('/')
-powerPointUnZip = os.path.join(mainPath,'resources/' + str(newPPSplit[len(newPPSplit) -1].split('.')[0]))
-ppSlides = os.path.join(mainPath,'resources/' + str(newPPSplit[len(newPPSplit) -1].split('.')[0]) + "/ppt/media/").replace('\\','/')
-print(ppSlides)
-powerPointImages = os.listdir(ppSlides)
-print(powerPointImages)
-
-with zipfile.ZipFile(newPP, "r") as zip_ref:
-    print(powerPointUnZip.replace('\\','/'))
-    zip_ref.extractall(powerPointUnZip.replace('\\','/'))
-
-
 
 # Accessing CSV file and adding to an array to be accessed later
-with open(hymn, newline="") as csvfile:
+with open(SettingsModal.gettingCSVFile(), newline="") as csvfile:
     rows = csv.reader(csvfile)
     for row in rows:
         dataNumbers += 1
         data.append(row[0].upper())
         data2.append(str(dataNumbers) + ") " + row[0].upper())
-
-# prs = Presentation(newPP)
-# for slide in prs.slides:
-#     for shapes in slide.shapes:
-#         print(shapes)
 
 class Example(QMainWindow):
     def __init__(self):
@@ -54,7 +37,7 @@ class Example(QMainWindow):
         self.w = None
 
         # Add label              
-        self.setGeometry(400, 200, 400, 475)
+        self.setGeometry(300, 100, 500, 500)
         self.setWindowTitle('HymnsOS') 
 
         #Grid Layout        
@@ -77,7 +60,7 @@ class Example(QMainWindow):
         onlyInt = QIntValidator()
         onlyInt.setRange(2, 479)
         #self.le.setValidator(onlyInt)
-        self.le.setFixedWidth(325)
+        self.le.setFixedWidth(250)
         self.layout.addWidget(self.le, 1,0)
         # self.le.returnPressed.connect(lambda: self.show_new_window_start(self.le.text())) 
         self.le.textChanged.connect(self.preview_widgetPOnly)
@@ -104,14 +87,34 @@ class Example(QMainWindow):
         # self.listHymn.addItems(data2)
         self.listHymn.currentItemChanged.connect(self.printListItems)
 
-        i=-1
-        for p in powerPointImages:
-            i+=1
-            print(i)
-            self.powerpointLabel = QPushButton(icon=QIcon(ppSlides + p))
-            self.powerpointLabel.setIconSize(QSize(300,180))
-            self.layout.addWidget(self.powerpointLabel, i, 1)
-            self.powerpointLabel.clicked.connect(lambda: self.showPowerPoint())  
+        self.scroll = QScrollArea()
+        self.widget1 = QWidget()
+        self.verticallayout = QVBoxLayout()
+        self.widget1.setLayout(self.verticallayout)
+        print(SettingsModal.gettingSlides())
+
+        for slide in SettingsModal.gettingSlides():
+            self.powerpointList = QLabel()
+            self.powerpointList.key = slide
+            self.powerpointList.setFixedWidth(300)
+            self.powerpointList.setFixedHeight(150)
+            pixmap = QPixmap(slide)
+            self.powerpointList.setPixmap(pixmap)
+            self.powerpointList.setScaledContents(True)
+            self.powerpointList.mousePressEvent = lambda event,sld=self.powerpointList: self.clickingImage(event,sld)
+            self.verticallayout.addWidget(self.powerpointList)
+
+        self.scroll.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOn) 
+        self.scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff) 
+        self.scroll.setWidgetResizable(True) 
+        self.scroll.setFixedWidth(330)
+        self.scroll.setWidget(self.widget1)
+
+        self.layout.addWidget(self.scroll, 0, 1,3,1)
+
+        self.changeBackgroundButton = QPushButton('Add New Slide')
+        self.changeBackgroundButton.clicked.connect(lambda: self.uploadingNewSlide())
+        self.layout.addWidget(self.changeBackgroundButton,3,1,3,1, Qt.AlignmentFlag.AlignRight)
 
         self.widget = QWidget()
         self.widget.setLayout(self.layout)
@@ -167,17 +170,52 @@ class Example(QMainWindow):
 
         self.show()
 
-    def showPowerPoint(self):
+    def clickingImage(self, event,slide):
+        allLabels = self.scroll.findChildren(QLabel)
+        for s in allLabels:
+            s.setStyleSheet('border-style:none')
+
+        if event.button() == Qt.MouseButton.LeftButton:
+            print('1')
+            print(slide.key)
+            slide.setStyleSheet('border: 5px solid lightblue')
+            self.showPowerPoint(slide.key)
+        if event.button() == Qt.MouseButton.RightButton:
+            print('2')
+            slide.setStyleSheet('border: 5px solid lightblue')
+
+    def imageClicked(slide):
+        print('clicked')
+
+    def showPowerPoint(self, i):
         print('showing.....')
-        if(self.btn2.text() == "Start"):
-            self.w = slideShow.Slide('', '',ppSlides +  powerPointImages[0])            
-            self.btn2.setText('Stop')
-            self.w.show()
-        elif (self.btn2.text() == "Stop"):
-            # self.creating_Preview("","","")
-            self.btn2.setText('Start')
-            self.w.close()
-            self.w = None
+        self.w = slideShow.Slide('', '',i)            
+        self.btn2.setText('Stop')
+        self.w.show()
+
+    def uploadingNewSlide(self):
+        filename, _ = QFileDialog.getOpenFileName(self, "Select Image", "", "Image Files (*.png *.jpg *bmp)")
+        if filename:
+            print(filename)
+            newFileName = filename.replace("\\","/")
+
+            dictionarySlideOut['slideShow'].append(newFileName)
+
+            self.powerpointList = QLabel()
+            self.powerpointList.key = newFileName
+            self.powerpointList.setFixedWidth(300)
+            self.powerpointList.setFixedHeight(150)
+            pixmap = QPixmap(newFileName)
+            self.powerpointList.setPixmap(pixmap)
+            self.powerpointList.setScaledContents(True)
+            self.powerpointList.mousePressEvent = lambda event,sld=self.powerpointList: self.clickingImage(event,sld)
+            self.verticallayout.addWidget(self.powerpointList)
+
+            json_object = json.dumps(dictionarySlideOut, indent=4)
+            with open('./backend/picsSlides.json' , "w") as outfile:
+                outfile.write(json_object)
+
+
 
     def show_settings(self):
         self.s = settingsWindow.Settings(SettingsModal.gettingHymnName())
@@ -197,10 +235,10 @@ class Example(QMainWindow):
                 self.creating_Preview(SettingsModal.gettingHymnName(), str(i.text().split(")")[1]), self.num)
         self.show_new_window_start(str(i.text()))
 
-    #Starting the slideShow from the start slideShow button
+    #starting the slideshow from the start slideshow button
     def show_new_window_start(self, hymnName):
         print(hymnName)
-        if(self.btn2.text() == "Start"):
+        if("Start" in self.btn2.text()):
             if (hymnName != ""):
                 self.allHymn = []
                 for y in data2:
