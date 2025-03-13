@@ -112,9 +112,13 @@ class Example(QMainWindow):
 
         self.layout.addWidget(self.scroll, 0, 1,3,1)
 
-        self.changeBackgroundButton = QPushButton('Add New Slide')
-        self.changeBackgroundButton.clicked.connect(lambda: self.uploadingNewSlide())
-        self.layout.addWidget(self.changeBackgroundButton,3,1,3,1, Qt.AlignmentFlag.AlignRight)
+        self.startSlideBtn = QPushButton('Start Slide')
+        self.startSlideBtn.clicked.connect(lambda: self.startStopSlides(SettingsModal.gettingSlides()[0]))
+        self.layout.addWidget(self.startSlideBtn,3,1,3,1, Qt.AlignmentFlag.AlignLeft)
+
+        self.addSlideButton = QPushButton('Add New Slide')
+        self.addSlideButton.clicked.connect(lambda: self.uploadingNewSlide())
+        self.layout.addWidget(self.addSlideButton,3,1,3,1, Qt.AlignmentFlag.AlignRight)
 
         self.widget = QWidget()
         self.widget.setLayout(self.layout)
@@ -174,24 +178,56 @@ class Example(QMainWindow):
         allLabels = self.scroll.findChildren(QLabel)
         for s in allLabels:
             s.setStyleSheet('border-style:none')
-
         if event.button() == Qt.MouseButton.LeftButton:
             print('1')
             print(slide.key)
             slide.setStyleSheet('border: 5px solid lightblue')
-            self.showPowerPoint(slide.key)
+            self.startStopSlides(slide.key)
         if event.button() == Qt.MouseButton.RightButton:
-            print('2')
             slide.setStyleSheet('border: 5px solid lightblue')
+            print('2')
+            context_menu = QMenu(self)
+            self.deleteTrigger = QAction("delete", self)
+            self.deleteTrigger.triggered.connect(lambda: self.deleteTheSlide(slide))
+            context_menu.addAction(self.deleteTrigger)
+            context_menu.popup(QCursor.pos())
 
-    def imageClicked(slide):
-        print('clicked')
+    def deleteTheSlide(self, j):
+        allLabels = self.scroll.findChildren(QLabel)
+        for s3 in allLabels:
+            if(s3.key == j.key):
+                s3.setParent(None)
+                print('deleted')
 
-    def showPowerPoint(self, i):
-        print('showing.....')
-        self.w = slideShow.Slide('', '',i)            
-        self.btn2.setText('Stop')
-        self.w.show()
+        for d in range(len(dictionarySlideOut['slideShow'])):
+            print(d)
+            if(dictionarySlideOut['slideShow'][d] == s3.key):
+                dictionarySlideOut['slideShow'].remove(s3.key)
+
+        print(dictionarySlideOut['slideShow'])
+
+        json_object = json.dumps(dictionarySlideOut, indent=4)
+        with open('./backend/picsSlides.json' , "w") as outfile:
+            outfile.write(json_object)
+
+
+    def startStopSlides(self, i):
+        allLabels1 = self.scroll.findChildren(QLabel)
+        for s1 in allLabels1:
+            s1.setStyleSheet('border-style:none')
+        if (self.startSlideBtn.text() == "Start Slide" and i != ""):
+            print('showing.....')
+            for s2 in allLabels1:
+                if(s2.key == i):
+                    s2.setStyleSheet('border: 5px solid lightblue')
+            self.w = slideShow.Slide('', '',i)            
+            self.startSlideBtn.setText('Stop Slide')
+            self.w.show()
+        elif (self.startSlideBtn.text() == "Stop Slide"):
+            # self.creating_Preview("","","")
+            self.startSlideBtn.setText('Start Slide')
+            self.w.close()
+            self.w = None
 
     def uploadingNewSlide(self):
         filename, _ = QFileDialog.getOpenFileName(self, "Select Image", "", "Image Files (*.png *.jpg *bmp)")
@@ -200,6 +236,10 @@ class Example(QMainWindow):
             newFileName = filename.replace("\\","/")
 
             dictionarySlideOut['slideShow'].append(newFileName)
+
+            json_object = json.dumps(dictionarySlideOut, indent=4)
+            with open('./backend/picsSlides.json' , "w") as outfile:
+                outfile.write(json_object)
 
             self.powerpointList = QLabel()
             self.powerpointList.key = newFileName
@@ -210,11 +250,6 @@ class Example(QMainWindow):
             self.powerpointList.setScaledContents(True)
             self.powerpointList.mousePressEvent = lambda event,sld=self.powerpointList: self.clickingImage(event,sld)
             self.verticallayout.addWidget(self.powerpointList)
-
-            json_object = json.dumps(dictionarySlideOut, indent=4)
-            with open('./backend/picsSlides.json' , "w") as outfile:
-                outfile.write(json_object)
-
 
 
     def show_settings(self):
@@ -238,7 +273,15 @@ class Example(QMainWindow):
     #starting the slideshow from the start slideshow button
     def show_new_window_start(self, hymnName):
         print(hymnName)
-        if("Start" in self.btn2.text()):
+        if (self.btn2.text() == "Stop"):
+            allLabels1 = self.scroll.findChildren(QLabel)
+            for s1 in allLabels1:
+                s1.setStyleSheet('border-style:none')
+            # self.creating_Preview("","","")
+            self.btn2.setText('Start')
+            self.w.close()
+            self.w = None
+        else:
             if (hymnName != ""):
                 self.allHymn = []
                 for y in data2:
@@ -254,11 +297,6 @@ class Example(QMainWindow):
                     self.w = slideShow.Slide(str(self.theHymn), str(self.num),SettingsModal.gettingHymnName())            
                     self.btn2.setText('Stop')
                     self.w.show()
-        elif (self.btn2.text() == "Stop"):
-            # self.creating_Preview("","","")
-            self.btn2.setText('Start')
-            self.w.close()
-            self.w = None
 
     #Starting the slideShow from the front an back page
     def show_front_back_page(self, hymnName, hymnNum):
