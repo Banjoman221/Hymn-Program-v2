@@ -7,11 +7,6 @@ To install python 3.12.3 or the latest version of pyhton go here: https://www.py
 
 To install Pyqt6 run this command in your terminal after you install python: pip install PyQt6
 
-I wrote a powershell script to create an exe file and copy relavant files to the created directory.
-The script relies on cx_freeze to create the exe file. 
-You can install it using the command: pip install --upgrade cx_Freeze.
-For aditional info go to https://cx-freeze.readthedocs.io/en/latest/installation.html
-
 <h2>The Main screen should look like this when opened:</h2>
 
 <img src="https://github.com/user-attachments/assets/f5e486a1-3914-44ad-b05c-99da34fe88ef" width="50%" height="50%">
