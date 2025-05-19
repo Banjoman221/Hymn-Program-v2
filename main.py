@@ -61,6 +61,7 @@ class Example(QMainWindow):
         onlyInt.setRange(2, 479)
         #self.le.setValidator(onlyInt)
         self.le.setFixedWidth(300)
+        self.le.setFixedHeight(30)
         self.layout.addWidget(self.le, 1,0)
         # self.le.returnPressed.connect(lambda: self.show_new_window_start(self.le.text())) 
         self.le.textChanged.connect(self.preview_widgetPOnly)
@@ -70,7 +71,13 @@ class Example(QMainWindow):
         self.btn2.setFixedHeight(30)
         self.layout.addWidget(self.btn2,1,0, Qt.AlignmentFlag.AlignRight)
         self.btn2.clicked.connect(lambda: self.show_new_window_start(self.le.text()))  
-
+        #
+        # self.btn21 = QPushButton('Add Slide')
+        # self.btn21.setFixedWidth(60)
+        # self.btn21.setFixedHeight(30)
+        # self.layout.addWidget(self.btn21,1,0)
+        # self.btn21.clicked.connect(lambda: self.addingSlide(self.le.text()))  
+        #
         self.hymnName = QLabel()
         self.hymnName.setText("")
         self.hymnName.setStyleSheet("")
@@ -174,6 +181,10 @@ class Example(QMainWindow):
 
         self.show()
 
+    def addingSlide(self, r):
+        if(r):
+            print(r)
+
     def clickingImage(self, event,slide):
         allLabels = self.scroll.findChildren(QLabel)
         for s in allLabels:
@@ -223,7 +234,7 @@ class Example(QMainWindow):
             self.w = slideShow.Slide('', '',i)            
             self.startSlideBtn.setText('Stop Slide')
             self.w.show()
-        elif (self.startSlideBtn.text() == "Stop Slide"):
+        elif (self.startSlideBtn.text() == "Stop Slide" and self.w):
             # self.creating_Preview("","","")
             self.startSlideBtn.setText('Start Slide')
             self.w.close()
@@ -273,7 +284,7 @@ class Example(QMainWindow):
     #starting the slideshow from the start slideshow button
     def show_new_window_start(self, hymnName):
         print(hymnName)
-        if (self.btn2.text() == "Stop"):
+        if (self.btn2.text() == "Stop" and self.w):
             allLabels1 = self.scroll.findChildren(QLabel)
             for s1 in allLabels1:
                 s1.setStyleSheet('border-style:none')
@@ -282,6 +293,7 @@ class Example(QMainWindow):
             self.w.close()
             self.w = None
         else:
+            self.startSlideBtn.setText('Start Slide')
             if (hymnName != ""):
                 self.allHymn = []
                 for y in data2:
@@ -300,6 +312,7 @@ class Example(QMainWindow):
 
     #Starting the slideShow from the front an back page
     def show_front_back_page(self, hymnName, hymnNum):
+        self.startSlideBtn.setText('Start Slide')
         self.w = slideShow.Slide(hymnName, hymnNum,SettingsModal.gettingHymnName()) 
         self.w.show() 
         self.btn2.setText('Stop')
