@@ -1,38 +1,70 @@
-# Hymn-Program-v2
-This Powerpoint type program is created with python, PyQt6, and  a csv full of Hymn Names. Its purpose is to put the Name of Hymns on screen so that your congregation can see what page to turn to if missed.
+# HymnOS
 
-This program uses Python 3.12.3 installed and PyQt6
+A fullscreen hymn display application built with **Python** and **PyQt6**. Designed for churches and congregations, HymnOS puts the current hymn name and page number on a projector or secondary monitor so nobody misses the page turn.
 
-To install python 3.12.3 or the latest version of pyhton go here: https://www.python.org/downloads/
+## Features
 
-To install Pyqt6 run this command in your terminal after you install python: pip install PyQt6
+- **Instant search** — search hymns by name or page number as you type
+- **Live preview** — see the hymn rendered on the background before you show it
+- **Fullscreen display** — sends the hymn to your projector or selected secondary monitor
+- **Playlist queue** — build a list of upcoming hymns, navigate with <kbd>Prev</kbd>/<kbd>Next</kbd>, and remove items with a right-click
+- **Dark mode** — toggle a dark theme from Settings (persisted between sessions)
+- **Custom backgrounds** — upload your own image to render hymn slides on
+- **Multi-monitor** — choose exactly which monitor the display uses
+- **CSV import** — load your church's hymn book from a CSV file
+- **PowerPoint import** — use slides from a `.pptx` file
 
-I wrote a powershell script to create an exe file and copy relavant files to the created directory.
-The script relies on cx_freeze to create the exe file. 
-You can install it using the command: pip install --upgrade cx_Freeze.
-For aditional info go to https://cx-freeze.readthedocs.io/en/latest/installation.html
+## Requirements
 
-<h2>The Main screen should look like this when opened:</h2>
+- [Python 3.12](https://www.python.org/downloads/) (or newer)
+- PyQt6
 
-<img src="https://github.com/user-attachments/assets/f5e486a1-3914-44ad-b05c-99da34fe88ef" width="50%" height="50%">
-</br>
-<h2>A preview should show up on the main window when typing the number for the hymn or the name of the hymn:</h2>
+## Installation
 
-<img src="https://github.com/user-attachments/assets/e923a68a-e53a-4502-abe1-c3464ee6de3a" width="50%" height="50%">
-</br>
-<h2>Enter the page number then click "Start" to throw slide onto the screen or second monitor if available. It should look like this:</h2>
+```bash
+pip install PyQt6
+```
 
-<img src="https://github.com/user-attachments/assets/31e0544c-44e5-450d-a6c9-51c3264e58e9" width="50%" height="50%">
-</br>
-<h2>A settings page has been added and in development. More to come</h2>
+## Running
 
-<img src="https://github.com/user-attachments/assets/063c07f8-87e0-4d7e-906e-7e06427597ae" width="50%" height="50%">
-</br>
-<h2>Added the ability to import a CSV file of your Church's Hymn Book</h2>
+Clone the repository and run:
 
-<img src="https://github.com/user-attachments/assets/f77dd401-3d71-4d13-8935-0c38e2dc0c24" width="50%" height="50%">
-</br>
+```bash
+git clone https://github.com/Banjoman221/Hymn-Program-v2.git
+cd Hymn-Program-v2
+python main.py
+```
 
-<h2>To exit the program close the main window or use the keycombo Ctrl+q</h2>
-</br>
-<h3>Have Fun!!</h3>
+## Usage
+
+1. **Find a hymn** — type a page number or hymn name in the search box. Matching hymns appear below with a live preview.
+2. **Queue it** — select a hymn in the list and click **Add** to place it in the playlist, or just click **Start** to show it immediately.
+3. **Present** — the hymn appears fullscreen on your selected monitor. Use the queue's **Prev** / **Next** buttons to move between slides.
+4. **Settings** — choose your background image, display monitor, and enable dark mode from **File → Settings**.
+5. **Exit** — close the main window or press <kbd>Ctrl</kbd>+<kbd>Q</kbd>.
+
+## Packaging (Windows)
+
+Build an executable with [cx_Freeze](https://cx-freeze.readthedocs.io/en/latest/installation.html):
+
+```bash
+pip install --upgrade cx_Freeze
+python setup.py build
+```
+
+A preconfigured PowerShell script (`updater.ps1`) pulls the latest changes and rebuilds the executable.
+
+## Project Structure
+
+| Path | Purpose |
+| --- | --- |
+| `main.py` | Main application window, search, preview, and queue |
+| `slideShow.py` | Fullscreen slide display window |
+| `SettingsWindow.py` | Settings dialog (background, monitor, dark mode) |
+| `settingsModal.py` | Shared settings persistence and helpers |
+| `backend/Setting.json` | Saved application settings |
+| `resources/` | Default background, hymn list, and PowerPoint assets |
+
+## License
+
+Copyright (C) 2025. All rights reserved.
