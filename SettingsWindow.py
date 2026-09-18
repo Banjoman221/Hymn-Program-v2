@@ -1,8 +1,7 @@
 from PyQt6.QtCore import *
 from PyQt6.QtGui import *
 from PyQt6.QtWidgets import *
-import settingsModal as SettingsModal 
-import SettingsWindow as settingsWindow
+import settingsModal as SettingsModal
 import os, sys
 import json
 from screeninfo import get_monitors
@@ -17,7 +16,8 @@ dictionary = {
     'background': SettingsModal.gettingHymnName(),
     'monitor': SettingsModal.gettingMonitor(),
     'csvFile': SettingsModal.gettingCSVFile(),
-    'powerpoint': SettingsModal.gettingPowerpoint()
+    'powerpoint': SettingsModal.gettingPowerpoint(),
+    'darkmode': SettingsModal.gettingDarkMode()
 }
 
 def nonPrimaryMonitors():
@@ -36,7 +36,7 @@ def get_CSV_File(self):
         print(dictionary['csvFile'])
 
         json_object = json.dumps(dictionary, indent=4)
-        with open("Setting.json", "w") as outfile:
+        with open(jsonFile, "w") as outfile:
             outfile.write(json_object)
     print("importing CSV file......")
 
@@ -48,7 +48,7 @@ def get_Powerpoint(self):
         print(dictionary['powerpoint'])
 
         json_object = json.dumps(dictionary, indent=4)
-        with open("Setting.json", "w") as outfile:
+        with open(jsonFile, "w") as outfile:
             outfile.write(json_object)
 
     print("importing powerpoint......")
@@ -56,7 +56,8 @@ def get_Powerpoint(self):
 class Settings(QWidget):
     def __init__(self,hymnPic):
         super().__init__()
-        self.setGeometry(200, 100, 400, 200)
+        self.setGeometry(200, 100, 500, 400)
+        self.setFixedSize(500, 400)
         
         self.layout = QGridLayout()
 
@@ -70,27 +71,36 @@ class Settings(QWidget):
         self.layout.addWidget(self.backGroundSetting, 1, 0, Qt.AlignmentFlag.AlignCenter)
 
         self.changeBackgroundButton = QPushButton('Upload New BackGround')
-        self.changeBackgroundButton.clicked.connect(lambda: self.uploadingNewBackground())
+        self.changeBackgroundButton.clicked.connect(SettingsModal.safe(lambda: self.uploadingNewBackground()))
         self.layout.addWidget(self.changeBackgroundButton, 2,0, Qt.AlignmentFlag.AlignRight)
 
-        self.monitorSelectLabel = QLabel('Monitors:')
-        self.monitorSelectLabel.setStyleSheet("position:relative;margin-left: 40px;")
-        self.layout.addWidget(self.monitorSelectLabel,3,0,Qt.AlignmentFlag.AlignLeft)
-
+        self.settingsRow = QHBoxLayout()
+        self.settingsRow.setSpacing(10)
+        self.settingsRow.addWidget(QLabel('Monitors:'))
         self.monitorSelect = QComboBox()
         self.monitorSelect.addItem(SettingsModal.gettingMonitor())
         self.monitorSelect.addItems(nonPrimaryMonitors())
         self.monitorSelect.setFixedWidth(180)
-        self.monitorSelect.activated.connect(self.setMonitorSettings)
-        self.layout.addWidget(self.monitorSelect,3,0,Qt.AlignmentFlag.AlignCenter)
+        self.monitorSelect.activated.connect(SettingsModal.safe(self.setMonitorSettings))
+        self.settingsRow.addWidget(self.monitorSelect)
+        self.settingsRow.addStretch()
+        self.settingsRow.addWidget(QLabel('   Dark Mode:'))
+        self.darkModeCheckbox = QCheckBox()
+        self.darkModeCheckbox.setChecked(SettingsModal.gettingDarkMode())
+        self.darkModeCheckbox.toggled.connect(SettingsModal.safe(self.setDarkModeSetting))
+        self.settingsRow.addWidget(self.darkModeCheckbox)
+
+        self.darkLayoutWidget = QWidget()
+        self.darkLayoutWidget.setLayout(self.settingsRow)
+        self.layout.addWidget(self.darkLayoutWidget, 3, 0, Qt.AlignmentFlag.AlignLeft)
 
         self.saveButton = QPushButton('Save')
-        self.saveButton.clicked.connect(lambda: self.savingSetting())
-        self.layout.addWidget(self.saveButton , 5,0, Qt.AlignmentFlag.AlignLeft)
+        self.saveButton.clicked.connect(SettingsModal.safe(lambda: self.savingSetting()))
+        self.layout.addWidget(self.saveButton , 4,0, Qt.AlignmentFlag.AlignLeft)
         
         self.saveButton = QPushButton('Save and Exit')
-        self.saveButton.clicked.connect(lambda: self. savingSettingAndExit())
-        self.layout.addWidget(self.saveButton , 5,0, Qt.AlignmentFlag.AlignRight)
+        self.saveButton.clicked.connect(SettingsModal.safe(lambda: self. savingSettingAndExit()))
+        self.layout.addWidget(self.saveButton , 4,0, Qt.AlignmentFlag.AlignRight)
         
         self.setLayout(self.layout)
 
@@ -122,5 +132,10 @@ class Settings(QWidget):
     def setMonitorSettings(self, index):
         ctext = self.monitorSelect.itemText(index) 
         print(ctext)
-        dictionary['monitor'] = ctext   
+        dictionary['monitor'] = ctext
+
+    def setDarkModeSetting(self, checked):
+        print(checked)
+        dictionary['darkmode'] = checked
+        SettingsModal.apply_dark_mode(checked)   
 
