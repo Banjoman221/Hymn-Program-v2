@@ -16,7 +16,7 @@ A fullscreen hymn display application built with **Python** and **PyQt6**. Desig
 
 ## Requirements
 
-- [Python 3.12](https://www.python.org/downloads/) (or newer)
+- [Python 3.14](https://www.python.org/downloads/) (or newer)
 - PyQt6
 
 ## Installation

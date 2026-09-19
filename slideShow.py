@@ -43,9 +43,7 @@ class Slide(QMainWindow):
             nameSize = int(200 * scale)
 
         hymnName.setStyleSheet(
-            "color: black; font-family: ALGERIAN; font-size: {}px;margin-top: {}px;".format(
-                nameSize, int(40 * scale)
-            )
+            f"color: black; font-family: ALGERIAN; font-size: {nameSize}px;margin-top: {int(40 * scale)}px;"
         )
 
         self.layoutVertical.addWidget(hymnName)
@@ -57,7 +55,7 @@ class Slide(QMainWindow):
         hymnNum.adjustSize()
         numSize = int(275 * scale)
         hymnNum.setStyleSheet(
-            "color: black; font-family: ALGERIAN; font-size: {}px".format(numSize)
+            f"color: black; font-family: ALGERIAN; font-size: {numSize}px"
         )
         self.layoutVertical.addWidget(hymnNum)
 

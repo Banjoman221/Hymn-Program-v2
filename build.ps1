@@ -18,7 +18,7 @@ function Get-Python {
         }
     }
     if (-not $py) {
-        throw "Python was not found. Install Python 3.12+ from https://www.python.org/downloads/"
+        throw "Python was not found. Install Python 3.14+ from https://www.python.org/downloads/"
     }
     return $py
 }

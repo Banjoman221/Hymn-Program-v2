@@ -29,7 +29,7 @@ except (FileNotFoundError, IndexError) as e:
 
 class Example(QMainWindow):
     def __init__(self):
-        super(Example, self).__init__()
+        super().__init__()
         self.w = None
 
         # Add label
