@@ -48,7 +48,14 @@ if (-not $Exe) {
     throw "Built executable HymnOS.exe was not found under build/"
 }
 
-New-Item -ItemType Directory -Force -Path $DistDir | Out-Null
-Copy-Item -Path $Exe.FullName -Destination (Join-Path $DistDir "HymnOS.exe") -Force
+Write-Host "Building MSI installer with cx_Freeze..." -ForegroundColor Cyan
+Invoke-Venv "python setup.py bdist_msi"
+if ($LASTEXITCODE -ne 0) { throw "cx_Freeze MSI build failed" }
 
-Write-Host "Build complete: $DistDir\HymnOS.exe" -ForegroundColor Green
+$Msi = Get-ChildItem -Path (Join-Path $RepoRoot "dist") -Filter "*.msi" -ErrorAction SilentlyContinue | Sort-Object LastWriteTime -Descending | Select-Object -First 1
+if (-not $Msi) {
+    throw "Built installer HymnOS*.msi was not found under dist/"
+}
+
+Write-Host "Installer build complete: $($Msi.FullName)" -ForegroundColor Green
+Write-Host "Run the MSI to install HymnOS and create the desktop shortcut." -ForegroundColor Cyan
