@@ -55,6 +55,16 @@ On Windows, run the preconfigured PowerShell script from the repo root:
 
 The script creates an isolated virtual environment, installs `cx_Freeze`, `PyQt6`, and `screeninfo`, builds the executable, and produces an MSI installer in the `dist/` folder. Running the MSI installs HymnOS and creates a desktop shortcut.
 
+### Linux
+
+Install on most Linux distros (Debian, Fedora, openSUSE, Arch, Alpine, Void, Gentoo) with the included script:
+
+```bash
+./install.sh --system-deps
+```
+
+This copies the application to `~/.local/share/HymnOS`, installs the required Python and Qt packages through your distro's package manager, creates a virtual environment with `PyQt6` and `screeninfo`, and adds a **HymnOS** launcher to the application menu. Set `INSTALL_DIR` to install elsewhere. If your distro's package manager isn't recognized, install Python 3 (with venv/pip) and the Qt runtime libraries manually, then run `./install.sh`.
+
 ## Project Structure
 
 | Path | Purpose |
