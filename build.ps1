@@ -45,6 +45,12 @@ Write-Host "Setting up build environment..." -ForegroundColor Cyan
 Invoke-Venv "python -m pip install --upgrade pip"
 Invoke-Venv "python -m pip install --upgrade cx_Freeze PyQt6 screeninfo"
 
+Write-Host "Regenerating the large gospel icon from resources/gospel.png..." -ForegroundColor Cyan
+Invoke-Venv "python make_gospel_icon.py"
+if (-not (Test-Path (Join-Path $RepoRoot "resources\gospel.ico"))) {
+    throw "Failed to generate resources/gospel.ico"
+}
+
 Write-Host "Building MSI installer with cx_Freeze..." -ForegroundColor Cyan
 Invoke-Venv "python setup.py bdist_msi"
 if ($LASTEXITCODE -ne 0) { throw "cx_Freeze MSI build failed" }

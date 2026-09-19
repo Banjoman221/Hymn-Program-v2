@@ -30,7 +30,7 @@ shortcut_table = [
         None,  # Arguments
         None,  # Description
         None,  # Hotkey
-        "./resources/gospel.ico",  # Icon
+        "IconId",  # Icon (foreign key into the Icon table below)
         None,  # IconIndex
         None,  # ShowCmd
         "TARGETDIR",  # WkDir

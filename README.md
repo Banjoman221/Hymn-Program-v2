@@ -53,7 +53,7 @@ On Windows, run the preconfigured PowerShell script from the repo root:
 .\build.ps1
 ```
 
-The script creates an isolated virtual environment, installs `cx_Freeze`, `PyQt6`, and `screeninfo`, builds the executable, and produces an MSI installer in the `dist/` folder. Running the MSI installs HymnOS and creates a desktop shortcut.
+The script creates an isolated virtual environment, installs `cx_Freeze`, `PyQt6`, and `screeninfo`, regenerates the desktop icon from the large `resources/gospel.png` artwork, builds the executable, and produces an MSI installer in the `dist/` folder. Running the MSI installs HymnOS and creates a desktop shortcut using the large gospel icon.
 
 ### Linux
 
