@@ -56,6 +56,7 @@ bdist_msi_options = {"data": msi_data}
 executables = [
     Executable(
         "main.py",
+        target_name="HymnOS.exe",
         copyright="Copyright (C) 2025 cx_Freeze",
         base="Win32Gui",
         icon="./resources/gospel.ico",
