@@ -108,13 +108,13 @@ class Example(QMainWindow):
         queueHeaderLayout.addWidget(self.queueLabel)
         queueHeaderLayout.addStretch()
         self.clearAllBtn = QPushButton("Clear All")
-        self.clearAllBtn.setFixedWidth(70)
+        self.clearAllBtn.setFixedWidth(90)
         self.clearAllBtn.clicked.connect(SettingsModal.safe(self.clear_queue))
         queueHeaderLayout.addWidget(self.clearAllBtn)
         self.queuePanel.addLayout(queueHeaderLayout)
 
         self.queueList = QListWidget()
-        self.queueList.setMinimumWidth(230)
+        self.queueList.setMinimumWidth(280)
         self.queueList.itemDoubleClicked.connect(
             SettingsModal.safe(self.remove_from_queue)
         )
