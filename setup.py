@@ -7,7 +7,12 @@ try:
 except ImportError:
     get_qt_plugins_paths = None
 
-include_files = [("./resources/hymnlist.csv","./resources/hymnlist.csv"),("./resources/jg.jpg","./resources/jg.jpg"),("./resources/1000014238.png","./resources/1000014238.png"),("./resources/gospel.ico","./resources/gospel.ico")]
+include_files = [
+    ("./resources/hymnlist.csv", "./resources/hymnlist.csv"),
+    ("./resources/jg.jpg", "./resources/jg.jpg"),
+    ("./resources/1000014238.png", "./resources/1000014238.png"),
+    ("./resources/gospel.ico", "./resources/gospel.ico"),
+]
 
 if get_qt_plugins_paths:
     # Inclusion of extra plugins (since cx_Freeze 6.8b2)
@@ -16,20 +21,21 @@ if get_qt_plugins_paths:
     include_files += get_qt_plugins_paths("PyQt6", "multimedia")
 
 shortcut_table = [
-    ("DesktopShortcut",        # Shortcut
-     "DesktopFolder",          # Directory_
-     "HymnOS",           # Name
-     "TARGETDIR",              # Component_
-     "[TARGETDIR]HymnOS.exe",# Target
-     None,                     # Arguments
-     None,                     # Description
-     None,                     # Hotkey
-     "./resources/gospel.ico",   # Icon
-     None,                     # IconIndex
-     None,                     # ShowCmd
-     'TARGETDIR'               # WkDir
-     )
-    ]
+    (
+        "DesktopShortcut",  # Shortcut
+        "DesktopFolder",  # Directory_
+        "HymnOS",  # Name
+        "TARGETDIR",  # Component_
+        "[TARGETDIR]HymnOS.exe",  # Target
+        None,  # Arguments
+        None,  # Description
+        None,  # Hotkey
+        "./resources/gospel.ico",  # Icon
+        None,  # IconIndex
+        None,  # ShowCmd
+        "TARGETDIR",  # WkDir
+    )
+]
 
 # Now create the table dictionary
 msi_data = {
@@ -43,7 +49,7 @@ msi_data = {
 }
 
 # Change some default MSI options and specify the use of the above defined tables
-bdist_msi_options = {'data': msi_data}
+bdist_msi_options = {"data": msi_data}
 
 # build_exe_options = {"excludes": ["tkinter", "unittest", "email", "http", "xml", "pydoc"],"include_msvcr": True, "include_files": include_files}
 
@@ -64,10 +70,7 @@ setup(
     description="A Powerpoint type program for displaying Hymns",
     executables=executables,
     options={
-        "build_exe": {
-                "packages":["PyQt6"],
-                "include_files":include_files
-            },
-        "bdist_msi":bdist_msi_options
+        "build_exe": {"packages": ["PyQt6"], "include_files": include_files},
+        "bdist_msi": bdist_msi_options,
     },
 )
