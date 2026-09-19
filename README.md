@@ -45,14 +45,15 @@ python main.py
 
 ## Packaging (Windows)
 
-Build an executable with [cx_Freeze](https://cx-freeze.readthedocs.io/en/latest/installation.html):
+Build an executable with [cx_Freeze](https://cx-freeze.readthedocs.io/en/latest/installation.html).
 
-```bash
-pip install --upgrade cx_Freeze
-python setup.py build
+On Windows, run the preconfigured PowerShell script from the repo root:
+
+```powershell
+.\build.ps1
 ```
 
-A preconfigured PowerShell script (`updater.ps1`) pulls the latest changes and rebuilds the executable.
+The script creates an isolated virtual environment, installs `cx_Freeze`, `PyQt6`, and `screeninfo`, builds the executable, and copies `HymnOS.exe` into the `dist/` folder.
 
 ## Project Structure
 
