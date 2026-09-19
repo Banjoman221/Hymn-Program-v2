@@ -3,6 +3,7 @@ $ErrorActionPreference = "Stop"
 $RepoRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
 $VenvDir = Join-Path $RepoRoot ".venv-build"
 $DistDir = Join-Path $RepoRoot "dist"
+$BuildDir = Join-Path $RepoRoot "build"
 
 Set-Location $RepoRoot
 
@@ -34,25 +35,21 @@ function Invoke-Venv {
     if ($LASTEXITCODE -ne 0) { throw "Command failed: $Expr" }
 }
 
+Write-Host "Cleaning previous build outputs..." -ForegroundColor Yellow
+Remove-Item -Path $BuildDir -Recurse -Force -ErrorAction SilentlyContinue
+Remove-Item -Path $DistDir -Recurse -Force -ErrorAction SilentlyContinue
+
 $Py = Get-Python
 
+Write-Host "Setting up build environment..." -ForegroundColor Cyan
 Invoke-Venv "python -m pip install --upgrade pip"
 Invoke-Venv "python -m pip install --upgrade cx_Freeze PyQt6 screeninfo"
-
-Write-Host "Building executable with cx_Freeze..." -ForegroundColor Cyan
-Invoke-Venv "python setup.py build"
-if ($LASTEXITCODE -ne 0) { throw "cx_Freeze build failed" }
-
-$Exe = Get-ChildItem -Path (Join-Path $RepoRoot "build") -Recurse -Filter "HymnOS.exe" -ErrorAction SilentlyContinue | Select-Object -First 1
-if (-not $Exe) {
-    throw "Built executable HymnOS.exe was not found under build/"
-}
 
 Write-Host "Building MSI installer with cx_Freeze..." -ForegroundColor Cyan
 Invoke-Venv "python setup.py bdist_msi"
 if ($LASTEXITCODE -ne 0) { throw "cx_Freeze MSI build failed" }
 
-$Msi = Get-ChildItem -Path (Join-Path $RepoRoot "dist") -Filter "*.msi" -ErrorAction SilentlyContinue | Sort-Object LastWriteTime -Descending | Select-Object -First 1
+$Msi = Get-ChildItem -Path $DistDir -Filter "*.msi" -ErrorAction SilentlyContinue | Sort-Object LastWriteTime -Descending | Select-Object -First 1
 if (-not $Msi) {
     throw "Built installer HymnOS*.msi was not found under dist/"
 }
