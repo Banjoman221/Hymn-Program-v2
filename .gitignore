@@ -1,4 +1,10 @@
 /HymnOS/
-/__pycache__  
+/__pycache__
 
 /backend/Setting.json
+
+# Build artifacts (cx_Freeze)
+/.venv-build/
+/build/
+/dist/
+/*.egg-info/
