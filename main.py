@@ -33,8 +33,8 @@ class Example(QMainWindow):
         self.w = None
 
         # Add label
-        self.setGeometry(400, 200, 510, 475)
-        self.setFixedSize(510, 475)
+        self.setGeometry(400, 200, 440, 520)
+        self.setFixedSize(440, 520)
         self.setWindowTitle("HymnsOS")
 
         # Grid Layout
