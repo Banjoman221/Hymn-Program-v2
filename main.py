@@ -42,28 +42,54 @@ class Example(QMainWindow):
         self.mainWidgetLayout = QHBoxLayout()
         self.mainWidgetLayout.addLayout(self.layout, 1)
 
-        self.preview = QLabel()
-        self.preview.setText("No Preview")
-        self.preview.setStyleSheet("font-family: ALGERIAN; font-size: 40px;")
-        self.preview.setFixedHeight(180)
-        self.preview.setFixedWidth(300)
-        self.layout.addWidget(self.preview, 0, 0, Qt.AlignmentFlag.AlignCenter)
-        self.backGround = QLabel(self)
-        self.backGround.setStyleSheet("")
-        self.layout.addWidget(self.backGround, 0, 0)
+        self.previewWidth = 320
+        self.previewHeight = 180  # 16:9 to match fullscreen output
+
+        self.previewContainer = QWidget()
+        self.previewContainer.setFixedSize(self.previewWidth, self.previewHeight)
+        self.previewLayout = QGridLayout()
+        self.previewLayout.setContentsMargins(0, 0, 0, 0)
+        self.previewLayout.setSpacing(0)
+        self.previewContainer.setLayout(self.previewLayout)
+        self.layout.addWidget(
+            self.previewContainer, 0, 0, Qt.AlignmentFlag.AlignCenter
+        )
+
+        self.backGround = QLabel()
+        self.backGround.setScaledContents(True)
+        self.backGround.setSizePolicy(
+            QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Ignored
+        )
         self.backGround.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.preview.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.previewLayout.addWidget(self.backGround, 0, 0)
+
+        self.previewOverlay = QVBoxLayout()
+        self.previewOverlay.setContentsMargins(0, 0, 0, 0)
+        self.previewOverlay.setSpacing(0)
+        self.previewOverlay.setAlignment(
+            Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignHCenter
+        )
+        self.previewLayout.addLayout(self.previewOverlay, 0, 0)
 
         self.hymnName = QLabel()
         self.hymnName.setText("")
-        self.hymnName.setStyleSheet("")
-        self.hymnName.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.layout.addWidget(self.hymnName, 0, 0, Qt.AlignmentFlag.AlignTop)
+        self.hymnName.setWordWrap(True)
+        self.hymnName.setAlignment(
+            Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignHCenter
+        )
+        self.previewOverlay.addWidget(self.hymnName)
+
         self.hymnNum = QLabel()
         self.hymnNum.setText("")
-        self.hymnNum.setStyleSheet("")
-        self.hymnNum.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.layout.addWidget(self.hymnNum, 0, 0, Qt.AlignmentFlag.AlignBottom)
+        self.hymnNum.setAlignment(
+            Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignHCenter
+        )
+        self.previewOverlay.addWidget(self.hymnNum)
+
+        self.preview = QLabel("No Preview", self.previewContainer)
+        self.preview.setStyleSheet("font-family: ALGERIAN; font-size: 40px;")
+        self.preview.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.preview.setGeometry(0, 0, self.previewWidth, self.previewHeight)
 
         self.le = QLineEdit(self)
         self.le.setFocus()
@@ -72,7 +98,10 @@ class Example(QMainWindow):
         onlyInt = QIntValidator()
         onlyInt.setRange(2, 479)
         # self.le.setValidator(onlyInt)
-        self.le.setFixedWidth(285)
+        self.le.setSizePolicy(
+            QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed
+        )
+        self.le.setMinimumWidth(0)
         self.le.textChanged.connect(SettingsModal.safe(self.preview_widgetPOnly))
 
         self.btn2 = QPushButton("Start")
@@ -91,9 +120,10 @@ class Example(QMainWindow):
         inputRow = QWidget()
         inputLayout = QHBoxLayout()
         inputLayout.setContentsMargins(0, 0, 0, 0)
-        inputLayout.addWidget(self.le)
-        inputLayout.addWidget(self.btnAdd)
-        inputLayout.addWidget(self.btn2)
+        inputLayout.setSpacing(6)
+        inputLayout.addWidget(self.le, 1)
+        inputLayout.addWidget(self.btnAdd, 0)
+        inputLayout.addWidget(self.btn2, 0)
         inputRow.setLayout(inputLayout)
         self.layout.addWidget(inputRow, 1, 0)
 
@@ -138,10 +168,6 @@ class Example(QMainWindow):
         self.queuePanel.addLayout(queueNavLayout)
 
         self.mainWidgetLayout.addLayout(self.queuePanel, 0)
-
-        self.placeHold = QLabel("")
-        self.placeHold.setFixedWidth(80)
-        self.layout.addWidget(self.placeHold, 0, 0, Qt.AlignmentFlag.AlignLeft)
 
         self.listHymn = QListWidget()
         self.listHymn.addItems(data2)
@@ -447,36 +473,45 @@ class Example(QMainWindow):
             self.listHymn.addItems(data2)
 
     # Handling the preview creation
+    # Mirrors slideShow.Slide: same background pixmap handling, same
+    # centered overlay layout, same font-size math scaled to preview size.
     def creating_Preview(self, hymnPicture, theHymn, theNum):
         if hymnPicture != "" and theHymn != "" and theNum != "":
-            self.backGround.setStyleSheet("border-image: url('" + hymnPicture + "');")
+            scale = self.previewWidth / slideShow.Slide.BASE_WIDTH
+            nameSize, numSize, topMargin = slideShow.Slide.font_sizes(
+                theHymn, scale
+            )
+
+            self.backGround.setPixmap(QPixmap(hymnPicture))
             self.backGround.setScaledContents(True)
-            self.backGround.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
             self.hymnName.setText(theHymn)
             self.hymnName.setWordWrap(True)
-            self.hymnName.setAlignment(Qt.AlignmentFlag.AlignCenter)
+            self.hymnName.setAlignment(
+                Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignHCenter
+            )
             self.hymnName.adjustSize()
-
-            if len(theHymn) >= 25:
-                self.hymnName.setStyleSheet(
-                    "color: black; font-family: ALGERIAN; font-size: 30px;margin-top: 20px;"
-                )
-            else:
-                self.hymnName.setStyleSheet(
-                    "color: black; font-family: ALGERIAN; font-size: 40px;margin-top: 20px;"
-                )
+            self.hymnName.setStyleSheet(
+                f"color: black; font-family: ALGERIAN; font-size: {nameSize}px;"
+                f"margin-top: {topMargin}px;"
+            )
 
             self.hymnNum.setText(str(theNum))
             self.hymnNum.setStyleSheet(
-                "color: black; font-family: ALGERIAN; font-size: 40px;padding-bottom:5px;"
+                f"color: black; font-family: ALGERIAN; font-size: {numSize}px"
             )
-            self.hymnNum.setAlignment(Qt.AlignmentFlag.AlignCenter)
+            self.hymnNum.setAlignment(
+                Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignHCenter
+            )
             self.hymnNum.adjustSize()
             self.preview.setText("")
+            self.preview.hide()
         else:
             self.preview.setText("No Preview")
-            self.backGround.setStyleSheet("border-image: none;")
+            self.preview.show()
+            self.preview.raise_()
+            self.backGround.setPixmap(QPixmap())
+            self.backGround.setStyleSheet("")
 
             self.hymnName.setText("")
             self.hymnNum.setText("")
