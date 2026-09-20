@@ -33,13 +33,13 @@ class Example(QMainWindow):
         self.w = None
 
         # Add label
-        self.setGeometry(400, 200, 680, 475)
-        self.setFixedSize(680, 475)
+        self.setGeometry(400, 200, 510, 475)
+        self.setFixedSize(510, 475)
         self.setWindowTitle("HymnsOS")
 
         # Grid Layout
         self.layout = QGridLayout()
-        self.mainWidgetLayout = QHBoxLayout()
+        self.mainWidgetLayout = QVBoxLayout()
         self.mainWidgetLayout.addLayout(self.layout, 1)
 
         self.previewWidth = 320
@@ -131,20 +131,23 @@ class Example(QMainWindow):
         self.queueIndex = -1
 
         self.queuePanel = QVBoxLayout()
+        self.queuePanel.setContentsMargins(0, 0, 0, 0)
+        self.queuePanel.setSpacing(4)
 
         self.queueLabel = QLabel("Queue:")
+        self.clearAllBtn = QPushButton("Clear All")
+        self.clearAllBtn.setFixedWidth(90)
+        self.clearAllBtn.clicked.connect(SettingsModal.safe(self.clear_queue))
         queueHeaderLayout = QHBoxLayout()
         queueHeaderLayout.setContentsMargins(0, 0, 0, 0)
         queueHeaderLayout.addWidget(self.queueLabel)
         queueHeaderLayout.addStretch()
-        self.clearAllBtn = QPushButton("Clear All")
-        self.clearAllBtn.setFixedWidth(90)
-        self.clearAllBtn.clicked.connect(SettingsModal.safe(self.clear_queue))
         queueHeaderLayout.addWidget(self.clearAllBtn)
         self.queuePanel.addLayout(queueHeaderLayout)
 
         self.queueList = QListWidget()
-        self.queueList.setMinimumWidth(280)
+        self.queueList.setMinimumHeight(60)
+        self.queueList.setMaximumHeight(80)
         self.queueList.itemDoubleClicked.connect(
             SettingsModal.safe(self.remove_from_queue)
         )
@@ -167,7 +170,7 @@ class Example(QMainWindow):
         queueNavLayout.addWidget(self.nextBtn)
         self.queuePanel.addLayout(queueNavLayout)
 
-        self.mainWidgetLayout.addLayout(self.queuePanel, 0)
+        self.mainWidgetLayout.addLayout(self.queuePanel)
 
         self.listHymn = QListWidget()
         self.listHymn.addItems(data2)
